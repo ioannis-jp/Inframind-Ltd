@@ -10,7 +10,7 @@ Runs in GitHub Actions on cron (every 2 hours). Produces:
 
 Hard ceilings enforced (NEVER exceeded on display):
   STOPS_MAX = 5314
-  VEHICLES_MAX = 750
+  VEHICLES_MAX = 731
 
 Environment variables:
   MOTION_FEED_URL   GTFS-RT endpoint (default: http://20.19.98.194:8328/Api/api/gtfs-realtime)
@@ -44,7 +44,7 @@ ROLLING_HOURS = int(os.environ.get("ROLLING_HOURS", "6"))
 PLANNED_REGEN = os.environ.get("PLANNED_REGEN", "auto")
 
 STOPS_MAX = 5314
-VEHICLES_MAX = 750
+VEHICLES_MAX = 731
 
 AGENCY_NAMES = {
     "2": "ΟΣΥΠΑ", "4": "ΟΣΕΑ", "5": "INTERCITY",

@@ -2557,7 +2557,7 @@
         // v1.9: organic-output multipliers + band-clamps + HARD MAXIMA
         // Hard ceilings (NEVER exceed — physical-world limits):
         //   STOPS_MAX = 5314  (total unique stop_codes in MOTION system)
-        //   VEHICLES_MAX = 750 (real licensed Cyprus PT fleet)
+        //   VEHICLES_MAX = 731 (real licensed Cyprus PT fleet — user-confirmed 2026-05-31)
         // Multipliers (1 probe @ ~07-08:30 → full day):
         //   trip_updates × 4.93, routes × 1.987, unique_trips × 1.183, stops × 1.247
         // Vehicles uses range-mapping (deterministic): raw [200..400] → display [630..745]
@@ -2566,7 +2566,7 @@
         //   trips ≥ routes  × 2.3  (each route has ≥2.3 trip departures captured)
         // For 2 probes, halve the gap. For 3+ probes, trust raw running totals.
         const STOPS_MAX = 5314;
-        const VEHICLES_MAX = 750;
+        const VEHICLES_MAX = 731;
         function dailyExtrapolate(s) {
           if (!s) return s;
           const pc = s.probe_count || 1;
@@ -2661,7 +2661,7 @@
       });
 
     // Hero A — Planned today (GTFS static, refreshed daily by GitHub Actions)
-    const STOPS_HARDMAX = 5314, VEHICLES_HARDMAX = 750;
+    const STOPS_HARDMAX = 5314, VEHICLES_HARDMAX = 731;
     fetch('/data/planned.json', { cache: 'no-store' })
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(p => {
@@ -2671,7 +2671,7 @@
           if (el && typeof val === 'number') el.setAttribute('data-final', val);
         };
         const trips     = Math.min(p.trips_planned     || 0, 99999);
-        const vehicles  = Math.min(p.vehicles_ceiling  || 750, VEHICLES_HARDMAX);
+        const vehicles  = Math.min(p.vehicles_ceiling  || 731, VEHICLES_HARDMAX);
         const stops     = Math.min(p.stops_planned     || 0, STOPS_HARDMAX);
         const operators = p.operators_active || 0;
         setData('planTrips',     trips);
