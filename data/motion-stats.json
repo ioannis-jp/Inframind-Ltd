@@ -1,154 +1,25 @@
 {
-  "date": "29/05/2026",
-  "generated_at": "2026-05-29T14:06:24",
-  "cyprus_stats": {
-    "stops_total": 5314,
-    "stops_live": 3882,
-    "stops_idle": 1432,
-    "coverage_pct": 73.1,
-    "trip_updates": 609,
-    "vehicle_positions": 350,
-    "unique_routes": 327,
-    "unique_vehicles": 373,
-    "unique_stops": 3882,
+  "schema": "v2.0-rolling-window",
+  "date": "2026-05-31",
+  "generated_at_utc": "2026-05-31T05:57:33.063055+00:00",
+  "cyprus_stats_last6h": {
+    "trip_updates_sum": 328,
+    "unique_vehicles": 190,
+    "unique_routes": 207,
+    "unique_trips": 328,
+    "unique_stops_served": 2575,
     "operators_active": [
       "INTERCITY",
       "LPT",
       "NPT",
-      "PAME EXPRESS",
+      "PAME",
       "ΕΜΕΛ",
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
-    "feed_timestamp": "14:06:24",
-    "per_operator": {
-      "LPT": {
-        "region": "Λάρνακα",
-        "stops_total": 1041,
-        "stops_live": 740,
-        "coverage_pct": 71.1,
-        "routes_active": 54
-      },
-      "NPT": {
-        "region": "Λευκωσία",
-        "stops_total": 1784,
-        "stops_live": 1545,
-        "coverage_pct": 86.6,
-        "routes_active": 111
-      },
-      "ΕΜΕΛ": {
-        "region": "Λεμεσός",
-        "stops_total": 1403,
-        "stops_live": 944,
-        "coverage_pct": 67.3,
-        "routes_active": 73
-      },
-      "ΟΣΕΑ": {
-        "region": "Αμμόχωστος",
-        "stops_total": 439,
-        "stops_live": 355,
-        "coverage_pct": 80.9,
-        "routes_active": 20
-      },
-      "INTERCITY": {
-        "region": "Διαπεριφερειακά",
-        "stops_total": 119,
-        "stops_live": 114,
-        "coverage_pct": 95.8,
-        "routes_active": 22
-      },
-      "PAME EXPRESS": {
-        "region": "Express",
-        "stops_total": 23,
-        "stops_live": 23,
-        "coverage_pct": 100.0,
-        "routes_active": 2
-      },
-      "ΟΣΥΠΑ": {
-        "region": "Πάφος",
-        "stops_total": 875,
-        "stops_live": 486,
-        "coverage_pct": 55.5,
-        "routes_active": 45
-      }
-    }
-  },
-  "cyprus_stats_last24h": {
-    "date": "2026-05-28",
-    "probe_count": 2,
-    "first_probe": "06:17:11",
-    "last_probe": "06:21:40",
-    "trip_updates_sum": 1064,
-    "vehicle_positions_sum": 631,
-    "unique_vehicles": 331,
-    "unique_routes": 337,
-    "unique_trips": 600,
-    "unique_stops_served": 3556,
-    "operators_active": [
-      "INTERCITY",
-      "LPT",
-      "NPT",
-      "PAME EXPRESS",
-      "ΕΜΕΛ",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "peak_stops_with_live": 3460,
-    "peak_at_probe": "06:21:40"
-  },
-  "cyprus_stats_today": {
-    "probe_count": 5,
-    "first_probe": "07:09:50",
-    "last_probe": "14:06:24",
-    "trip_updates_sum": 2778,
-    "vehicle_positions_sum": 1634,
-    "unique_vehicles": 466,
-    "unique_routes": 476,
-    "unique_trips": 1425,
-    "unique_stops_served": 4588,
-    "operators_active": [
-      "INTERCITY",
-      "LPT",
-      "NPT",
-      "PAME EXPRESS",
-      "ΕΜΕΛ",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "peak_stops_with_live": 3882,
-    "peak_at_probe": "14:06:24"
-  },
-  "bus_shelters": {
-    "runs_today": 1,
-    "last_bulk": {
-      "time": "06:17:00",
-      "ok": 426,
-      "empty": 29,
-      "fail": 9,
-      "total": 464,
-      "pct": "97.9%",
-      "avg_ms": 5180
-    },
-    "peak_bulk": {
-      "time": "06:17:00",
-      "ok": 426,
-      "empty": 29,
-      "fail": 9,
-      "total": 464,
-      "pct": "97.9%",
-      "avg_ms": 5180
-    },
-    "not_registered_count": 9,
-    "not_registered_codes": [
-      "20036",
-      "NeasOmonoias-NoCode",
-      "40300",
-      "40302",
-      "10412A",
-      "10412B",
-      "20272A",
-      "20272B",
-      "10435"
-    ]
+    "probe_count": 1,
+    "first_probe": "2026-05-31T05:57:33.061802+00:00",
+    "last_probe": "2026-05-31T05:57:33.061802+00:00",
+    "window_hours": 6
   }
 }
