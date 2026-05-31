@@ -1,0 +1,54 @@
+name: Refresh MOTION data
+
+on:
+  schedule:
+    # Every 2 hours, 4 times a day during active hours, plus midnight (Cyprus)
+    # Cron in UTC; Cyprus = UTC+3 (EEST). So 03:00, 09:00, 15:00, 21:00 UTC ≈ 06/12/18/00 Cyprus
+    - cron: "0 3,9,15,21 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-motion
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests gtfs-realtime-bindings protobuf
+
+      - name: Refresh MOTION data
+        env:
+          MOTION_FEED_URL: ${{ secrets.MOTION_FEED_URL || 'http://20.19.98.194:8328/Api/api/gtfs-realtime' }}
+          ROLLING_HOURS: "6"
+        run: python scripts/refresh_motion_data.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "inframind-bot"
+          git config user.email "bot@inframind.eu"
+          git add data/motion-stats.json data/planned.json data/_rolling_snapshots.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No data changes — nothing to commit."
+            exit 0
+          fi
+          ts=$(date -u +"%Y-%m-%d %H:%M UTC")
+          git commit -m "chore(data): refresh MOTION stats — $ts"
+          git push

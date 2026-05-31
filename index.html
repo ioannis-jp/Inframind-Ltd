@@ -1,0 +1,3058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="meta.title">Inframind — Innovative Infrastructures</title>
+  <meta name="description" data-i18n-meta="meta.description" content="Inframind Ltd — ICT & ITS consultancy delivering intelligent transport, smart mobility and public digital infrastructure from concept to daily citizen use.">
+  <link rel="canonical" href="https://inframind.eu/">
+
+  <!-- ── HREFLANG (EN / EL alternates) ── -->
+  <link rel="alternate" hreflang="en" href="https://inframind.eu/">
+  <link rel="alternate" hreflang="el" href="https://inframind.gr/">
+  <link rel="alternate" hreflang="x-default" href="https://inframind.eu/">
+
+  <!-- ── OPEN GRAPH + TWITTER ── -->
+  <meta property="og:title" content="Inframind — Innovative Infrastructures">
+  <meta property="og:description" content="Inframind Ltd — ICT & ITS consultancy delivering intelligent transport, smart mobility and public digital infrastructure from concept to daily citizen use.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://inframind.eu/">
+  <meta property="og:image" content="https://inframind.eu/logo.png">
+  <meta property="og:image:alt" content="Inframind — Innovative Infrastructures">
+  <meta property="og:site_name" content="Inframind">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="el_GR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Inframind — Innovative Infrastructures">
+  <meta name="twitter:description" content="ICT & ITS consultancy delivering intelligent transport, smart mobility and public digital infrastructure from concept to daily citizen use.">
+  <meta name="twitter:image" content="https://inframind.eu/logo.png">
+
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- ── STRUCTURED DATA (Schema.org JSON-LD) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://inframind.eu/#organization",
+        "name": "Inframind Ltd",
+        "alternateName": "Inframind",
+        "url": "https://inframind.eu",
+        "logo": "https://inframind.eu/logo.png",
+        "image": "https://inframind.eu/logo.png",
+        "description": "ICT & ITS consultancy delivering intelligent transport, smart mobility and public digital infrastructure from concept to daily citizen use.",
+        "slogan": "When Technology meets Purpose",
+        "foundingDate": "2018",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Armenias 4",
+          "addressLocality": "Nicosia",
+          "postalCode": "2003",
+          "addressCountry": "CY"
+        },
+        "telephone": "+357-95-576747",
+        "email": "info@inframind.eu",
+        "founder": { "@id": "https://inframind.eu/#founder" },
+        "areaServed": [
+          { "@type": "Country", "name": "Cyprus" },
+          { "@type": "Place", "name": "European Union" }
+        ],
+        "knowsAbout": [
+          "Intelligent Transport Systems",
+          "Smart Mobility",
+          "Smart Parking Systems",
+          "Park and Ride",
+          "EMV Open Loop Payments",
+          "Account-Based Ticketing",
+          "Public Digital Infrastructure",
+          "Open Data",
+          "Interoperability",
+          "Telematics"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://inframind.eu/#founder",
+        "name": "Ioannis Chr. Panagiotidis",
+        "jobTitle": "Founder & Director",
+        "worksFor": { "@id": "https://inframind.eu/#organization" },
+        "image": "https://inframind.eu/founder.jpg",
+        "url": "https://inframind.eu",
+        "knowsAbout": [
+          "Intelligent Transport Systems",
+          "Smart Mobility",
+          "EMV Open Loop Payments",
+          "Public Digital Infrastructure",
+          "ITS World Congress",
+          "Smart City Expo World Congress"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://inframind.eu/#website",
+        "url": "https://inframind.eu",
+        "name": "Inframind — Innovative Infrastructures",
+        "publisher": { "@id": "https://inframind.eu/#organization" },
+        "inLanguage": ["en", "el"]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #1a1a1a;
+      --grey: #6b6b6b;
+      --light-grey: #f5f5f5;
+      --mid-grey: #e8e8e8;
+      --white: #ffffff;
+      --border: #e0e0e0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo-img { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-img img { height: 26px; width: auto; display: block; }
+
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--black);
+      transition: width 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── LANG SWITCHER ── */
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+    }
+    .lang-switch button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      color: var(--grey);
+      padding: 4px 2px;
+      transition: color 0.2s;
+    }
+    .lang-switch button:hover { color: var(--black); }
+    .lang-switch button.active { color: var(--black); }
+    .lang-switch .sep { color: var(--border); }
+
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--black);
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 6%;
+      z-index: 99;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dark);
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-lang {
+      display: flex;
+      gap: 8px;
+      padding: 16px 0 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+    .mobile-lang button {
+      background: none; border: none; cursor: pointer;
+      font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit;
+      color: var(--grey); padding: 4px 8px;
+    }
+    .mobile-lang button.active { color: var(--black); }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 10%; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 64px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 52%; }
+
+    /* ── HERO NETWORK GRAPHIC ── */
+    .hero-graphic {
+      position: absolute;
+      top: 214px;
+      right: 4%;
+      width: 550px;
+      height: 650px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* Όταν δεν χωράει άνετα δεξιά (laptops, tablets, mobiles, browser windows που δεν είναι
+       fullscreen σε wide monitors), το canvas πέφτει αυτόματα κάτω full-width. Καθαρό
+       αισθητικό αποτέλεσμα, χωρίς overlap. Threshold: 1500px (το canvas 550px χρειάζεται
+       τουλάχιστον ~1700px viewport για να μην ακουμπά το hero content που πιάνει 52%). */
+    @media (max-width: 1500px) {
+      .hero-graphic {
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 230px;
+        border-radius: 0;
+        opacity: 0.92;
+      }
+      #home { padding-bottom: 254px; }
+      .hero-content { max-width: 100%; }
+    }
+
+    .hero-logo-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 56px;
+      margin-left: -75px;
+    }
+    .hero-logo {
+      width: auto;
+      max-width: 720px;
+      height: auto;
+      display: block;
+      filter: contrast(1.08);
+    }
+
+    /* ── DATA RAIN across "M I N D" of MIND ── */
+    .logo-stream {
+      position: absolute;
+      left: 52%;           /* starts above the "M" of MIND */
+      right: 11%;          /* ends at the "D" */
+      top: -180px;
+      bottom: 80%;
+      pointer-events: none;
+    }
+    .stream-bit {
+      position: absolute;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: rgba(10, 10, 10, 0.42);
+      letter-spacing: 0.05em;
+      left: var(--col, 0%);
+      top: 0;
+      transform: translateX(-50%);
+      opacity: 0;
+      white-space: nowrap;
+      animation: rainFall var(--dur, 6s) linear var(--delay, 0s) infinite;
+    }
+
+    @keyframes rainFall {
+      0%   { top: 0;     opacity: 0; }
+      12%  { opacity: 0.55; }
+      80%  { opacity: 0.6; }
+      92%  { top: 100%;  opacity: 0.5; }
+      96%  { top: 100%;  opacity: 0; }
+      100% { top: 100%;  opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stream-bit { animation: none; opacity: 0; }
+    }
+
+    .hero-tagline {
+      font-size: clamp(14px, 1.6vw, 19px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dark);
+      letter-spacing: 0.02em;
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .hero-typewriter {
+      font-size: clamp(22px, 3.2vw, 36px);
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 32px;
+      min-height: 48px;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--black);
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-title {
+      font-size: clamp(46px, 6.5vw, 92px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      max-width: 840px;
+      margin-bottom: 32px;
+    }
+
+    .hero-title .light { font-weight: 300; }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--grey);
+      max-width: 540px;
+      line-height: 1.85;
+      margin-bottom: 48px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      border: 1.5px solid var(--black);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 500;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+
+    .btn-ghost {
+      border-color: var(--border);
+      color: var(--grey);
+      margin-left: 16px;
+    }
+    .btn-ghost:hover { background: var(--light-grey); color: var(--dark); border-color: var(--mid-grey); }
+
+    /* ── SECTION HEADER ── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: clamp(30px, 4vw, 54px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--black);
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+
+    .section-title .light { font-weight: 300; }
+
+    .section-body {
+      font-size: 16px;
+      color: var(--grey);
+      max-width: 620px;
+      line-height: 1.8;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--light-grey); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 56px;
+    }
+
+    .about-col p {
+      font-size: 15px;
+      color: var(--grey);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .about-col p strong { color: var(--dark); font-weight: 600; }
+
+    .about-narrative {
+      font-size: 18px !important;
+      font-weight: 300 !important;
+      color: var(--dark) !important;
+      font-style: italic;
+    }
+
+    .quote-block {
+      border-left: 3px solid var(--black);
+      padding-left: 24px;
+      margin-top: 40px;
+    }
+    .quote-block p {
+      font-size: 17px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    .founder-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    /* ── FOUNDER PHOTO ── */
+    .founder-photo-wrap {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 4 / 5;
+      margin-bottom: 32px;
+      overflow: hidden;
+      background: var(--mid-grey);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .founder-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(0.15) contrast(1.02);
+      transition: filter 0.7s ease;
+    }
+    .founder-photo-wrap:hover .founder-photo {
+      filter: grayscale(0) contrast(1);
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: #0f0f0f;
+      position: relative;
+    }
+    #services::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url(services-bg.jpg);
+      background-size: cover;
+      background-position: center 18%;
+      opacity: 0.32;
+      filter: grayscale(100%) contrast(1.2) brightness(1.1);
+      z-index: 0;
+      pointer-events: none;
+    }
+    #services > * { position: relative; z-index: 1; }
+    #services .section-label { color: rgba(255,255,255,0.38); }
+    #services .section-title { color: var(--white); }
+    #services .section-title .light { color: rgba(255,255,255,0.6); }
+    #services .section-body { color: rgba(255,255,255,0.55); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 56px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .service-card {
+      padding: 44px 36px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 2px;
+      background: rgba(255,255,255,0.7);
+      transition: width 0.3s ease;
+    }
+    .service-card:hover { background: rgba(255,255,255,0.06); }
+    .service-card:hover::before { width: 100%; }
+
+    .service-number {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .service-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .service-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+    }
+
+    /* ── LIFECYCLE STRIP ── */
+    .lifecycle-strip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 52px 0 48px;
+      flex-wrap: wrap;
+    }
+    .lifecycle-step {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .lifecycle-arrow {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .lifecycle-arrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: rgba(255,255,255,0.4);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.55s ease;
+    }
+    .lifecycle-arrow.lc-drawn::after {
+      transform: scaleX(1);
+    }
+    .lifecycle-strip { position: relative; }
+    .lifecycle-step.lc-dimmed {
+      opacity: 0.13 !important;
+      transition: opacity 1.1s ease !important;
+      transform: translateY(0) !important;
+    }
+    .lifecycle-arrow.lc-dimmed {
+      opacity: 0.06 !important;
+      transition: opacity 1.1s ease !important;
+    }
+    .lc-final.lc-centered {
+      position: absolute !important;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) !important;
+      transition: left 0s, top 0s !important;
+    }
+    .lc-num { font-size: 9px; letter-spacing: 0.22em; color: rgba(255,255,255,0.45); font-weight: 700; text-transform: uppercase; }
+    .lc-label { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.92); white-space: nowrap; letter-spacing: 0.01em; }
+    .lc-label::after {
+      content: '';
+      display: block;
+      margin-top: 5px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+    }
+    .lc-final .lc-label { color: var(--white); }
+    .lc-final .lc-label::after { background: rgba(255,255,255,0.6); }
+    .lc-final.lc-spotlight .lc-num {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.3em;
+    }
+    .lc-final.lc-spotlight .lc-label {
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(255,255,255,0.35);
+      transition: font-size 0.6s ease, letter-spacing 0.6s ease;
+      animation: lc-glow-pulse 2.4s ease-in-out infinite;
+    }
+    .lc-final.lc-spotlight .lc-label::after {
+      height: 2px;
+      background: rgba(255,255,255,0.7);
+      transform: scaleX(1);
+    }
+    @keyframes lc-glow-pulse {
+      0%, 100% { text-shadow: 0 0 40px rgba(255,255,255,0.35); }
+      50%       { text-shadow: 0 0 70px rgba(255,255,255,0.75), 0 0 25px rgba(255,255,255,0.3); }
+    }
+    /* Progress bar */
+    .lc-progress-wrap {
+      position: absolute;
+      bottom: -16px;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .lc-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: rgba(255,255,255,0.55);
+    }
+
+    /* ── PROJECTS IN OPERATION ── */
+    #projects {
+      background: #050505;
+      color: var(--white);
+      position: relative;
+    }
+    #projects::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url(philosophy-bg.jpg);
+      background-size: 70% auto;
+      background-position: right center;
+      background-repeat: no-repeat;
+      filter: brightness(0.9) contrast(5.0) saturate(0.05);
+      opacity: 0.75;
+      z-index: 0;
+      pointer-events: none;
+    }
+    #projects::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to left,
+        rgba(5,5,5,0.05) 0%,
+        rgba(5,5,5,0.4)  35%,
+        rgba(5,5,5,0.92) 55%,
+        rgba(5,5,5,1.0)  100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    #projects > * { position: relative; z-index: 2; }
+    #projects .section-label { color: #555; }
+    #projects .section-title { color: var(--white); }
+
+    .projects-narrative {
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: #888;
+      max-width: 780px;
+      margin: 28px 0 60px;
+    }
+    .projects-narrative strong { color: #d0d0d0; font-weight: 500; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .project-card {
+      background: rgba(8,8,8,0.55);
+      padding: 44px 40px;
+      border: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--white);
+      transition: width 0.4s ease;
+    }
+    .project-card:hover { background: rgba(20,20,20,0.65); }
+    .project-card:hover::after { width: 100%; }
+
+    .project-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #555;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .project-metrics {
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      font-weight: 500;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .project-metrics .sep { color: #444; margin: 0 6px; }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #888;
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .project-name {
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+    .project-desc {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.85;
+    }
+    .project-desc strong { color: #999; font-weight: 500; }
+
+    /* ── IMPACT STRIP ── */
+    .impact-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 64px;
+      border-top: 1px solid #1c1c1c;
+    }
+    .impact-item {
+      padding: 40px 0;
+      border-right: 1px solid #1c1c1c;
+    }
+    .impact-item:not(:first-child) { padding-left: 48px; }
+    .impact-item:last-child { border-right: none; }
+
+    .impact-number {
+      font-size: clamp(38px, 5vw, 60px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+    .impact-label {
+      font-size: 13px;
+      color: #555;
+      font-weight: 400;
+    }
+
+    .impact-statement-text {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 300;
+      color: #888;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    /* ── LIVE OPS — MOTION ITS CYPRUS (Σκέψη 3) ── */
+    #live-ops {
+      background: var(--white);
+      padding: 100px 5%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    #live-ops .section-label { color: var(--grey); }
+    #live-ops .section-title { color: var(--black); margin-bottom: 24px; }
+    .liveops-intro {
+      font-size: clamp(15px, 1.5vw, 17px);
+      color: var(--grey);
+      max-width: 720px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    /* ── NARRATIVE HERO BLOCK (v2 — αφήγηση μεγέθους & ικανότητας) ── */
+    .liveops-narrative {
+      max-width: 1100px;
+      margin: 0 0 72px 0;
+      padding: 56px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .narr-pulse-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 36px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .narr-pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #0E7C7B;
+      box-shadow: 0 0 0 0 rgba(14,124,123,0.7);
+      animation: narrPulse 2s infinite;
+    }
+    @keyframes narrPulse {
+      0%   { box-shadow: 0 0 0 0   rgba(14,124,123,0.55); }
+      70%  { box-shadow: 0 0 0 12px rgba(14,124,123,0);   }
+      100% { box-shadow: 0 0 0 0   rgba(14,124,123,0);    }
+    }
+    .narr-body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(22px, 2.6vw, 36px);
+      line-height: 1.5;
+      color: var(--black);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+    .narr-body .lead, .narr-body .tail, .narr-body .narr-stat {
+      display: inline;
+      opacity: 0;
+      transition: opacity 1.0s ease;
+    }
+    .liveops-narrative.in-view .narr-body .lead   { opacity: 1; transition-delay: 0.1s; }
+    .liveops-narrative.in-view .narr-body .stat1  { opacity: 1; transition-delay: 0.7s; }
+    .liveops-narrative.in-view .narr-body .stat2  { opacity: 1; transition-delay: 1.3s; }
+    .liveops-narrative.in-view .narr-body .stat3  { opacity: 1; transition-delay: 1.9s; }
+    .liveops-narrative.in-view .narr-body .stat4  { opacity: 1; transition-delay: 2.5s; }
+    .liveops-narrative.in-view .narr-body .tail   { opacity: 1; transition-delay: 3.1s; }
+    .narr-num {
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-weight: 800;
+      font-size: clamp(36px, 4.5vw, 64px);
+      line-height: 1;
+      color: var(--black);
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      vertical-align: -0.05em;
+      margin: 0 6px 0 12px;
+      background: linear-gradient(180deg, var(--black) 0%, #1A2A4F 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .narr-noun {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--grey);
+      margin-right: 4px;
+    }
+    .narr-attribution {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 40px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 0.8s ease 3.5s;
+    }
+    .liveops-narrative.in-view .narr-attribution { opacity: 1; }
+    .attr-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--black);
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .attr-badge:hover { background: var(--light-grey); border-color: var(--black); }
+    .attr-badge svg {
+      width: 14px; height: 14px;
+      color: #0E7C7B;
+      flex-shrink: 0;
+    }
+    .attr-badge.attr-inframind svg { color: #D4A437; }
+    .attr-text {
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+    .attr-text strong { color: var(--black); font-weight: 600; }
+    @media (max-width: 720px) {
+      .narr-body { font-size: 20px; line-height: 1.55; }
+      .narr-num { font-size: 30px; margin: 0 4px 0 8px; }
+      .narr-attribution { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+    .liveops-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+    .liveops-tile {
+      padding: 48px 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      transition: background 0.25s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .liveops-tile.in-view {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease, background 0.25s;
+    }
+    .liveops-tile:nth-child(1).in-view { transition-delay: 0s, 0s, 0s; }
+    .liveops-tile:nth-child(2).in-view { transition-delay: 0.15s, 0.15s, 0s; }
+    .liveops-tile:nth-child(3).in-view { transition-delay: 0.30s, 0.30s, 0s; }
+    .liveops-tile:nth-child(4).in-view { transition-delay: 0.45s, 0.45s, 0s; }
+    .liveops-tile:hover { background: var(--light-grey); }
+
+    .liveops-icon {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 28px;
+      color: var(--grey);
+      transition: color 0.3s ease;
+    }
+    .liveops-tile:hover .liveops-icon { color: var(--black); }
+    .liveops-icon svg { width: 100%; height: 100%; display: block; }
+    /* Subtle SVG draw-in (stroke length animation) — only on first reveal */
+    .liveops-icon svg path,
+    .liveops-icon svg line,
+    .liveops-icon svg rect,
+    .liveops-icon svg circle {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      transition: stroke-dashoffset 1.2s ease;
+    }
+    .liveops-tile.in-view .liveops-icon svg path,
+    .liveops-tile.in-view .liveops-icon svg line,
+    .liveops-tile.in-view .liveops-icon svg rect,
+    .liveops-tile.in-view .liveops-icon svg circle {
+      stroke-dashoffset: 0;
+    }
+
+    .liveops-number {
+      font-size: clamp(38px, 5vw, 60px);
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.6s;  /* fade in AFTER icon draws */
+    }
+    .liveops-tile.in-view .liveops-number { opacity: 1; }
+    /* Stagger number fade with tile delay */
+    .liveops-tile:nth-child(2).in-view .liveops-number { transition-delay: 0.75s; }
+    .liveops-tile:nth-child(3).in-view .liveops-number { transition-delay: 0.90s; }
+    .liveops-tile:nth-child(4).in-view .liveops-number { transition-delay: 1.05s; }
+    .liveops-label {
+      font-size: 13px;
+      color: var(--grey);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .liveops-footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .liveops-meta {
+      font-size: 13px;
+      color: var(--grey);
+    }
+    .liveops-meta a { color: var(--grey); text-decoration: underline; text-underline-offset: 3px; }
+    .liveops-meta a:hover { color: var(--black); }
+    .liveops-meta .sep { color: var(--border); margin: 0 8px; }
+    .liveops-link {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--black);
+      transition: opacity 0.2s;
+    }
+    .liveops-link:hover { opacity: 0.6; }
+
+    /* ── QUOTE INTERLUDE — dark cinematic with procedural wireframe ── */
+    #liveops-quote {
+      position: relative;
+      background: radial-gradient(ellipse at 30% 20%, #2a2a3a 0%, #0a0a0a 65%, #050505 100%);
+      padding: 140px 5%;
+      overflow: hidden;
+      text-align: center;
+      isolation: isolate;
+    }
+    #liveops-quote .quote-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.92;
+      z-index: 0;
+      pointer-events: none;
+    }
+    #liveops-quote .quote-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .quote-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .quote-mark-deco {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 96px;
+      line-height: 0.4;
+      color: rgba(255, 255, 255, 0.18);
+      display: block;
+      margin-bottom: 28px;
+      user-select: none;
+      opacity: 0;
+      transition: opacity 1s ease-out 0.4s;
+    }
+    .quote-en {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.45;
+      color: #f5f5f5;
+      margin: 0 0 28px 0;
+      letter-spacing: -0.005em;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 1.2s ease-out 0.9s, transform 1.2s ease-out 0.9s;
+    }
+    .quote-gr {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(16px, 1.8vw, 20px);
+      line-height: 1.55;
+      color: rgba(245, 245, 245, 0.7);
+      margin: 0 auto 48px;
+      max-width: 680px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 1.2s ease-out 2.0s, transform 1.2s ease-out 2.0s;
+    }
+    .quote-attribution {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245, 245, 245, 0.5);
+      margin: 0;
+      opacity: 0;
+      transition: opacity 1s ease-out 2.8s;
+    }
+    .quote-attribution em {
+      font-style: italic;
+      letter-spacing: 0.05em;
+      text-transform: none;
+      color: rgba(245, 245, 245, 0.5);
+    }
+    .quote-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.25);
+      margin: 0 auto 28px;
+      border: 0;
+      opacity: 0;
+      transition: opacity 1s ease-out 1.7s;
+    }
+    #liveops-quote.in-view .quote-mark-deco,
+    #liveops-quote.in-view .quote-en,
+    #liveops-quote.in-view .quote-gr,
+    #liveops-quote.in-view .quote-divider,
+    #liveops-quote.in-view .quote-attribution { opacity: 1; }
+    #liveops-quote.in-view .quote-en,
+    #liveops-quote.in-view .quote-gr { transform: translateY(0); }
+
+    /* ── PHILOSOPHY ── */
+    #philosophy { background: var(--light-grey); padding: 0; }
+    #philosophy .section-label { color: var(--grey); }
+    #philosophy .section-title { color: var(--black); }
+
+    .philosophy-inner {
+      display: flex;
+      align-items: stretch;
+      min-height: 520px;
+    }
+    .philosophy-left {
+      flex: 1;
+      padding: 100px 10%;
+    }
+
+    .philosophy-text {
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--grey);
+      max-width: 600px;
+      margin-top: 40px;
+    }
+    .philosophy-text strong { color: var(--dark); font-weight: 600; }
+
+    /* ── PHILOSOPHY FEATURE BLOCK ── */
+    .philosophy-feature {
+      flex: 0 0 42%;
+      margin-top: 0;
+      background: #050505;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      position: relative;
+      min-height: 520px;
+    }
+    /* image layer — positioned right, diagonal crop */
+    .philosophy-feature::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url(philosophy-bg.jpg);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      filter: brightness(1.4) contrast(3.2) saturate(0.06);
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* dark gradient — heavy left, fades toward image on right */
+    .philosophy-feature::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(5,5,5,0.88) 0%,
+        rgba(5,5,5,0.6)  40%,
+        rgba(5,5,5,0.2)  70%,
+        rgba(5,5,5,0.0)  100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    .philosophy-quote-col {
+      flex: 1;
+      padding: 44px 10% 44px 10%;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+    }
+    .phil-typewriter-quote {
+      font-size: clamp(15px, 1.6vw, 20px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.9;
+      letter-spacing: 0.01em;
+      min-height: 60px;
+    }
+    .phil-cursor {
+      display: inline-block;
+      width: 1.5px;
+      height: 0.9em;
+      background: rgba(255,255,255,0.5);
+      vertical-align: middle;
+      margin-left: 3px;
+      animation: blink 1s step-end infinite;
+    }
+    @media (max-width: 900px) {
+      .philosophy-inner { flex-direction: column; }
+      .philosophy-left { padding: 80px 6%; }
+      .philosophy-feature { flex: none; min-height: 300px; }
+      .philosophy-feature::before { background-size: 90%; background-position: right bottom; }
+      .philosophy-quote-col { flex: 1; padding: 0 0 36px 0; }
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--white); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 56px;
+    }
+
+    .contact-info dt {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 6px;
+      margin-top: 28px;
+      font-weight: 600;
+    }
+    .contact-info dt:first-child { margin-top: 0; }
+    .contact-info dd { font-size: 15px; color: var(--dark); }
+    .contact-info dd a {
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+    .contact-info dd a:hover { border-color: var(--dark); }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px 0;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--dark);
+      outline: none;
+      margin-bottom: 28px;
+      transition: border-color 0.2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-bottom-color: var(--black); }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: #bbb; font-size: 14px; }
+    .contact-form textarea { resize: none; height: 110px; }
+    .contact-form button[type="submit"] {
+      display: inline-block;
+      padding: 14px 30px;
+      border: 1.5px solid var(--black);
+      background: transparent;
+      font-family: inherit;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+    .contact-form button[type="submit"]:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+    .form-honeypot { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+    .form-success {
+      display: none;
+      padding: 20px 24px;
+      background: var(--light-grey);
+      border-left: 3px solid var(--black);
+      color: var(--dark);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .form-success.show { display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 36px 10%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer .footer-brand {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      font-weight: 500;
+    }
+    footer .footer-copy { font-size: 12px; color: #bbb; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 80px 6%; }
+      nav { padding: 0 6%; }
+      .nav-links, .lang-switch { display: none; }
+      .hamburger { display: flex; }
+      footer { padding: 28px 6%; flex-direction: column; gap: 12px; text-align: center; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .impact-strip { grid-template-columns: 1fr; }
+      .impact-item { border-right: none; border-bottom: 1px solid #1c1c1c; padding: 32px 0 !important; }
+      .impact-item:last-child { border-bottom: none; }
+      .liveops-grid { grid-template-columns: repeat(2, 1fr); }
+      .liveops-footer { flex-direction: column; align-items: flex-start; }
+      .hero-logo { max-width: 320px; }
+      .hero-logo-wrap { margin-bottom: 40px; margin-left: 0; }
+      .logo-stream { top: -55px; bottom: auto; height: calc(100% + 55px); }
+      .logo-stream .stream-bit { font-size: 13px; }
+      .nav-logo-img img { height: 22px; }
+      .lifecycle-strip { gap: 8px; }
+      .lc-label { font-size: 12px; white-space: normal; }
+      .btn-ghost { margin-left: 0; margin-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo-img">
+    <img src="logo.png" alt="Inframind" />
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="#philosophy" data-i18n="nav.philosophy">Philosophy</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="en" class="active">EN</button>
+      <span class="sep">|</span>
+      <button type="button" data-lang="gr">EL</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()" data-i18n="nav.about">About</a>
+  <a href="#services" onclick="closeMobile()" data-i18n="nav.services">Services</a>
+  <a href="#projects" onclick="closeMobile()" data-i18n="nav.projects">Projects</a>
+  <a href="#philosophy" onclick="closeMobile()" data-i18n="nav.philosophy">Philosophy</a>
+  <a href="#contact" onclick="closeMobile()" data-i18n="nav.contact">Contact</a>
+  <div class="mobile-lang" id="mobileLangSwitch">
+    <button type="button" data-lang="en" class="active">EN</button>
+    <span style="color:var(--border)">|</span>
+    <button type="button" data-lang="gr">EL</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <canvas id="heroCanvas" class="hero-graphic" aria-hidden="true"></canvas>
+  <div class="hero-content">
+    <div class="hero-logo-wrap">
+      <img src="logo.png" alt="Inframind — Innovative Infrastructures" class="hero-logo" />
+      <div class="logo-stream" aria-hidden="true">
+        <!-- Column M -->
+        <span class="stream-bit" style="--col: 12%;  --delay: 0s;   --dur: 6.4s;">a8f</span>
+        <span class="stream-bit" style="--col: 12%;  --delay: 3.6s; --dur: 6.8s;">2c1</span>
+        <!-- Column M-I -->
+        <span class="stream-bit" style="--col: 30%;  --delay: 1.3s; --dur: 6.2s;">4d2</span>
+        <span class="stream-bit" style="--col: 30%;  --delay: 5.2s; --dur: 6.6s;">9e7</span>
+        <!-- Column I -->
+        <span class="stream-bit" style="--col: 44%;  --delay: 0.8s; --dur: 6.6s;">7e1</span>
+        <span class="stream-bit" style="--col: 44%;  --delay: 4.5s; --dur: 6.3s;">3f5</span>
+        <!-- Column N -->
+        <span class="stream-bit" style="--col: 62%;  --delay: 2.4s; --dur: 6.5s;">b3c</span>
+        <span class="stream-bit" style="--col: 62%;  --delay: 6.0s; --dur: 6.1s;">8a4</span>
+        <!-- Column N-D -->
+        <span class="stream-bit" style="--col: 78%;  --delay: 1.0s; --dur: 6.3s;">f2e</span>
+        <span class="stream-bit" style="--col: 78%;  --delay: 4.8s; --dur: 6.7s;">c5a</span>
+        <!-- Column D -->
+        <span class="stream-bit" style="--col: 93%;  --delay: 1.9s; --dur: 6.7s;">1fa</span>
+        <span class="stream-bit" style="--col: 93%;  --delay: 5.6s; --dur: 6.4s;">5d8</span>
+      </div>
+    </div>
+    <p class="hero-tagline" data-i18n="hero.tagline">When Technology meets Purpose</p>
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Inframind Ltd &mdash; Cyprus &nbsp;·&nbsp; Technology Facilitators</p>
+    <p class="hero-typewriter" id="typewriter"><span class="typewriter-cursor"></span></p>
+    <p class="hero-sub" data-i18n="hero.sub">
+      From the first technical study to the moment a system becomes part of daily life —
+      designing and delivering infrastructure that thousands of citizens rely on,
+      every single day.
+    </p>
+    <div>
+      <a href="#services" class="btn" data-i18n="hero.btn.services">Our Services</a>
+      <a href="#contact" class="btn btn-ghost" data-i18n="hero.btn.contact">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal" data-i18n="about.label">About</p>
+  <h2 class="section-title reveal" data-i18n-html="about.title">Technology Facilitators<br><span class="light">who deliver results</span></h2>
+
+  <div class="about-grid">
+    <div class="about-col">
+      <p class="about-narrative reveal" data-i18n="about.p1">
+        Infrastructure that works does not announce itself. It performs —
+        quietly, reliably, day after day. Over time it becomes habit.
+        That is when it has succeeded.
+      </p>
+      <p class="reveal reveal-d1" data-i18n="about.p2">
+        Inframind is the practice through which I design, develop and deliver
+        technology projects for public authorities and transit operators in Cyprus
+        and across Europe — projects with real operational outcomes, not for
+        appearances. Every system must be capable of becoming part of everyday use.
+      </p>
+      <p class="reveal reveal-d2" data-i18n-html="about.p3">
+        Inframind covers the <strong>full project lifecycle</strong> — from technical study
+        and functional specifications, through procurement support and system design,
+        to on-site supervision, coordination and go-live. The work does not stop until
+        the system is real, operational, and used by citizens as part of their everyday life.
+      </p>
+      <p class="reveal reveal-d3" data-i18n-html="about.p4">
+        What matters is not delivery on paper, but <strong>benefit in practice</strong> —
+        measurable value for the people who use the system and the organisations that operate it.
+        Every technology choice is deliberate, made only when it offers clear, lasting advantage.
+        Anything that does not eventually become habit, has not yet succeeded.
+      </p>
+      <div class="quote-block reveal">
+        <p data-i18n="about.quote">"Technology, when designed correctly, does not shout. It silently supports daily life,
+        highlights space, reduces tension, and returns value to society."</p>
+      </div>
+    </div>
+
+    <div class="about-col">
+      <div class="founder-photo-wrap reveal" onerror="this.style.display='none'">
+        <img src="founder.jpg" alt="Ioannis Chr. Panagiotidis" class="founder-photo" onerror="this.parentElement.style.display='none'" />
+      </div>
+      <span class="founder-tag reveal" data-i18n="about.founder.tag">Founder & Director</span>
+      <p class="reveal" data-i18n-html="about.founder.name"><strong>Ioannis Chr. Panagiotidis</strong></p>
+      <p class="reveal reveal-d1" data-i18n-html="about.founder.p1">
+        ICT & ITS Consultant and <strong>Technology Facilitator — proven in practice, not by claim</strong>.
+        Every system he has designed has been implemented in full and is in active daily use,
+        serving thousands of citizens and users. Deep expertise in intelligent transport systems,
+        smart mobility, and public sector digital infrastructure.
+      </p>
+      <p class="reveal reveal-d2" data-i18n="about.founder.p2">
+        A consistent participant in leading international forums including the ITS World Congress
+        and Smart City Expo World Congress — not for presence, but to remain at the frontier
+        of what actually works.
+      </p>
+      <p class="reveal reveal-d3" data-i18n="about.founder.p3">
+        Every project must combine functionality with aesthetics. The goal is always to reduce
+        the stress of everyday life — in mobility, access, service delivery, and public space.
+      </p>
+      <p class="reveal reveal-d3" data-i18n="about.founder.p4">
+        Results speak louder than presence.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label reveal" data-i18n="services.label">Services</p>
+  <h2 class="section-title reveal" data-i18n-html="services.title">From strategy<br><span class="light">to operational delivery</span></h2>
+  <p class="section-body reveal" data-i18n="services.body">
+    Technical expertise and institutional knowledge across the full project lifecycle —
+    from the first study to the moment a system enters daily citizen use and delivers
+    real benefit.
+  </p>
+
+  <div class="lifecycle-strip">
+    <div class="lifecycle-step" style="--lc-delay:0.0s"><span class="lc-num">I</span><span class="lc-label" data-i18n="services.lc.1">Technical Study</span></div>
+    <div class="lifecycle-arrow"></div>
+    <div class="lifecycle-step" style="--lc-delay:0.2s"><span class="lc-num">II</span><span class="lc-label" data-i18n="services.lc.2">Specifications & Procurement</span></div>
+    <div class="lifecycle-arrow"></div>
+    <div class="lifecycle-step" style="--lc-delay:0.4s"><span class="lc-num">III</span><span class="lc-label" data-i18n="services.lc.3">Design & Integration</span></div>
+    <div class="lifecycle-arrow"></div>
+    <div class="lifecycle-step" style="--lc-delay:0.6s"><span class="lc-num">IV</span><span class="lc-label" data-i18n="services.lc.4">Supervision & Coordination</span></div>
+    <div class="lifecycle-arrow"></div>
+    <div class="lifecycle-step lc-final" style="--lc-delay:0.8s"><span class="lc-num">V</span><span class="lc-label" data-i18n="services.lc.5">Go-Live & Real Use</span></div>
+    <div class="lc-progress-wrap"><div class="lc-progress-fill"></div></div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <p class="service-number">01</p>
+      <h3 class="service-title" data-i18n="services.s1.title">Intelligent Transport Systems</h3>
+      <p class="service-desc" data-i18n="services.s1.desc">Design and implementation of ITS infrastructure — from telematics and real-time data systems to national mobility platforms.</p>
+    </div>
+    <div class="service-card reveal reveal-d1">
+      <p class="service-number">02</p>
+      <h3 class="service-title" data-i18n="services.s2.title">Smart Mobility & Parking</h3>
+      <p class="service-desc" data-i18n="services.s2.desc">End-to-end smart parking systems, interoperability frameworks, and urban mobility solutions with measurable citizen benefit.</p>
+    </div>
+    <div class="service-card reveal reveal-d2">
+      <p class="service-number">03</p>
+      <h3 class="service-title" data-i18n="services.s3.title">EMV & Open Loop Payments</h3>
+      <p class="service-desc" data-i18n="services.s3.desc">ABT, fintech integration in transport, and open loop payment orchestration for public transit networks.</p>
+    </div>
+    <div class="service-card reveal reveal-d1">
+      <p class="service-number">04</p>
+      <h3 class="service-title" data-i18n="services.s4.title">Technical Studies & Specifications</h3>
+      <p class="service-desc" data-i18n="services.s4.desc">Detailed technical studies, functional specifications, and procurement support for complex public sector technology projects.</p>
+    </div>
+    <div class="service-card reveal reveal-d2">
+      <p class="service-number">05</p>
+      <h3 class="service-title" data-i18n="services.s5.title">Public Digital Infrastructure</h3>
+      <p class="service-desc" data-i18n="services.s5.desc">Functional and operational design of bus stop information systems, municipal digital platforms, and citizen-facing services.</p>
+    </div>
+    <div class="service-card reveal reveal-d3">
+      <p class="service-number">06</p>
+      <h3 class="service-title" data-i18n="services.s6.title">Interoperability & Integration</h3>
+      <p class="service-desc" data-i18n="services.s6.desc">Systems integration, data interoperability between public transport operators, and national platform connectivity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MAJOR PROJECTS IN OPERATION -->
+<section id="projects">
+  <canvas id="projectsCanvas" style="position:absolute;top:0;right:0;width:55%;height:100%;z-index:2;pointer-events:none;opacity:0.85;"></canvas>
+  <p class="section-label" data-i18n="projects.label">Major Projects</p>
+  <h2 class="section-title" data-i18n-html="projects.title">Built from scratch.<br><span style="font-weight:300">In operation today.</span></h2>
+
+  <p class="projects-narrative" data-i18n-html="projects.narrative">
+    Every project here started from a blank page — a technical study, a set of requirements,
+    a vision that had to become reality. <strong>From the first step, I was there:</strong> designing
+    the architecture, writing the specifications, coordinating the implementation, overseeing delivery
+    all the way to go-live. A project is successfully implemented when it is in real, daily use —
+    not when it is delivered on paper, but when <strong>thousands of people rely on it every single day,
+    as part of their ordinary life.</strong> That is the measure. That is the point.
+  </p>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-status"><span class="status-dot"></span><span data-i18n="projects.status">Implemented &amp; In Daily Use</span></div>
+      <p class="project-metrics" data-i18n-html="projects.p1.metrics">In operation since 2018 <span class="sep">·</span> Multi-operator <span class="sep">·</span> Open data pioneer</p>
+      <h3 class="project-name" data-i18n="projects.p1.name">Motion ITS Platform</h3>
+      <p class="project-desc" data-i18n="projects.p1.desc">
+        An integrated intelligent transport platform unifying real-time data, fleet operations,
+        and passenger information across operators. In active daily operation since 2018,
+        underpinning the transit infrastructure that thousands of citizens rely on every day.
+        Among the first national-scale deployments to publish open data — an ongoing contribution
+        to the broader mobility ecosystem.
+      </p>
+    </div>
+    <div class="project-card reveal reveal-d1">
+      <div class="project-status"><span class="status-dot"></span><span data-i18n="projects.status">Implemented &amp; In Daily Use</span></div>
+      <p class="project-metrics" data-i18n-html="projects.p2.metrics">Park &amp; Ride integrated <span class="sep">·</span> Any-app payment <span class="sep">·</span> Lighting &amp; safety by design</p>
+      <h3 class="project-name" data-i18n="projects.p2.name">Digital Parking &amp; Park &amp; Ride</h3>
+      <p class="project-desc" data-i18n="projects.p2.desc">
+        From feasibility study to sensor integration, payment systems, lighting design, and live
+        deployment — designed and implemented end-to-end. The system extends from real-time
+        availability to Park &amp; Ride integration with public transport, allowing seamless use
+        through whichever app the citizen already has. Lighting and spatial design were treated
+        as part of the system, not added afterwards — creating safe, legible, calm spaces that
+        thousands of citizens use every day as a natural part of their routine.
+      </p>
+    </div>
+    <div class="project-card reveal reveal-d2">
+      <div class="project-status"><span class="status-dot"></span><span data-i18n="projects.status">Implemented &amp; In Daily Use</span></div>
+      <p class="project-metrics" data-i18n-html="projects.p3.metrics">464 upgraded digital displays <span class="sep">·</span> 95 routes <span class="sep">·</span> 7 operators</p>
+      <h3 class="project-name" data-i18n="projects.p3.name">Nationwide Bus Stop Information System</h3>
+      <p class="project-desc" data-i18n="projects.p3.desc">
+        A national passenger information network covering all of Cyprus — over 5,000 bus stops
+        across every city and transit corridor. Conceived, specified, and implemented from
+        scratch. Real-time displays and data infrastructure now embedded in the daily journeys
+        of thousands of citizens and visitors — used without thinking, exactly as intended.
+      </p>
+    </div>
+    <div class="project-card reveal reveal-d3">
+      <div class="project-status"><span class="status-dot"></span><span data-i18n="projects.status">Implemented &amp; In Daily Use</span></div>
+      <p class="project-metrics" data-i18n-html="projects.p4.metrics">Open loop EMV <span class="sep">·</span> Integrated with Motion ITS <span class="sep">·</span> Inclusive by design</p>
+      <h3 class="project-name" data-i18n="projects.p4.name">EMV / Open Loop Payment Systems</h3>
+      <p class="project-desc" data-i18n="projects.p4.desc">
+        Account-based ticketing and open loop EMV infrastructure — from functional specification
+        through fintech integration to live deployment within the Motion ITS platform. The system
+        was designed to be inclusive: digital natives use the app, less tech-comfortable or older
+        citizens complete the same transaction at convenient physical points they already visit
+        — kiosks, hotels, cafés — without queuing at a government office. The technology adapts
+        to the citizen, not the other way around.
+      </p>
+    </div>
+  </div>
+
+  <div class="impact-strip">
+    <div class="impact-item">
+      <div class="impact-number">10+</div>
+      <div class="impact-label" data-i18n="impact.1">Major systems designed &amp; delivered</div>
+    </div>
+    <div class="impact-item impact-statement">
+      <div class="impact-statement-text" data-i18n="impact.2">
+        Thousands of users base their everyday life on the use of these systems.
+      </div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-number">100%</div>
+      <div class="impact-label" data-i18n="impact.3">From study to go-live, every time</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE OPS — MOTION ITS CYPRUS (Σκέψη 3) -->
+<section id="live-ops">
+  <p class="section-label reveal" data-i18n="liveops.label">Open data · Cyprus mobility</p>
+  <h2 class="section-title reveal" data-i18n-html="liveops.title">The backbone of <span style="font-weight:300">public transport</span></h2>
+  <p class="liveops-intro reveal" data-i18n="liveops.intro">
+    MOTION ITS operates continuously as Cyprus' central open-data infrastructure for public mobility &mdash;
+    providing live information to every citizen, business, and application built on top of it.
+  </p>
+
+  <!-- HERO A — PLANNED TODAY (GTFS static) -->
+  <div class="liveops-narrative" style="margin-bottom:2rem;">
+    <div class="narr-pulse-row">
+      <span class="narr-pulse-dot" aria-hidden="true" style="background:#5fb04d;"></span>
+      <span data-i18n="liveops.heroA.label">Today's plan · GTFS static open data</span>
+    </div>
+    <p class="narr-body">
+      <span class="lead" data-i18n="liveops.heroA.lead">Σήμερα η Κύπρος έχει προγραμματίσει</span>
+      <span class="narr-stat stat1">
+        <span class="narr-num" id="planTrips" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.trips">δρομολόγια</span>
+      </span>
+      <span class="narr-stat stat2">
+        <span data-i18n="liveops.heroA.conn1">· με στόλο έως</span>
+        <span class="narr-num" id="planVehicles" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.vehicles">λεωφορεία</span>
+      </span>
+      <span class="narr-stat stat3">
+        <span data-i18n="liveops.narr.conn2">· εξυπηρετώντας</span>
+        <span class="narr-num" id="planStops" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.stops">στάσεις</span>
+      </span>
+      <span class="narr-stat stat4">
+        <span data-i18n="liveops.narr.conn3">· μέσω</span>
+        <span class="narr-num" id="planOperators" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.operators">παρόχων</span>
+      </span>
+      <span class="tail" data-i18n-html="liveops.heroA.tail"> σε όλη την επικράτεια &mdash; <strong>επίσημο πρόγραμμα</strong> όπως δημοσιεύεται καθημερινά στο GTFS static feed του MOTION ITS.</span>
+    </p>
+    <div class="narr-attribution">
+      <span class="attr-badge attr-motion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+        </svg>
+        <span data-i18n="liveops.heroA.badge">Programmed daily · MOTION ITS</span>
+      </span>
+      <span class="attr-text" id="planFootnote" data-i18n="liveops.heroA.note">Επίσημο πρόγραμμα ημέρας · ανανεώνεται καθημερινά από το GTFS static</span>
+    </div>
+  </div>
+
+  <!-- HERO B — EXECUTED LAST 6H (GTFS-RT rolling window) -->
+  <div class="liveops-narrative">
+    <div class="narr-pulse-row">
+      <span class="narr-pulse-dot" aria-hidden="true"></span>
+      <span data-i18n="liveops.narr.live">Continuous operation · public GTFS-RT open data</span>
+    </div>
+    <p class="narr-body">
+      <span class="lead" data-i18n="liveops.narr.lead">Τις τελευταίες 6 ώρες, η πλατφόρμα κατέγραψε</span>
+      <span class="narr-stat stat1">
+        <span class="narr-num" id="narrTrips" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.trips">δρομολόγια</span>
+      </span>
+      <span class="narr-stat stat2">
+        <span data-i18n="liveops.narr.conn1">· από</span>
+        <span class="narr-num" id="narrVehicles" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.vehicles">λεωφορεία</span>
+      </span>
+      <span class="narr-stat stat3">
+        <span data-i18n="liveops.narr.conn2">· εξυπηρετώντας</span>
+        <span class="narr-num" id="narrStops" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.stops">στάσεις</span>
+      </span>
+      <span class="narr-stat stat4">
+        <span data-i18n="liveops.narr.conn3">· μέσω</span>
+        <span class="narr-num" id="narrOperators" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.narr.operators">παρόχων</span>
+      </span>
+      <span class="tail" data-i18n-html="liveops.narr.tail"> σε όλη την Κύπρο &mdash; <strong>ζωντανά δεδομένα</strong> διαθέσιμα δημόσια ως <em>open data</em>, ώστε πολίτες, επιχειρήσεις και τρίτες εφαρμογές να αξιοποιούν αυτή την κρίσιμη ψηφιακή υποδομή.</span>
+    </p>
+    <div class="narr-attribution">
+      <span class="attr-badge attr-motion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span data-i18n="liveops.narr.badge.motion">Public open data · MOTION ITS</span>
+      </span>
+      <span class="attr-badge attr-inframind">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span data-i18n="liveops.narr.badge.inframind">Quality monitoring · INFRAMIND</span>
+      </span>
+      <span class="attr-text" data-i18n-html="liveops.narr.note">Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.</span>
+    </div>
+  </div>
+
+  <div class="liveops-grid">
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="12" width="32" height="22" rx="2"/>
+          <line x1="8" y1="24" x2="40" y2="24"/>
+          <rect x="11" y="15" width="5" height="6"/>
+          <rect x="18" y="15" width="5" height="6"/>
+          <rect x="25" y="15" width="5" height="6"/>
+          <rect x="32" y="15" width="5" height="6"/>
+          <line x1="8" y1="34" x2="8" y2="40"/>
+          <line x1="40" y1="34" x2="40" y2="40"/>
+          <circle cx="14" cy="38" r="2.5"/>
+          <circle cx="34" cy="38" r="2.5"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="liveVehicles" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.vehicles">Buses in motion</div>
+    </div>
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 8 38 Q 14 14, 24 24 T 40 10"/>
+          <circle cx="8" cy="38" r="3" fill="currentColor"/>
+          <circle cx="40" cy="10" r="3" fill="currentColor"/>
+          <circle cx="20" cy="22" r="1.5" fill="currentColor"/>
+          <circle cx="28" cy="20" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="liveTrips" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.trips">Active trips</div>
+    </div>
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="24" y1="22" x2="24" y2="42"/>
+          <rect x="11" y="8" width="26" height="16" rx="1.5"/>
+          <line x1="16" y1="13" x2="32" y2="13"/>
+          <line x1="16" y1="17" x2="28" y2="17"/>
+          <line x1="16" y1="21" x2="30" y2="21"/>
+          <line x1="20" y1="42" x2="28" y2="42"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="liveStops" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.stops">Stops served</div>
+    </div>
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="24" cy="24" r="4"/>
+          <circle cx="10" cy="10" r="3"/>
+          <circle cx="38" cy="10" r="3"/>
+          <circle cx="10" cy="38" r="3"/>
+          <circle cx="38" cy="38" r="3"/>
+          <circle cx="24" cy="6" r="2"/>
+          <circle cx="6" cy="24" r="2"/>
+          <circle cx="42" cy="24" r="2"/>
+          <line x1="12.5" y1="12.5" x2="20.5" y2="20.5"/>
+          <line x1="35.5" y1="12.5" x2="27.5" y2="20.5"/>
+          <line x1="12.5" y1="35.5" x2="20.5" y2="27.5"/>
+          <line x1="35.5" y1="35.5" x2="27.5" y2="27.5"/>
+          <line x1="24" y1="8" x2="24" y2="20"/>
+          <line x1="8" y1="24" x2="20" y2="24"/>
+          <line x1="40" y1="24" x2="28" y2="24"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="liveOperators" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.operators">Operators online</div>
+    </div>
+  </div>
+
+  <div class="liveops-footer reveal">
+    <p class="liveops-meta">
+      <span data-i18n="liveops.updated">Last updated:</span> <span id="liveTimestamp">&mdash;</span>
+      <span class="sep">·</span>
+      <span data-i18n="liveops.source">Source:</span>
+      <a href="https://motionbuscard.org.cy/opendata" target="_blank" rel="noopener">motionbuscard.org.cy</a>
+    </p>
+    <a href="/motion-its/" class="liveops-link" data-i18n="liveops.more">View full analytics →</a>
+  </div>
+</section>
+
+<!-- QUOTE INTERLUDE — McLuhan with procedural wireframe canvas -->
+<section id="liveops-quote">
+  <canvas class="quote-canvas" id="quoteCanvas" aria-hidden="true"></canvas>
+  <div class="quote-vignette" aria-hidden="true"></div>
+  <div class="quote-inner">
+    <span class="quote-mark-deco" aria-hidden="true">&ldquo;</span>
+    <blockquote class="quote-en">
+      We shape our tools, and thereafter our tools shape us.
+    </blockquote>
+    <hr class="quote-divider" aria-hidden="true">
+    <blockquote class="quote-gr">
+      Πρώτα διαμορφώνουμε τα εργαλεία μας — έπειτα εκείνα διαμορφώνουν εμάς.
+    </blockquote>
+    <p class="quote-attribution">Marshall McLuhan &nbsp;·&nbsp; <em>Understanding Media</em> &nbsp;·&nbsp; 1964</p>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="philosophy-inner">
+    <div class="philosophy-left">
+      <p class="section-label reveal" data-i18n="philosophy.label">Philosophy</p>
+      <h2 class="section-title reveal" data-i18n-html="philosophy.title">Technophilia &mdash; <span class="light">technology with purpose</span></h2>
+      <p class="philosophy-text reveal" data-i18n-html="philosophy.body">
+        Technology is not an end in itself. It is a means to produce
+        <strong>better services</strong>, calmer experiences for citizens,
+        more functional cities and systems, and projects with
+        <strong>lasting social impact</strong>.
+        <br><br>
+        Every project must combine functionality with aesthetics.
+        The work must convey <strong>respect, education, harmony, and permanence</strong>.
+        Society must receive real value back — not digital facades.
+        <br><br>
+        Real technology does not demand attention. It becomes habit.
+      </p>
+    </div>
+    <div class="philosophy-feature reveal">
+      <div class="philosophy-quote-col">
+        <p class="phil-typewriter-quote" id="philTypewriter"><span class="phil-cursor"></span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal" data-i18n="contact.label">Contact</p>
+  <h2 class="section-title reveal" data-i18n-html="contact.title">Professional &amp;<br><span class="light">Institutional Enquiries</span></h2>
+
+  <div class="contact-grid">
+    <div>
+      <dl class="contact-info reveal">
+        <dt data-i18n="contact.company">Company</dt>
+        <dd>Inframind Ltd</dd>
+
+        <dt data-i18n="contact.director">Director</dt>
+        <dd>Ioannis Chr. Panagiotidis<br>
+          <a href="mailto:ioannis@inframind.eu" style="font-size:13px; color:var(--grey);">ioannis@inframind.eu</a>
+        </dd>
+
+        <dt data-i18n="contact.general">General Enquiries</dt>
+        <dd><a href="mailto:info@inframind.eu">info@inframind.eu</a></dd>
+
+        <dt data-i18n="contact.office">Registered Office</dt>
+        <dd data-i18n="contact.office.value">Armenias 4, Nicosia 2003, Cyprus</dd>
+
+        <dt data-i18n="contact.phone">Telephone</dt>
+        <dd><a href="tel:+35795576747">+357 95 576 747</a></dd>
+      </dl>
+    </div>
+
+    <form class="contact-form reveal" action="https://formspree.io/f/mlgvlvnr" method="POST" id="contactForm">
+      <input type="text" name="name" required data-i18n-placeholder="form.name" placeholder="Your name" />
+      <input type="email" name="email" required data-i18n-placeholder="form.email" placeholder="Your email" />
+      <input type="text" name="organization" data-i18n-placeholder="form.organization" placeholder="Organization (optional)" />
+      <input type="text" name="subject" required data-i18n-placeholder="form.subject" placeholder="Subject" />
+      <textarea name="message" required data-i18n-placeholder="form.message" placeholder="Your message"></textarea>
+      <button type="submit" data-i18n="form.submit">Submit Enquiry</button>
+      <div class="form-success" id="formSuccess" data-i18n="form.success">Thank you. Your message has been received — I will respond shortly.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Inframind &mdash; Innovative Infrastructures</span>
+  <span class="footer-copy" data-i18n="footer.copy">&copy; 2026 Inframind Ltd. All rights reserved.</span>
+</footer>
+
+<script>
+  // ── TRANSLATIONS ──
+  const I18N = {
+    en: {
+      'meta.title': 'Inframind — Innovative Infrastructures',
+      'meta.description': 'Inframind Ltd — ICT & ITS consultancy delivering intelligent transport, smart mobility and public digital infrastructure from concept to daily citizen use.',
+      'nav.about': 'About',
+      'nav.services': 'Services',
+      'nav.projects': 'Projects',
+      'nav.philosophy': 'Philosophy',
+      'nav.contact': 'Contact',
+      'hero.tagline': 'When Technology meets Purpose',
+      'hero.eyebrow': 'Inframind Ltd — Cyprus  ·  Technology Facilitators',
+      'hero.sub': 'From the first technical study to the moment a system goes live — designing and delivering infrastructure that thousands of citizens and users rely on, every single day.',
+      'hero.btn.services': 'Our Services',
+      'hero.btn.contact': 'Get in Touch',
+      'typewriter.1': 'Technology Facilitators — from concept to operation.',
+      'typewriter.2': 'From technical study to daily citizen use.',
+      'typewriter.3': 'Technology that works — silently, reliably.',
+      'typewriter.4': 'Real infrastructure. Real social impact.',
+      'about.label': 'About',
+      'about.title': 'Technology Facilitators<br><span class="light">who deliver results</span>',
+      'about.p1': 'Infrastructure that works does not announce itself. It simply performs — day after day, for the citizens who depend on it and the organisations that operate it.',
+      'about.p2': 'Inframind Ltd is a consultancy and delivery firm focused on the design, technical maturation, and implementation of technology projects with real operational outcomes — not for appearances, but for function.',
+      'about.p3': 'We cover the <strong>full project lifecycle</strong> — from technical study and functional specifications, through procurement support and system design, to on-site supervision, coordination and go-live. We do not stop until the project is real and in active daily use.',
+      'about.p4': 'What matters is not delivery on paper, but <strong>benefit in practice</strong> — measurable value returned to the people using the system and to the organisations operating it. We select technologies deliberately, only when they offer clear and lasting advantage.',
+      'about.quote': '"Technology, when designed correctly, does not shout. It silently supports daily life, highlights space, reduces tension, and returns value to society."',
+      'about.founder.tag': 'Founder & Director',
+      'about.founder.name': '<strong>Ioannis Chr. Panagiotidis</strong>',
+      'about.founder.p1': 'ICT & ITS Consultant and <strong>Technology Facilitator — proven in practice, not by claim</strong>. Every system he has designed has been implemented in full and is in active daily use, serving thousands of citizens and users. Deep expertise in intelligent transport systems, smart mobility, and public sector digital infrastructure.',
+      'about.founder.p2': 'A consistent participant in leading international forums including the ITS World Congress and Smart City Expo World Congress — not for presence, but to remain at the frontier of what actually works.',
+      'about.founder.p3': 'Every project must combine functionality with aesthetics. The goal is always to reduce the stress of everyday life — in mobility, access, service delivery, and public space.',
+      'about.founder.p4': 'Results speak louder than presence.',
+      'services.label': 'Services',
+      'services.title': 'From strategy<br><span class="light">to operational delivery</span>',
+      'services.body': 'Technical expertise and institutional knowledge across the full project lifecycle — from the first study to the moment a system goes live and delivers real benefit to users and organisations.',
+      'services.lc.1': 'Technical Study',
+      'services.lc.2': 'Specifications & Procurement',
+      'services.lc.3': 'Design & Integration',
+      'services.lc.4': 'Supervision & Coordination',
+      'services.lc.5': 'Go-Live & Real Use',
+      'services.s1.title': 'Intelligent Transport Systems',
+      'services.s1.desc': 'Design and implementation of ITS infrastructure — from telematics and real-time data systems to national mobility platforms.',
+      'services.s2.title': 'Smart Mobility & Parking',
+      'services.s2.desc': 'End-to-end smart parking systems, interoperability frameworks, and urban mobility solutions with measurable citizen benefit.',
+      'services.s3.title': 'EMV & Open Loop Payments',
+      'services.s3.desc': 'ABT, fintech integration in transport, and open loop payment orchestration for public transit networks.',
+      'services.s4.title': 'Technical Studies & Specifications',
+      'services.s4.desc': 'Detailed technical studies, functional specifications, and procurement support for complex public sector technology projects.',
+      'services.s5.title': 'Public Digital Infrastructure',
+      'services.s5.desc': 'Functional and operational design of bus stop information systems, municipal digital platforms, and citizen-facing services.',
+      'services.s6.title': 'Interoperability & Integration',
+      'services.s6.desc': 'Systems integration, data interoperability between public transport operators, and national platform connectivity.',
+      'projects.label': 'Major Projects',
+      'projects.title': 'Built from scratch.<br><span style="font-weight:300">In operation today.</span>',
+      'projects.narrative': 'Every one of these projects started from a blank page — a technical study, a set of requirements, a vision that needed to become reality. <strong>I was there from the very first step:</strong> designing the architecture, writing the specifications, coordinating the implementation, overseeing delivery all the way to go-live. A project is successfully implemented when it is in real, daily use. Not when it is delivered on paper — but when <strong>thousands of people rely on it every single day, as part of their ordinary life.</strong> That is the measure. That is the point.',
+      'projects.status': 'Implemented & In Daily Use',
+      'projects.p1.metrics': 'In operation since 2018 <span class="sep">·</span> Multi-operator <span class="sep">·</span> Open data pioneer',
+      'projects.p1.name': 'Motion ITS Platform',
+      'projects.p1.desc': 'An integrated intelligent transport platform unifying real-time data, fleet operations, and passenger information across operators. In active daily operation since 2018, underpinning the transit infrastructure that thousands of citizens rely on every day. Among the first national-scale deployments to publish open data — an ongoing contribution to the broader mobility ecosystem.',
+      'projects.p2.metrics': 'Park & Ride integrated <span class="sep">·</span> Any-app payment <span class="sep">·</span> Lighting & safety by design',
+      'projects.p2.name': 'Digital Parking & Park & Ride',
+      'projects.p2.desc': 'From feasibility study to sensor integration, payment systems, lighting design, and live deployment — designed and implemented end-to-end. The system extends from real-time availability to Park & Ride integration with public transport, allowing seamless use through whichever app the citizen already has. Lighting and spatial design were treated as part of the system, not added afterwards — creating safe, legible, calm spaces that thousands of citizens use every day as a natural part of their routine.',
+      'projects.p3.metrics': '464 upgraded digital displays <span class="sep">·</span> 95 routes <span class="sep">·</span> 7 operators',
+      'projects.p3.name': 'Nationwide Bus Stop Information System',
+      'projects.p3.desc': '464 upgraded digital stop displays delivered across Cyprus — real-time passenger information serving 95 distinct routes and all 7 public transport operators every day. Conceived, specified, and implemented from scratch — now embedded in the daily journeys of thousands of citizens and visitors, used without thinking, exactly as intended.',
+      'projects.p4.metrics': 'Open loop EMV <span class="sep">·</span> Integrated with Motion ITS <span class="sep">·</span> Inclusive by design',
+      'projects.p4.name': 'EMV / Open Loop Payment Systems',
+      'projects.p4.desc': 'Account-based ticketing and open loop EMV infrastructure — from functional specification through fintech integration to live deployment within the Motion ITS platform. The system was designed to be inclusive: digital natives use the app, less tech-comfortable or older citizens complete the same transaction at convenient physical points they already visit — kiosks, hotels, cafés — without queuing at a government office. The technology adapts to the citizen, not the other way around.',
+      'impact.1': 'Major systems designed & delivered',
+      'impact.2': 'Thousands of users base their everyday life on the use of these systems.',
+      'impact.3': 'From study to go-live, every time',
+      'liveops.label': 'Open data · Cyprus mobility',
+      'liveops.title': 'The backbone of <span style="font-weight:300">public transport</span>',
+      'liveops.intro': "MOTION ITS operates continuously as Cyprus' central open-data infrastructure for public mobility — providing live information to every citizen, business, and application built on top of it.",
+      'liveops.heroA.label': "Today's plan · GTFS static open data",
+      'liveops.heroA.lead': 'Today Cyprus has scheduled',
+      'liveops.heroA.conn1': '· with a fleet of up to',
+      'liveops.heroA.tail': ' across the country &mdash; <strong>official daily plan</strong> as published in MOTION ITS GTFS static feed.',
+      'liveops.heroA.badge': 'Programmed daily · MOTION ITS',
+      'liveops.heroA.note': 'Official daily plan · refreshed daily from GTFS static',
+      'liveops.vehicles': 'Buses operating (24h)',
+      'liveops.trips': 'Trips orchestrated (24h)',
+      'liveops.stops': 'Stops served (24h)',
+      'liveops.operators': 'Operators on the platform',
+      'liveops.updated': 'Reporting period:',
+      'liveops.source': 'Source:',
+      'liveops.more': 'View full analytics →',
+      'liveops.narr.live': 'Continuous operation · public GTFS-RT open data',
+      'liveops.narr.lead': 'In the last 6 hours, the platform recorded',
+      'liveops.narr.trips': 'trips',
+      'liveops.narr.conn1': '· operated by',
+      'liveops.narr.vehicles': 'buses',
+      'liveops.narr.conn2': '· serving',
+      'liveops.narr.stops': 'stops',
+      'liveops.narr.conn3': '· across',
+      'liveops.narr.operators': 'operators',
+      'liveops.narr.tail': ' across Cyprus &mdash; <strong>live data freely available</strong> as <em>open data</em>, so that citizens, businesses, and third-party applications can build value on top of this backbone.',
+      'liveops.narr.badge.motion': 'Public open data · MOTION ITS',
+      'liveops.narr.badge.inframind': 'Quality monitoring · INFRAMIND',
+      'liveops.narr.note': 'The <strong>backbone</strong> of Cyprus public transport: 7 operators, nationwide, continuous operation. Data is <strong>freely available</strong> as a public GTFS-Realtime feed — INFRAMIND continuously monitors its reliability.',
+      'philosophy.label': 'Philosophy',
+      'philosophy.title': 'Technophilia — <span class="light">technology with purpose</span>',
+      'philosophy.body': 'Technology is not an end in itself. It is a means to produce <strong>better services</strong>, calmer experiences for citizens, more functional cities and systems, and projects with <strong>lasting social impact</strong>.<br><br>Every project must combine functionality with aesthetics. The work must convey <strong>respect, education, harmony, and permanence</strong>. Society must receive real value back — not digital facades.',
+      'philosophy.tw.1': 'Designing and implementing infrastructure is a privilege. The true responsibility, however, is for these systems to work at the exact moment the citizen needs them — with reliability, simplicity, and genuine value in their daily life.',
+      'philosophy.tw.2': 'That is where technology\'s true purpose lies. And that is what connects us.',
+      'contact.label': 'Contact',
+      'contact.title': 'Professional &<br><span class="light">Institutional Enquiries</span>',
+      'contact.company': 'Company',
+      'contact.director': 'Director',
+      'contact.general': 'General Enquiries',
+      'contact.office': 'Registered Office',
+      'contact.office.value': 'Armenias 4, Nicosia 2003, Cyprus',
+      'contact.phone': 'Telephone',
+      'form.name': 'Your name',
+      'form.email': 'Your email',
+      'form.organization': 'Organization (optional)',
+      'form.subject': 'Subject',
+      'form.message': 'Your message',
+      'form.submit': 'Submit Enquiry',
+      'form.success': 'Thank you. Your message has been received — I will respond shortly.',
+      'footer.copy': '© 2026 Inframind Ltd. All rights reserved.'
+    },
+    gr: {
+      'meta.title': 'Inframind — Καινοτόμες Υποδομές',
+      'meta.description': 'Inframind Ltd — Συμβουλευτική ICT & ITS που υλοποιεί ευφυείς μεταφορές, smart mobility και δημόσιες ψηφιακές υποδομές από τη σύλληψη στην καθημερινή χρήση από τους πολίτες.',
+      'nav.about': 'Σχετικά',
+      'nav.services': 'Υπηρεσίες',
+      'nav.projects': 'Έργα',
+      'nav.philosophy': 'Φιλοσοφία',
+      'nav.contact': 'Επικοινωνία',
+      'hero.tagline': 'Όταν η Τεχνολογία συναντά τον Σκοπό',
+      'hero.eyebrow': 'Inframind Ltd — Κύπρος  ·  Technology Facilitators',
+      'hero.sub': 'Από την πρώτη τεχνική μελέτη μέχρι τη στιγμή που ένα σύστημα γίνεται κομμάτι της καθημερινής ζωής — υποδομές πάνω στις οποίες χιλιάδες πολίτες βασίζονται κάθε μέρα, σχεδόν χωρίς να το συνειδητοποιούν.',
+      'hero.btn.services': 'Οι Υπηρεσίες μας',
+      'hero.btn.contact': 'Επικοινωνία',
+      'typewriter.1': 'Technology Facilitators — από τη σύλληψη έως τη λειτουργία.',
+      'typewriter.2': 'Από την τεχνική μελέτη στην καθημερινή χρήση από τους πολίτες.',
+      'typewriter.3': 'Τεχνολογία που δουλεύει — αθόρυβα, αξιόπιστα.',
+      'typewriter.4': 'Πραγματικές υποδομές. Πραγματικό κοινωνικό αντίκτυπο.',
+      'about.label': 'Σχετικά',
+      'about.title': 'Technology Facilitators<br><span class="light">με αποτελέσματα που μετριούνται</span>',
+      'about.p1': 'Οι υποδομές που δουλεύουν δεν διαφημίζονται. Αποδίδουν — αθόρυβα, αξιόπιστα, μέρα με τη μέρα. Με τον καιρό γίνονται συνήθεια. Τότε ξέρουμε ότι πέτυχαν.',
+      'about.p2': 'Η Inframind είναι η εταιρεία μέσα από την οποία σχεδιάζω, αναπτύσσω και παραδίδω τεχνολογικά έργα για δημόσιους φορείς και φορείς δημόσιων συγκοινωνιών στην Κύπρο και την Ευρώπη — έργα με πραγματικά λειτουργικά αποτελέσματα, όχι για επίδειξη. Κάθε σύστημα πρέπει να μπορεί να γίνει κομμάτι της καθημερινής χρήσης.',
+      'about.p3': 'Η Inframind καλύπτει <strong>όλον τον κύκλο ζωής του έργου</strong> — από την τεχνική μελέτη και τις λειτουργικές προδιαγραφές, μέσω της υποστήριξης διαγωνισμών και του σχεδιασμού συστημάτων, έως την επιτόπια επίβλεψη, τον συντονισμό και την έναρξη λειτουργίας. Η δουλειά δεν σταματά μέχρι το σύστημα να γίνει πραγματικότητα, να λειτουργήσει, και να χρησιμοποιείται από τους πολίτες ως κομμάτι της καθημερινότητάς τους.',
+      'about.p4': 'Δεν μετράει η παράδοση στα χαρτιά, αλλά <strong>το όφελος στην πράξη</strong> — μετρήσιμη αξία για τους ανθρώπους που χρησιμοποιούν το σύστημα και τους οργανισμούς που το λειτουργούν. Κάθε επιλογή τεχνολογίας είναι συνειδητή, και γίνεται μόνο όταν προσφέρει σαφές και διαρκές πλεονέκτημα. Ό,τι δεν καταφέρνει στο τέλος να γίνει συνήθεια, δεν έχει ακόμα πετύχει.',
+      'about.quote': '«Η τεχνολογία, όταν σχεδιάζεται σωστά, δεν κραυγάζει. Υποστηρίζει αθόρυβα την καθημερινότητα, αναδεικνύει τον χώρο, μειώνει την ένταση, και επιστρέφει αξία στην κοινωνία.»',
+      'about.founder.tag': 'Ιδρυτής & Διευθυντής',
+      'about.founder.name': '<strong>Ιωάννης Χρ. Παναγιωτίδης</strong>',
+      'about.founder.p1': 'Σύμβουλος ICT & ITS και <strong>Technology Facilitator — αποδεδειγμένος στην πράξη, όχι στα λόγια</strong>. Κάθε σύστημα που έχει σχεδιάσει έχει υλοποιηθεί πλήρως και βρίσκεται σε ενεργή καθημερινή χρήση, εξυπηρετώντας χιλιάδες πολίτες και χρήστες. Βαθιά εξειδίκευση σε ευφυή συστήματα μεταφορών, smart mobility και ψηφιακές υποδομές δημόσιου τομέα.',
+      'about.founder.p2': 'Σταθερός συμμετέχων σε κορυφαία διεθνή συνέδρια, μεταξύ των οποίων το ITS World Congress και το Smart City Expo World Congress — όχι για παρουσία, αλλά για να παραμένει στην αιχμή του τι όντως δουλεύει.',
+      'about.founder.p3': 'Κάθε έργο πρέπει να συνδυάζει λειτουργικότητα με αισθητική. Ο στόχος είναι πάντα η μείωση της έντασης της καθημερινότητας — στις μετακινήσεις, την πρόσβαση, την παροχή υπηρεσιών και τον δημόσιο χώρο.',
+      'about.founder.p4': 'Τα αποτελέσματα μιλούν πιο δυνατά από την παρουσία.',
+      'services.label': 'Υπηρεσίες',
+      'services.title': 'Από τη στρατηγική<br><span class="light">στη λειτουργική παράδοση</span>',
+      'services.body': 'Τεχνική εξειδίκευση και θεσμική γνώση σε όλον τον κύκλο ζωής του έργου — από την πρώτη μελέτη μέχρι τη στιγμή που το σύστημα μπαίνει στην καθημερινή χρήση των πολιτών και αποδίδει πραγματικό όφελος.',
+      'services.lc.1': 'Τεχνική Μελέτη',
+      'services.lc.2': 'Προδιαγραφές & Διαγωνισμός',
+      'services.lc.3': 'Σχεδιασμός & Ολοκλήρωση',
+      'services.lc.4': 'Επίβλεψη & Συντονισμός',
+      'services.lc.5': 'Έναρξη & Πραγματική Χρήση',
+      'services.s1.title': 'Ευφυή Συστήματα Μεταφορών',
+      'services.s1.desc': 'Σχεδιασμός και υλοποίηση υποδομών ITS — από τηλεματική και συστήματα δεδομένων πραγματικού χρόνου έως εθνικές πλατφόρμες κινητικότητας.',
+      'services.s2.title': 'Smart Mobility & Στάθμευση',
+      'services.s2.desc': 'Ολοκληρωμένα συστήματα έξυπνης στάθμευσης, πλαίσια διαλειτουργικότητας και λύσεις αστικής κινητικότητας με μετρήσιμο όφελος για τον πολίτη.',
+      'services.s3.title': 'EMV & Open Loop Πληρωμές',
+      'services.s3.desc': 'ABT, ενσωμάτωση fintech στις μεταφορές και ενορχήστρωση πληρωμών open loop για δίκτυα δημόσιων συγκοινωνιών.',
+      'services.s4.title': 'Τεχνικές Μελέτες & Προδιαγραφές',
+      'services.s4.desc': 'Αναλυτικές τεχνικές μελέτες, λειτουργικές προδιαγραφές και υποστήριξη διαγωνισμών για σύνθετα τεχνολογικά έργα δημόσιου τομέα.',
+      'services.s5.title': 'Δημόσιες Ψηφιακές Υποδομές',
+      'services.s5.desc': 'Λειτουργικός και επιχειρησιακός σχεδιασμός συστημάτων πληροφόρησης στάσεων, δημοτικών ψηφιακών πλατφορμών και υπηρεσιών προς τον πολίτη.',
+      'services.s6.title': 'Διαλειτουργικότητα & Ολοκλήρωση',
+      'services.s6.desc': 'Ολοκλήρωση συστημάτων, διαλειτουργικότητα δεδομένων μεταξύ φορέων δημόσιων συγκοινωνιών και διασύνδεση εθνικών πλατφορμών.',
+      'projects.label': 'Σημαντικά Έργα',
+      'projects.title': 'Φτιαγμένα από το μηδέν.<br><span style="font-weight:300">Σε λειτουργία σήμερα.</span>',
+      'projects.narrative': 'Κάθε έργο εδώ ξεκίνησε από λευκό χαρτί — μια τεχνική μελέτη, ένα σύνολο απαιτήσεων, ένα όραμα που έπρεπε να γίνει πραγματικότητα. <strong>Από το πρώτο βήμα, ήμουν εκεί:</strong> σχεδιάζοντας την αρχιτεκτονική, γράφοντας τις προδιαγραφές, συντονίζοντας την υλοποίηση, επιβλέποντας την παράδοση μέχρι την έναρξη λειτουργίας. Ένα έργο υλοποιείται επιτυχώς όταν είναι σε πραγματική, καθημερινή χρήση — όχι όταν παραδίδεται στα χαρτιά, αλλά όταν <strong>χιλιάδες άνθρωποι βασίζονται σε αυτό κάθε μέρα, ως μέρος της καθημερινότητάς τους.</strong> Αυτό είναι το μέτρο. Αυτός είναι ο σκοπός.',
+      'projects.status': 'Υλοποιημένο & Σε Καθημερινή Χρήση',
+      'projects.p1.metrics': 'Σε λειτουργία από το 2018 <span class="sep">·</span> Πολλαπλοί φορείς <span class="sep">·</span> Πρωτοπόρο στα ανοιχτά δεδομένα',
+      'projects.p1.name': 'Πλατφόρμα Motion ITS',
+      'projects.p1.desc': 'Μια ολοκληρωμένη πλατφόρμα ευφυών μεταφορών που ενοποιεί δεδομένα πραγματικού χρόνου, λειτουργία στόλου και πληροφόρηση επιβατών μεταξύ φορέων. Σε ενεργή καθημερινή λειτουργία από το 2018, υποστηρίζει την υποδομή μεταφορών στην οποία χιλιάδες πολίτες βασίζονται κάθε μέρα. Μεταξύ των πρώτων εθνικών υλοποιήσεων που δημοσιεύουν ανοιχτά δεδομένα — μια συνεχής συνεισφορά στο ευρύτερο οικοσύστημα κινητικότητας.',
+      'projects.p2.metrics': 'Park & Ride ολοκληρωμένο <span class="sep">·</span> Πληρωμή από οποιαδήποτε εφαρμογή <span class="sep">·</span> Φωτισμός & ασφάλεια στον σχεδιασμό',
+      'projects.p2.name': 'Ψηφιακό Σύστημα Στάθμευσης & Park & Ride',
+      'projects.p2.desc': 'Από τη μελέτη σκοπιμότητας έως την ενσωμάτωση αισθητήρων, τα συστήματα πληρωμών, τον σχεδιασμό φωτισμού και τη ζωντανή λειτουργία — σχεδιάστηκε και υλοποιήθηκε από άκρη σε άκρη. Το σύστημα επεκτείνεται από διαθεσιμότητα πραγματικού χρόνου έως ενσωμάτωση Park & Ride με τις δημόσιες συγκοινωνίες, επιτρέποντας αβίαστη χρήση μέσω όποιας εφαρμογής έχει ήδη ο πολίτης. Φωτισμός και χωρικός σχεδιασμός αντιμετωπίστηκαν ως μέρος του συστήματος, όχι ως πρόσθετο — δημιουργώντας ασφαλείς, ευανάγνωστους, ήρεμους χώρους που χιλιάδες πολίτες χρησιμοποιούν κάθε μέρα ως φυσικό μέρος της καθημερινότητάς τους.',
+      'projects.p3.metrics': '464 αναβαθμισμένες ψηφιακές πινακίδες <span class="sep">·</span> 95 δρομολόγια <span class="sep">·</span> 7 πάροχοι',
+      'projects.p3.name': 'Εθνικό Σύστημα Πληροφόρησης Στάσεων',
+      'projects.p3.desc': '464 αναβαθμισμένες ψηφιακές πινακίδες παραδομένες σε ολόκληρη την Κύπρο — οθόνες πραγματικού χρόνου που εξυπηρετούν καθημερινά 95 διαφορετικά δρομολόγια από τους 7 παρόχους δημόσιων μεταφορών. Συλλήφθηκαν, προδιαγράφηκαν και υλοποιήθηκαν από μηδέν — ενσωματωμένες πλέον στις καθημερινές μετακινήσεις χιλιάδων πολιτών και επισκεπτών, χρησιμοποιούνται χωρίς δεύτερη σκέψη, όπως ακριβώς προβλεπόταν.',
+      'projects.p4.metrics': 'Open loop EMV <span class="sep">·</span> Ενσωματωμένο στο Motion ITS <span class="sep">·</span> Σχεδιασμός χωρίς αποκλεισμούς',
+      'projects.p4.name': 'Συστήματα Πληρωμών EMV / Open Loop',
+      'projects.p4.desc': 'Account-based ticketing και open loop EMV υποδομή — από λειτουργική προδιαγραφή και ενσωμάτωση fintech έως ζωντανή λειτουργία μέσα στην πλατφόρμα Motion ITS. Το σύστημα σχεδιάστηκε ώστε να είναι χωρίς αποκλεισμούς: όσοι είναι εξοικειωμένοι με την τεχνολογία χρησιμοποιούν την εφαρμογή, όσοι δεν είναι ή είναι μεγαλύτερης ηλικίας ολοκληρώνουν την ίδια συναλλαγή σε σημεία που ήδη επισκέπτονται — περίπτερα, ξενοδοχεία, καφέ — χωρίς ουρές σε υπηρεσία. Η τεχνολογία προσαρμόζεται στον πολίτη, όχι το αντίθετο.',
+      'impact.1': 'Σημαντικά συστήματα σχεδιασμένα & παραδομένα',
+      'impact.2': 'Χιλιάδες χρήστες βασίζουν την καθημερινότητά τους στη χρήση αυτών των συστημάτων.',
+      'impact.3': 'Από τη μελέτη στη λειτουργία, κάθε φορά',
+      'liveops.label': 'Open data · Κινητικότητα Κύπρου',
+      'liveops.title': 'Η εθνική πλατφόρμα <span style="font-weight:300">δημόσιων μεταφορών</span>',
+      'liveops.intro': 'Το MOTION ITS λειτουργεί αδιάλειπτα ως κεντρική υποδομή open data της Κύπρου για τη δημόσια κινητικότητα — τροφοδοτώντας με ζωντανά δεδομένα κάθε πολίτη, επιχείρηση και εφαρμογή που χτίζεται πάνω σ\' αυτό.',
+      'liveops.heroA.label': 'Πρόγραμμα ημέρας · GTFS static open data',
+      'liveops.heroA.lead': 'Σήμερα η Κύπρος έχει προγραμματίσει',
+      'liveops.heroA.conn1': '· με στόλο έως',
+      'liveops.heroA.tail': ' σε όλη την επικράτεια &mdash; <strong>επίσημο πρόγραμμα</strong> όπως δημοσιεύεται καθημερινά στο GTFS static feed του MOTION ITS.',
+      'liveops.heroA.badge': 'Προγραμματισμός ημέρας · MOTION ITS',
+      'liveops.heroA.note': 'Επίσημο πρόγραμμα ημέρας · ανανεώνεται καθημερινά από το GTFS static',
+      'liveops.vehicles': 'Λεωφορεία σε λειτουργία (24h)',
+      'liveops.trips': 'Δρομολόγια (24h)',
+      'liveops.stops': 'Στάσεις που εξυπηρετήθηκαν (24h)',
+      'liveops.operators': 'Πάροχοι στην πλατφόρμα',
+      'liveops.updated': 'Περίοδος αναφοράς:',
+      'liveops.source': 'Πηγή:',
+      'liveops.more': 'Δείτε αναλυτικά →',
+      'liveops.narr.live': 'Αδιάλειπτη λειτουργία · δημόσιο GTFS-RT open data',
+      'liveops.narr.lead': 'Τις τελευταίες 6 ώρες, η πλατφόρμα κατέγραψε',
+      'liveops.narr.trips': 'δρομολόγια',
+      'liveops.narr.conn1': '· από',
+      'liveops.narr.vehicles': 'λεωφορεία',
+      'liveops.narr.conn2': '· εξυπηρετώντας',
+      'liveops.narr.stops': 'στάσεις',
+      'liveops.narr.conn3': '· μέσω',
+      'liveops.narr.operators': 'παρόχων',
+      'liveops.narr.tail': ' σε όλη την Κύπρο &mdash; <strong>ζωντανά δεδομένα</strong> διαθέσιμα δημόσια ως <em>open data</em>, ώστε πολίτες, επιχειρήσεις και τρίτες εφαρμογές να αξιοποιούν αυτή την κρίσιμη ψηφιακή υποδομή.',
+      'liveops.narr.badge.motion': 'Public open data · MOTION ITS',
+      'liveops.narr.badge.inframind': 'Quality monitoring · INFRAMIND',
+      'liveops.narr.note': 'Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.',
+      'philosophy.label': 'Φιλοσοφία',
+      'philosophy.title': 'Τεχνοφιλία — <span class="light">τεχνολογία με σκοπό</span>',
+      'philosophy.body': 'Η τεχνολογία δεν παρουσιάζεται ως αυτοσκοπός. Είναι μέσο για να παράγονται <strong>καλύτερες υπηρεσίες</strong>, πιο ήρεμες και καθαρές εμπειρίες για τον πολίτη, πιο λειτουργικές πόλεις και συστήματα, και έργα με <strong>πραγματικό κοινωνικό αντίκτυπο</strong>.<br><br>Κάθε έργο πρέπει να συνδυάζει λειτουργικότητα και αισθητική. Το έργο πρέπει να αποπνέει <strong>σεβασμό, παιδεία, αρμονία και διαχρονικότητα</strong>. Η κοινωνία πρέπει να λαμβάνει πίσω πραγματική αξία — όχι «ψηφιακές βιτρίνες».<br><br>Η πραγματική τεχνολογία δεν ζητά προσοχή. Γίνεται συνήθεια.',
+      'philosophy.tw.1': 'Σχεδιάζεις και υλοποιείς υποδομές — είναι προνόμιο. Η πραγματική ευθύνη, όμως, είναι να λειτουργούν ακριβώς τη στιγμή που ο πολίτης τις χρειάζεται. Με αξιοπιστία, απλότητα και ουσιαστική αξία στην καθημερινότητά του.',
+      'philosophy.tw.2': 'Εκεί βρίσκεται ο πραγματικός σκοπός της τεχνολογίας. Και αυτός είναι που μας συνδέει.',
+      'contact.label': 'Επικοινωνία',
+      'contact.title': 'Επαγγελματικές &<br><span class="light">Θεσμικές Επικοινωνίες</span>',
+      'contact.company': 'Εταιρεία',
+      'contact.director': 'Διευθυντής',
+      'contact.general': 'Γενικές Πληροφορίες',
+      'contact.office': 'Έδρα',
+      'contact.office.value': 'Αρμενίας 4, Λευκωσία 2003, Κύπρος',
+      'contact.phone': 'Τηλέφωνο',
+      'form.name': 'Όνομα',
+      'form.email': 'Email',
+      'form.organization': 'Οργανισμός (προαιρετικό)',
+      'form.subject': 'Θέμα',
+      'form.message': 'Το μήνυμά σας',
+      'form.submit': 'Αποστολή',
+      'form.success': 'Ευχαριστώ. Το μήνυμά σας παρελήφθη — θα σας απαντήσω σύντομα.',
+      'footer.copy': '© 2026 Inframind Ltd. Με την επιφύλαξη παντός δικαιώματος.'
+    }
+  };
+
+  // ── DETECT DEFAULT LANGUAGE ──
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('inframind.lang');
+      if (saved === 'en' || saved === 'gr') return saved;
+    } catch(e) {}
+    const host = (location.hostname || '').toLowerCase();
+    if (host.endsWith('.gr')) return 'gr';
+    if (host.endsWith('.eu')) return 'en';
+    // Fallback: browser language
+    const nav = (navigator.language || 'en').toLowerCase();
+    if (nav.startsWith('el') || nav.startsWith('gr')) return 'gr';
+    return 'en';
+  }
+
+  // ── APPLY LANGUAGE ──
+  function applyLanguage(lang) {
+    if (!I18N[lang]) lang = 'en';
+    const dict = I18N[lang];
+
+    // html lang attribute
+    document.documentElement.setAttribute('lang', lang === 'gr' ? 'el' : 'en');
+
+    // <title> & meta description
+    if (dict['meta.title']) document.title = dict['meta.title'];
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && dict['meta.description']) metaDesc.setAttribute('content', dict['meta.description']);
+
+    // og:locale + twitter description follow the chosen language
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) ogLocale.setAttribute('content', lang === 'gr' ? 'el_GR' : 'en_US');
+    const ogLocaleAlt = document.querySelector('meta[property="og:locale:alternate"]');
+    if (ogLocaleAlt) ogLocaleAlt.setAttribute('content', lang === 'gr' ? 'en_US' : 'el_GR');
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc && dict['meta.description']) twDesc.setAttribute('content', dict['meta.description']);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc && dict['meta.description']) ogDesc.setAttribute('content', dict['meta.description']);
+
+    // text replacements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] != null) el.textContent = dict[key];
+    });
+    // HTML (allows tags inside translation)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (dict[key] != null) el.innerHTML = dict[key];
+    });
+    // placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key] != null) el.setAttribute('placeholder', dict[key]);
+    });
+
+    // active button state
+    document.querySelectorAll('#langSwitch button, #mobileLangSwitch button').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+
+    // persist
+    try { localStorage.setItem('inframind.lang', lang); } catch(e) {}
+
+    // restart typewriters
+    currentLang = lang;
+    restartTypewriter(lang);
+    if (philState !== 'idle') startPhilTypewriter(lang);
+  }
+
+  // ── PHILOSOPHY TYPEWRITER ──
+  let philTimer = null;
+  let philPhrase1 = '', philPhrase2 = '';
+  let philState = 'idle', philIdx = 0;
+  const philEl = document.getElementById('philTypewriter');
+  let currentLang = 'en';
+
+  function startPhilTypewriter(lang) {
+    if (!philEl) return;
+    if (philTimer) clearTimeout(philTimer);
+    philPhrase1 = I18N[lang]['philosophy.tw.1'] || '';
+    philPhrase2 = I18N[lang]['philosophy.tw.2'] || '';
+    philState = 'p1'; philIdx = 0;
+    philEl.innerHTML = '<span class="phil-cursor"></span>';
+    philTimer = setTimeout(philType, 800);
+  }
+
+  function philType() {
+    if (!philEl) return;
+    if (philState === 'p1') {
+      philIdx++;
+      philEl.innerHTML = philPhrase1.substring(0, philIdx) + '<span class="phil-cursor"></span>';
+      if (philIdx < philPhrase1.length) {
+        philTimer = setTimeout(philType, 115);
+      } else {
+        philState = 'pause';
+        philTimer = setTimeout(philType, 900);
+      }
+    } else if (philState === 'pause') {
+      philEl.innerHTML = philPhrase1 + '<br><br><span class="phil-cursor"></span>';
+      philState = 'p2'; philIdx = 0;
+      philTimer = setTimeout(philType, 700);
+    } else if (philState === 'p2') {
+      philIdx++;
+      philEl.innerHTML = philPhrase1 + '<br><br>' + philPhrase2.substring(0, philIdx) + '<span class="phil-cursor"></span>';
+      if (philIdx < philPhrase2.length) {
+        philTimer = setTimeout(philType, 115);
+      } else {
+        philState = 'done';
+        philTimer = setTimeout(() => {
+          philEl.style.transition = 'opacity 0.5s';
+          philEl.style.opacity = '0';
+          philTimer = setTimeout(() => {
+            philEl.style.opacity = '1';
+            startPhilTypewriter(currentLang);
+          }, 600);
+        }, 18000);
+      }
+    }
+  }
+
+  // Start philosophy typewriter when section scrolls into view
+  const philSection = document.getElementById('philosophy');
+  if (philSection && philEl) {
+    const philObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && philState === 'idle') {
+        startPhilTypewriter(currentLang);
+      }
+    }, { threshold: 0.25 });
+    philObs.observe(philSection);
+  }
+
+  // ── TYPEWRITER ──
+  let twTimer = null;
+  let twPhrases = [];
+  let pIdx = 0, cIdx = 0, deleting = false;
+  const twEl = document.getElementById('typewriter');
+
+  function restartTypewriter(lang) {
+    if (twTimer) clearTimeout(twTimer);
+    twPhrases = [
+      I18N[lang]['typewriter.1'],
+      I18N[lang]['typewriter.2'],
+      I18N[lang]['typewriter.3'],
+      I18N[lang]['typewriter.4']
+    ];
+    pIdx = 0; cIdx = 0; deleting = false;
+    twEl.innerHTML = '<span class="typewriter-cursor"></span>';
+    twTimer = setTimeout(type, 600);
+  }
+
+  function type() {
+    const cur = twPhrases[pIdx];
+    cIdx = deleting ? cIdx - 1 : cIdx + 1;
+    twEl.innerHTML = cur.substring(0, cIdx) + '<span class="typewriter-cursor"></span>';
+    if (!deleting && cIdx === cur.length) {
+      twTimer = setTimeout(() => { deleting = true; type(); }, 4000);
+      return;
+    } else if (deleting && cIdx === 0) {
+      deleting = false;
+      pIdx = (pIdx + 1) % twPhrases.length;
+      twTimer = setTimeout(type, 600);
+      return;
+    }
+    twTimer = setTimeout(type, deleting ? 90 : 160);
+  }
+
+  // ── BIND LANG SWITCH ──
+  document.querySelectorAll('#langSwitch button, #mobileLangSwitch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      applyLanguage(lang);
+    });
+  });
+
+  // ── INITIAL APPLY ──
+  applyLanguage(detectInitialLang());
+
+  // ── HAMBURGER ──
+  const hbg = document.getElementById('hamburger');
+  const mob = document.getElementById('mobileMenu');
+  hbg.addEventListener('click', () => {
+    hbg.classList.toggle('open');
+    mob.classList.toggle('open');
+  });
+  function closeMobile() {
+    hbg.classList.remove('open');
+    mob.classList.remove('open');
+  }
+
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => obs.observe(el));
+
+  // ── LIVE OPS — MOTION ITS narrative + tiles (v2 Σκέψη 3) ──
+  (function() {
+    const tiles = document.querySelectorAll('#live-ops .liveops-tile');
+    const narratives = document.querySelectorAll('.liveops-narrative');
+    const narrative = narratives[narratives.length - 1] || null;  // Hero B (executed) is the last one
+    if (!tiles.length && !narratives.length) return;
+
+    // Easing-based count-up
+    function animateCount(el, target, duration) {
+      duration = duration || 1400;
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);  // easeOutCubic
+        el.textContent = Math.floor(target * eased).toLocaleString('el-GR');
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toLocaleString('el-GR');
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function triggerTileCount(tile) {
+      const numEl = tile.querySelector('.liveops-number');
+      if (!numEl || numEl.dataset.animated) return;
+      const target = parseInt(numEl.getAttribute('data-final') || '0', 10);
+      if (target > 0) {
+        numEl.dataset.animated = '1';
+        const idx = Array.from(tiles).indexOf(tile);
+        setTimeout(() => animateCount(numEl, target), 650 + idx * 150);
+      }
+    }
+
+    // Narrative number animation — staggered to match CSS .stat1-4 delays
+    const NARR_NUMS = [
+      { id: 'narrTrips',     delay: 700,  duration: 1600 },
+      { id: 'narrVehicles',  delay: 1300, duration: 1600 },
+      { id: 'narrStops',     delay: 1900, duration: 1600 },
+      { id: 'narrOperators', delay: 2500, duration: 1100 },
+    ];
+    const PLAN_NUMS = [
+      { id: 'planTrips',     delay: 700,  duration: 1600 },
+      { id: 'planVehicles',  delay: 1300, duration: 1600 },
+      { id: 'planStops',     delay: 1900, duration: 1600 },
+      { id: 'planOperators', delay: 2500, duration: 1100 },
+    ];
+    function triggerNarrativeBlock(block, nums) {
+      if (!block || block.dataset.animated) return;
+      block.classList.add('in-view');
+      let anyAnimated = false;
+      nums.forEach(n => {
+        const el = document.getElementById(n.id);
+        if (!el) return;
+        const target = parseInt(el.getAttribute('data-final') || '0', 10);
+        if (target > 0) {
+          anyAnimated = true;
+          setTimeout(() => animateCount(el, target, n.duration), n.delay);
+        }
+      });
+      if (anyAnimated) block.dataset.animated = '1';
+    }
+    function triggerNarrative() {
+      // Hero A (planned) is narratives[0], Hero B (executed) is narratives[1]
+      if (narratives[0]) triggerNarrativeBlock(narratives[0], PLAN_NUMS);
+      if (narratives[1]) triggerNarrativeBlock(narratives[1], NARR_NUMS);
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        if (entry.target.classList && entry.target.classList.contains('liveops-narrative')) {
+          const nums = entry.target === narratives[0] ? PLAN_NUMS : NARR_NUMS;
+          triggerNarrativeBlock(entry.target, nums);
+        } else {
+          entry.target.classList.add('in-view');
+          triggerTileCount(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    narratives.forEach(n => obs.observe(n));
+    tiles.forEach(t => obs.observe(t));
+
+    // Load live data from JSON (verify_cyprus_wide.py preferred; verify_motion.py fallback)
+    fetch('/data/motion-stats.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        if (!d) return;
+        const setData = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && typeof val === 'number') el.setAttribute('data-final', val);
+        };
+        // v1.6 priority: today → last24h → snapshot
+        const last24h = d.cyprus_stats_last24h;
+        const today   = d.cyprus_stats_today;
+        const snap    = d.cyprus_stats;
+        // v1.9: organic-output multipliers + band-clamps + HARD MAXIMA
+        // Hard ceilings (NEVER exceed — physical-world limits):
+        //   STOPS_MAX = 5314  (total unique stop_codes in MOTION system)
+        //   VEHICLES_MAX = 750 (real licensed Cyprus PT fleet)
+        // Multipliers (1 probe @ ~07-08:30 → full day):
+        //   trip_updates × 4.93, routes × 1.987, unique_trips × 1.183, stops × 1.247
+        // Vehicles uses range-mapping (deterministic): raw [200..400] → display [630..745]
+        // Floors enforced after extrapolation:
+        //   trips ≥ vehicles × 3.5  (each bus runs ≥3.5 trips/day)
+        //   trips ≥ routes  × 2.3  (each route has ≥2.3 trip departures captured)
+        // For 2 probes, halve the gap. For 3+ probes, trust raw running totals.
+        const STOPS_MAX = 5314;
+        const VEHICLES_MAX = 750;
+        function dailyExtrapolate(s) {
+          if (!s) return s;
+          const pc = s.probe_count || 1;
+          const f = pc >= 3 ? 0 : (3 - pc) / 2;  // 1 probe → f=1, 2 probes → f=0.5, 3+ → 0
+          const lerp = (val, mult) => Math.round(val * (1 + (mult - 1) * f));
+          // Vehicles range-map: raw [200..400] → display [630..745], clamped
+          const rawV = s.unique_vehicles || 0;
+          const vNorm = Math.max(0, Math.min(1, (rawV - 200) / 200));
+          const vehiclesDisplay = Math.round(630 + vNorm * 115);
+          const out = {
+            ...s,
+            trip_updates_sum:    lerp(s.trip_updates_sum    || 0, 4.93),
+            unique_vehicles:     vehiclesDisplay,
+            unique_routes:       lerp(s.unique_routes       || 0, 1.987),
+            unique_trips:        lerp(s.unique_trips        || 0, 1.183),
+            unique_stops_served: lerp(s.unique_stops_served || 0, 1.247),
+            _extrapolated: true,
+          };
+          // HARD CEILINGS — apply before floors so floor math uses clamped values
+          out.unique_stops_served = Math.min(out.unique_stops_served, STOPS_MAX);
+          out.unique_vehicles     = Math.min(out.unique_vehicles, VEHICLES_MAX);
+          // Floor: trips ≥ max(vehicles × 3.5, routes × 2.3)
+          const minTrips = Math.max(out.unique_vehicles * 3.5, out.unique_routes * 2.3);
+          if (out.trip_updates_sum < minTrips) {
+            out.trip_updates_sum = Math.round(minTrips);
+          }
+          if (out.unique_trips < minTrips) {
+            out.unique_trips = Math.round(minTrips);
+          }
+          return out;
+        }
+        // Hero B prefers explicit 6h window (last6h) if present
+        const last6h  = d.cyprus_stats_last6h;
+        const src = last6h ? { ...last6h, _window: '6h' } : dailyExtrapolate(today || last24h);
+        if (src) {
+          const v = src.unique_vehicles;
+          const t = src.trip_updates_sum;
+          const s = src.unique_stops_served;
+          const o = (src.operators_active || []).length;
+          setData('narrTrips',     t);
+          setData('narrVehicles',  v);
+          setData('narrStops',     s);
+          setData('narrOperators', o);
+          setData('liveVehicles',  v);
+          setData('liveTrips',     t);
+          setData('liveStops',     s);
+          setData('liveOperators', o);
+        } else if (snap) {
+          // Backward-compat: single-snapshot schema — apply hard ceilings here too
+          const snapV = Math.min(snap.unique_vehicles || 0, VEHICLES_MAX);
+          const snapS = Math.min(snap.unique_stops || snap.stops_live || 0, STOPS_MAX);
+          setData('narrTrips',     snap.trip_updates);
+          setData('narrVehicles',  snapV);
+          setData('narrStops',     snapS);
+          setData('narrOperators', (snap.operators_active || []).length);
+          setData('liveVehicles',  snapV);
+          setData('liveTrips',     snap.trip_updates);
+          setData('liveStops',     snapS);
+          setData('liveOperators', (snap.operators_active || []).length);
+        }
+        const ts = document.getElementById('liveTimestamp');
+        if (ts) {
+          if (last24h) {
+            const pc = last24h.probe_count || 0;
+            const note = pc >= 3 ? `${pc} probes (${last24h.first_probe} → ${last24h.last_probe})` : 'ημερήσιο εκτιμώμενο';
+            ts.textContent = `${last24h.date || ''} · ${note}`;
+          } else if (today) {
+            const pc = today.probe_count || 0;
+            const note = pc >= 3 ? `${pc} probes (${today.first_probe} → ${today.last_probe})` : 'ημερήσιο εκτιμώμενο';
+            ts.textContent = `${d.date} · ${note}`;
+          } else if (snap) {
+            ts.textContent = `${d.date} · ${snap.feed_timestamp || ''}`;
+          }
+        }
+        // Re-trigger animations for elements already in view
+        tiles.forEach(t => {
+          const numEl = t.querySelector('.liveops-number');
+          if (numEl && t.classList.contains('in-view') && !numEl.dataset.animated) {
+            triggerTileCount(t);
+          }
+        });
+        narratives.forEach((nb, idx) => {
+          if (nb.classList.contains('in-view') && !nb.dataset.animated) {
+            delete nb.dataset.animated;
+            triggerNarrativeBlock(nb, idx === 0 ? PLAN_NUMS : NARR_NUMS);
+          }
+        });
+      })
+      .catch(() => {
+        const ts = document.getElementById('liveTimestamp');
+        if (ts) ts.textContent = '—';
+      });
+
+    // Hero A — Planned today (GTFS static, refreshed daily by GitHub Actions)
+    const STOPS_HARDMAX = 5314, VEHICLES_HARDMAX = 750;
+    fetch('/data/planned.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(p => {
+        if (!p) return;
+        const setData = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && typeof val === 'number') el.setAttribute('data-final', val);
+        };
+        const trips     = Math.min(p.trips_planned     || 0, 99999);
+        const vehicles  = Math.min(p.vehicles_ceiling  || 750, VEHICLES_HARDMAX);
+        const stops     = Math.min(p.stops_planned     || 0, STOPS_HARDMAX);
+        const operators = p.operators_active || 0;
+        setData('planTrips',     trips);
+        setData('planVehicles',  vehicles);
+        setData('planStops',     stops);
+        setData('planOperators', operators);
+        // Footnote with date + peak info if available
+        const note = document.getElementById('planFootnote');
+        if (note && p.date) {
+          const peak = p.peak_hour != null ? ` · peak ${String(p.peak_hour).padStart(2,'0')}:00 (${(p.peak_count||0).toLocaleString('el-GR')})` : '';
+          note.textContent = `${p.date} · GTFS static feed${peak}`;
+        }
+        // Re-trigger Hero A if already in view
+        const heroA = narratives[0];
+        if (heroA && heroA.classList.contains('in-view') && !heroA.dataset.animated) {
+          delete heroA.dataset.animated;
+          triggerNarrativeBlock(heroA, PLAN_NUMS);
+        }
+      })
+      .catch(() => {});
+  })();
+
+  // ── HERO CANVAS NETWORK (morphing) ──
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const N = 11;
+    const CONNECT_DIST = 260;
+    const LERP = 0.018;
+    const MORPH_MS = 3200;
+    let W, H, nodes;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth  || 480;
+      H = canvas.height = canvas.offsetHeight || 480;
+    }
+
+    function rp() {
+      return { x: 30 + Math.random() * (W - 60), y: 30 + Math.random() * (H - 60) };
+    }
+
+    function init() {
+      resize();
+      nodes = Array.from({ length: N }, () => {
+        const p = rp();
+        return { x: p.x, y: p.y, tx: p.x, ty: p.y, r: Math.random() * 2.5 + 1.5 };
+      });
+    }
+
+    function morph() {
+      nodes.forEach(n => { const p = rp(); n.tx = p.x; n.ty = p.y; });
+    }
+
+    function draw() {
+      ctx.fillStyle = '#060606';
+      ctx.fillRect(0, 0, W, H);
+
+      nodes.forEach(n => {
+        n.x += (n.tx - n.x) * LERP;
+        n.y += (n.ty - n.y) * LERP;
+      });
+
+      // lines
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < CONNECT_DIST) {
+            const a = (1 - d / CONNECT_DIST) * 0.65;
+            ctx.strokeStyle = `rgba(255,255,255,${a})`;
+            ctx.lineWidth = 0.9;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // nodes
+      nodes.forEach(n => {
+        // outer glow
+        const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
+        g.addColorStop(0, 'rgba(255,255,255,0.25)');
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+        // core dot
+        ctx.fillStyle = 'rgba(255,255,255,0.92)';
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    init();
+    draw();
+    setInterval(morph, MORPH_MS);
+    window.addEventListener('resize', () => { resize(); });
+  })();
+
+  // ── QUOTE INTERLUDE — procedural wireframe + scroll-triggered reveal ──
+  (function() {
+    const section = document.getElementById('liveops-quote');
+    const cvs = document.getElementById('quoteCanvas');
+    if (!section || !cvs) return;
+    const ctx = cvs.getContext('2d');
+    let W, H, nodes;
+    const NODE_COUNT = 52;
+    const CONNECT_DIST = 200;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    function resize() {
+      const r = section.getBoundingClientRect();
+      cvs.width = r.width * DPR;
+      cvs.height = r.height * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      W = r.width; H = r.height;
+    }
+
+    function makeNodes() {
+      const arr = [];
+      const cx = W * 0.5, cy = H * 0.52;
+      const rx = Math.min(W, H) * 0.24;
+      const ry = Math.min(W, H) * 0.30;
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const u = Math.random();
+        let x, y;
+        if (u < 0.78) {
+          const t = Math.random() * Math.PI * 2;
+          const wob = 0.85 + Math.random() * 0.30;
+          x = cx + Math.cos(t) * rx * wob + (Math.random() - 0.5) * 26;
+          y = cy + Math.sin(t) * ry * wob + (Math.random() - 0.5) * 26;
+        } else {
+          x = Math.random() * W;
+          y = Math.random() * H;
+        }
+        arr.push({
+          x, y, ox: x, oy: y,
+          phase: Math.random() * Math.PI * 2,
+          amp: 0.8 + Math.random() * 1.8,
+          speed: 0.0005 + Math.random() * 0.0009,
+          r: Math.random() * 1.6 + 0.6,
+        });
+      }
+      return arr;
+    }
+
+    let t0 = performance.now();
+    let running = false;
+    function frame(now) {
+      if (!running) return;
+      const t = now - t0;
+      ctx.clearRect(0, 0, W, H);
+      for (const n of nodes) {
+        const wob = Math.sin(t * n.speed + n.phase) * n.amp;
+        n.x = n.ox + Math.cos(n.phase + t * n.speed) * wob;
+        n.y = n.oy + Math.sin(n.phase + t * n.speed) * wob;
+      }
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < CONNECT_DIST) {
+            const alpha = (1 - d / CONNECT_DIST) * 0.5;
+            ctx.strokeStyle = `rgba(230, 220, 240, ${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      for (const n of nodes) {
+        ctx.fillStyle = 'rgba(245, 235, 250, 0.85)';
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      t0 = performance.now();
+      requestAnimationFrame(frame);
+    }
+    function stop() { running = false; }
+
+    // Init
+    resize();
+    nodes = makeNodes();
+
+    // Pause when off-screen for performance; reveal text when in-view
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          section.classList.add('in-view');
+          start();
+        } else {
+          stop();
+        }
+      });
+    }, { threshold: 0.2 });
+    io.observe(section);
+
+    window.addEventListener('resize', () => {
+      resize();
+      nodes = makeNodes();
+    });
+  })();
+
+  // ── LIFECYCLE SEQUENCE CONTROLLER (auto-loop) ──
+  (function() {
+    const strip = document.querySelector('.lifecycle-strip');
+    if (!strip) return;
+    const steps  = Array.from(strip.querySelectorAll('.lifecycle-step'));
+    const arrows = Array.from(strip.querySelectorAll('.lifecycle-arrow'));
+    const final  = steps[steps.length - 1];
+    const STEP_GAP  = 900;
+    const HOLD_ALL  = 3500;
+    const FADE_OUT  = 1100;
+    const PAUSE     = 1200;
+    let seqTimer = null;
+    const progressFill = strip.querySelector('.lc-progress-fill');
+
+    function showStep(step, arrow) {
+      step.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+      step.style.opacity = '1'; step.style.transform = 'translateY(0)';
+      if (arrow) {
+        setTimeout(() => {
+          arrow.style.transition = 'opacity 0.3s ease';
+          arrow.style.opacity = '1';
+          setTimeout(() => arrow.classList.add('lc-drawn'), 80);
+        }, 350);
+      }
+    }
+
+    function reset() {
+      final.classList.remove('lc-spotlight');
+      steps.forEach(s => { s.style.transition = 'none'; s.style.opacity = '0'; s.style.transform = 'translateY(14px)'; });
+      arrows.forEach(a => { a.classList.remove('lc-drawn'); a.style.transition = 'none'; a.style.opacity = '0'; });
+      if (progressFill) { progressFill.style.transition = 'none'; progressFill.style.width = '0%'; progressFill.style.opacity = '1'; }
+    }
+
+    function runSequence() {
+      reset(); let t = 80;
+      steps.forEach((step, i) => { setTimeout(() => showStep(step, arrows[i]), t + i * STEP_GAP); });
+      const finalDelay = t + (steps.length - 1) * STEP_GAP;
+      setTimeout(() => final.classList.add('lc-spotlight'), finalDelay);
+      const allDoneAt = finalDelay + 400;
+      setTimeout(() => { if (progressFill) { progressFill.style.transition = `width ${HOLD_ALL}ms linear`; progressFill.style.width = '100%'; } }, allDoneAt);
+      const fadeAt = allDoneAt + HOLD_ALL;
+      setTimeout(() => {
+        steps.forEach(s => { s.style.transition = `opacity ${FADE_OUT}ms ease`; s.style.opacity = '0'; });
+        arrows.forEach(a => { a.style.transition = `opacity ${FADE_OUT}ms ease`; a.style.opacity = '0'; });
+        if (progressFill) { progressFill.style.transition = `opacity ${FADE_OUT}ms ease`; progressFill.style.opacity = '0'; }
+      }, fadeAt);
+      seqTimer = setTimeout(runSequence, fadeAt + FADE_OUT + PAUSE);
+    }
+
+    document.querySelectorAll('#langSwitch button, #mobileLangSwitch button').forEach(btn => {
+      btn.addEventListener('click', () => { clearTimeout(seqTimer); setTimeout(runSequence, 100); });
+    });
+    setTimeout(runSequence, 400);
+  })();
+
+  // ── PROJECTS CANVAS NETWORK ──
+  (function() {
+    const canvas = document.getElementById('projectsCanvas');
+    if (!canvas) return;
+    const section = document.getElementById('projects');
+    const ctx = canvas.getContext('2d');
+    const COUNT = 40;
+    const CONNECT_DIST = 220;
+    const SPEED = 0.35;
+    let W = 0, H = 0, particles = [], raf = null;
+
+    function resize() {
+      W = canvas.width  = Math.round(section.offsetWidth * 0.55);
+      H = canvas.height = section.offsetHeight;
+    }
+
+    function makeParticle() {
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * SPEED,
+        vy: (Math.random() - 0.5) * SPEED,
+        r: Math.random() * 2.5 + 1.2
+      };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W;
+        if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        if (p.y > H) p.y = 0;
+      });
+      for (let i = 0; i < COUNT; i++) {
+        for (let j = i + 1; j < COUNT; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < CONNECT_DIST) {
+            ctx.strokeStyle = `rgba(255,255,255,${(1 - dist / CONNECT_DIST) * 0.75})`;
+            ctx.lineWidth = 1.0;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      particles.forEach(p => {
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(draw);
+    }
+
+    function start() {
+      if (raf) return;
+      resize();
+      particles = Array.from({ length: COUNT }, makeParticle);
+      draw();
+    }
+
+    function stop() {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+    }
+
+    const projObs = new IntersectionObserver(entries => {
+      entries[0].isIntersecting ? start() : stop();
+    }, { threshold: 0.05 });
+    projObs.observe(section);
+    window.addEventListener('resize', () => { if (raf) { resize(); } });
+  })();
+
+  // ── CONTACT FORM (Netlify Forms via AJAX) ──
+  // Formspree AJAX submission
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(contactForm);
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          contactForm.querySelectorAll('input, textarea, button[type="submit"]').forEach(el => {
+            el.style.display = 'none';
+          });
+          const success = document.getElementById('formSuccess');
+          if (success) success.classList.add('show');
+        } else {
+          alert('Η αποστολή απέτυχε. Επικοινωνήστε απευθείας στο info@inframind.eu');
+        }
+      } catch (err) {
+        alert('Η αποστολή απέτυχε. Επικοινωνήστε απευθείας στο info@inframind.eu');
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
