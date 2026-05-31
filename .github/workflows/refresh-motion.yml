@@ -2,9 +2,13 @@ name: Refresh MOTION data
 
 on:
   schedule:
-    # Every 2 hours, 4 times a day during active hours, plus midnight (Cyprus)
-    # Cron in UTC; Cyprus = UTC+3 (EEST). So 03:00, 09:00, 15:00, 21:00 UTC ≈ 06/12/18/00 Cyprus
-    - cron: "0 3,9,15,21 * * *"
+    # Every 10 minutes during Cyprus operating hours.
+    # Cyprus = UTC+2 (EET, winter) or UTC+3 (EEST, summer).
+    # Cron range 01:00-21:59 UTC covers Cyprus 03:00-00:59 (winter) / 04:00-00:59 (summer)
+    # — buffers around the 05:00-23:00 local operating window in both DST regimes.
+    # Total: 21h × 6 = 126 runs/day. Data goes to repo only; website fetches from raw
+    # GitHub, so Netlify is not rebuilt on data commits.
+    - cron: "*/10 1-21 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -44,11 +48,26 @@ jobs:
         run: |
           git config user.name  "inframind-bot"
           git config user.email "bot@inframind.eu"
-          git add data/motion-stats.json data/planned.json data/_rolling_snapshots.json 2>/dev/null || true
+          git add \
+            data/motion-stats.json \
+            data/planned.json \
+            data/_rolling_snapshots.json \
+            data/daily_executed.json \
+            data/daily_history.json \
+            data/_trip_distances.json \
+            2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0
           fi
           ts=$(date -u +"%Y-%m-%d %H:%M UTC")
-          git commit -m "chore(data): refresh MOTION stats — $ts"
+          # [skip netlify] in message — site reads data from raw.githubusercontent.com,
+          # no rebuild needed on data refreshes.
+          git commit -m "chore(data): refresh MOTION stats — $ts [skip netlify]"
+          # Resilient push (concurrent run may have just pushed)
+          for i in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push failed (attempt $i), rebasing..."
+            git pull --rebase
+          done
           git push
