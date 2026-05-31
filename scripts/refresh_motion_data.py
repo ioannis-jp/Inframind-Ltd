@@ -53,6 +53,43 @@ AGENCY_NAMES = {
 AGENCY_IDS = list(AGENCY_NAMES.keys())
 
 
+def build_route_to_agency():
+    """Build a lookup route_id → agency_name from GTFS static routes.txt.
+    The Cyprus GTFS route_id prefix is NOT the agency_id — must be looked up.
+    """
+    import zipfile as _zip
+    mapping = {}
+    for ag in AGENCY_IDS:
+        zip_path = GTFS_STATIC_DIR / f"{ag}_google_transit.zip"
+        if not zip_path.exists():
+            continue
+        try:
+            with _zip.ZipFile(zip_path) as z:
+                with z.open("routes.txt") as f:
+                    reader = csv.DictReader(
+                        (line.decode("utf-8-sig") for line in f)
+                    )
+                    name = AGENCY_NAMES[ag]
+                    for row in reader:
+                        rid = row.get("route_id", "").strip()
+                        if rid:
+                            mapping[rid] = name
+        except Exception as e:
+            print(f"[route_lookup] skip {zip_path.name}: {e}", file=sys.stderr)
+    return mapping
+
+
+_ROUTE_TO_AGENCY = None
+
+
+def route_to_agency():
+    global _ROUTE_TO_AGENCY
+    if _ROUTE_TO_AGENCY is None:
+        _ROUTE_TO_AGENCY = build_route_to_agency()
+        print(f"[route_lookup] loaded {len(_ROUTE_TO_AGENCY)} route_id → agency mappings")
+    return _ROUTE_TO_AGENCY
+
+
 def now_utc():
     return datetime.now(timezone.utc)
 
@@ -92,12 +129,13 @@ def snapshot_from_feed(feed):
                 trips.add(v.trip.trip_id)
             if v.trip and v.trip.route_id:
                 routes.add(v.trip.route_id)
-    # Infer operators from route_id prefix (first digits = agency id in Cyprus GTFS)
+    # Resolve operators via authoritative route_id → agency_name lookup
+    # (route_id PREFIX is NOT agency_id in Cyprus GTFS — must use routes.txt mapping)
+    lookup = route_to_agency()
     for rid in routes:
-        for ag in sorted(AGENCY_IDS, key=lambda x: -len(x)):
-            if rid.startswith(ag) and AGENCY_NAMES.get(ag):
-                operators.add(AGENCY_NAMES[ag])
-                break
+        name = lookup.get(rid)
+        if name:
+            operators.add(name)
     return {
         "ts_utc": now_utc().isoformat(),
         "trips": sorted(trips),
@@ -125,14 +163,23 @@ def update_rolling(snapshot):
 
 
 def aggregate_window(buf):
-    """Union across rolling snapshots → rolling-window stats."""
-    trips, vehicles, stops, routes, operators = set(), set(), set(), set(), set()
+    """Union across rolling snapshots → rolling-window stats.
+    Operators are RE-DERIVED from routes (not trusted from snapshot field) so that
+    older buffer entries with wrong operator inference get auto-corrected.
+    """
+    trips, vehicles, stops, routes = set(), set(), set(), set()
     for s in buf:
         trips.update(s.get("trips", []))
         vehicles.update(s.get("vehicles", []))
         stops.update(s.get("stops", []))
         routes.update(s.get("routes", []))
-        operators.update(s.get("operators", []))
+    # Re-derive operators from authoritative route → agency lookup
+    lookup = route_to_agency()
+    operators = set()
+    for rid in routes:
+        name = lookup.get(rid)
+        if name:
+            operators.add(name)
     first = buf[0]["ts_utc"] if buf else None
     last = buf[-1]["ts_utc"] if buf else None
     return {
