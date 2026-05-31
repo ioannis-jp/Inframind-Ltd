@@ -1354,8 +1354,9 @@
     .tip-canvas {
       display: block;
       width: 100%;
-      height: 140px;
-      margin: 36px 0 8px;
+      height: 220px;
+      margin: 48px 0 16px;
+      background: var(--black);
       pointer-events: none;
       opacity: 0;
       transition: opacity 1.4s ease 1.5s;
@@ -3038,7 +3039,8 @@
         });
       }
       function intraCluster(nodes) {
-        ctx.strokeStyle = 'rgba(10,10,10,0.05)';
+        // intra-cluster lines — white on black background
+        ctx.strokeStyle = 'rgba(255,255,255,0.10)';
         ctx.lineWidth = 0.5;
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
@@ -3066,8 +3068,8 @@
           n.y = n.oy + Math.sin(n.phase + 1.3) * (wob * 0.6);
         });
 
-        // bridge curves (subtle black on light-grey, matches site palette)
-        ctx.strokeStyle = 'rgba(10,10,10,0.18)';
+        // bridge curves — white on black for contrast
+        ctx.strokeStyle = 'rgba(255,255,255,0.25)';
         ctx.lineWidth = 0.9;
         bridge.forEach(b => {
           const cx = (b.start.x + b.end.x) / 2;
@@ -3080,9 +3082,9 @@
         intraCluster(leftNodes);
         intraCluster(rightNodes);
 
-        // node dots
+        // node dots — white on black
         [...leftNodes, ...rightNodes].forEach(n => {
-          ctx.fillStyle = 'rgba(10,10,10,0.28)';
+          ctx.fillStyle = 'rgba(255,255,255,0.55)';
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
           ctx.fill();
@@ -3102,27 +3104,26 @@
           const y = (1 - tt) * (1 - tt) * p.line.start.y + 2 * (1 - tt) * tt * p.line.cpY + tt * tt * p.line.end.y;
           const alpha = Math.sin(p.t * Math.PI);
 
-          // outer halo (wide, low-intensity wash)
-          const g1 = ctx.createRadialGradient(x, y, 0, x, y, 38);
-          g1.addColorStop(0,   `rgba(10,10,10,${alpha * 0.72})`);
-          g1.addColorStop(0.4, `rgba(10,10,10,${alpha * 0.28})`);
-          g1.addColorStop(1,   'rgba(10,10,10,0)');
+          // outer halo — soft white wash on black
+          const g1 = ctx.createRadialGradient(x, y, 0, x, y, 44);
+          g1.addColorStop(0,   `rgba(255,255,255,${alpha * 0.85})`);
+          g1.addColorStop(0.4, `rgba(255,255,255,${alpha * 0.32})`);
+          g1.addColorStop(1,   'rgba(255,255,255,0)');
           ctx.fillStyle = g1;
           ctx.beginPath();
-          ctx.arc(x, y, 38, 0, Math.PI * 2);
+          ctx.arc(x, y, 44, 0, Math.PI * 2);
           ctx.fill();
 
-          // 4-point star-burst rays (gives the "shine" feel)
+          // 4-point + 8-point star-burst rays — white rays on black
           if (alpha > 0.35) {
-            ctx.strokeStyle = `rgba(20,20,20,${alpha * 0.55})`;
-            ctx.lineWidth = 0.7;
-            const flareR = 9 + alpha * 6;
+            ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.85})`;
+            ctx.lineWidth = 0.8;
+            const flareR = 11 + alpha * 7;
             ctx.beginPath();
             ctx.moveTo(x - flareR, y); ctx.lineTo(x + flareR, y);
             ctx.moveTo(x, y - flareR); ctx.lineTo(x, y + flareR);
             ctx.stroke();
-            // diagonal rays at half length for 8-point star feel
-            ctx.strokeStyle = `rgba(20,20,20,${alpha * 0.30})`;
+            ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.42})`;
             const dR = flareR * 0.55;
             ctx.beginPath();
             ctx.moveTo(x - dR, y - dR); ctx.lineTo(x + dR, y + dR);
@@ -3130,15 +3131,10 @@
             ctx.stroke();
           }
 
-          // dark core (anchor)
-          ctx.fillStyle = `rgba(10,10,10,${alpha})`;
-          ctx.beginPath();
-          ctx.arc(x, y, 4.0, 0, Math.PI * 2);
-          ctx.fill();
-          // bright white specular highlight (the "shine")
+          // bright pure-white core (anchor point on black)
           ctx.fillStyle = `rgba(255,255,255,${alpha})`;
           ctx.beginPath();
-          ctx.arc(x - 0.8, y - 0.8, 1.8, 0, Math.PI * 2);
+          ctx.arc(x, y, 4.0, 0, Math.PI * 2);
           ctx.fill();
         });
 
@@ -3151,23 +3147,18 @@
         sparkles.forEach(s => {
           const tt = (now - s.birth) / s.lifespan;
           const alpha = Math.sin(tt * Math.PI) * s.maxAlpha;
-          // soft halo for sparkle
+          // soft white halo
           const sg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 4);
-          sg.addColorStop(0, `rgba(10,10,10,${alpha * 0.30})`);
-          sg.addColorStop(1, 'rgba(10,10,10,0)');
+          sg.addColorStop(0, `rgba(255,255,255,${alpha * 0.40})`);
+          sg.addColorStop(1, 'rgba(255,255,255,0)');
           ctx.fillStyle = sg;
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.size * 4, 0, Math.PI * 2);
           ctx.fill();
-          // small dark twinkle
-          ctx.fillStyle = `rgba(10,10,10,${alpha * 0.65})`;
+          // bright white twinkle
+          ctx.fillStyle = `rgba(255,255,255,${alpha * 0.95})`;
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-          ctx.fill();
-          // bright pin-prick highlight in the center
-          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size * 0.45, 0, Math.PI * 2);
           ctx.fill();
         });
 
@@ -3381,7 +3372,14 @@
         }
         const ts = document.getElementById('liveTimestamp');
         if (ts) {
-          if (last24h) {
+          if (last6h) {
+            // New schema v2.0-rolling-window — primary path
+            const pc = last6h.probe_count || 0;
+            const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+            const probeWord = pc === 1 ? (lang === 'en' ? 'probe' : 'δειγματοληψία') : (lang === 'en' ? 'probes' : 'δειγματοληψίες');
+            const windowLabel = lang === 'en' ? `last ${last6h.window_hours || 6}h` : `τελευταίες ${last6h.window_hours || 6} ώρες`;
+            ts.textContent = `${d.date} · ${windowLabel} · ${pc} ${probeWord}`;
+          } else if (last24h) {
             const pc = last24h.probe_count || 0;
             const note = pc >= 3 ? `${pc} probes (${last24h.first_probe} → ${last24h.last_probe})` : 'ημερήσιο εκτιμώμενο';
             ts.textContent = `${last24h.date || ''} · ${note}`;
