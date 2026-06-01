@@ -2050,8 +2050,8 @@
     <p class="narr-freshness" id="heroAFreshness" aria-live="polite">&mdash;</p>
   </div>
 
-  <!-- HERO B — EXECUTED LAST 6H (GTFS-RT rolling window) -->
-  <div class="liveops-narrative">
+  <!-- HERO B — EXECUTED LAST 6H (GTFS-RT rolling window) — HIDDEN until polling cadence stabilizes -->
+  <div class="liveops-narrative" style="display:none">
     <div class="narr-pulse-row">
       <span class="narr-pulse-dot" aria-hidden="true"></span>
       <span data-i18n="liveops.narr.live">Continuous operation · public GTFS-RT open data</span>
@@ -2099,8 +2099,8 @@
     <p class="narr-freshness" id="heroBFreshness" aria-live="polite">&mdash;</p>
   </div>
 
-  <!-- HERO C — DAILY DELIVERY (planned vs executed km, finalized previous day at ~midnight Cyprus) -->
-  <div class="liveops-narrative" id="heroC" data-anim-set="hist">
+  <!-- HERO C — DAILY DELIVERY (planned vs executed km) — HIDDEN until daily rollover proven reliable -->
+  <div class="liveops-narrative" id="heroC" data-anim-set="hist" style="display:none">
     <div class="narr-pulse-row">
       <span class="narr-pulse-dot" aria-hidden="true"></span>
       <span data-i18n="liveops.heroC.label">Daily delivery · estimated from open data</span>
@@ -2140,7 +2140,7 @@
     <p class="narr-freshness" id="heroCFreshness" aria-live="polite">&mdash;</p>
   </div>
 
-  <!-- HERO C TILES — yesterday's daily reckoning (4-tile grid matching Hero B aesthetic) -->
+  <!-- PLANNED KM TILE — only reliable metric while polling cadence stabilizes -->
   <div class="liveops-grid liveops-grid-hist">
     <div class="liveops-tile">
       <div class="liveops-icon" aria-hidden="true">
@@ -2155,9 +2155,10 @@
         </svg>
       </div>
       <div class="liveops-number" id="histTilePlanKm" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.histTile.planKm">Planned km (yesterday)</div>
+      <div class="liveops-label" data-i18n="liveops.histTile.planKm">Planned km (today)</div>
     </div>
-    <div class="liveops-tile">
+    <!-- Executed km / Delivery rate / Polls tiles HIDDEN until polling cadence stabilizes -->
+    <div class="liveops-tile" style="display:none">
       <div class="liveops-icon" aria-hidden="true">
         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
           <path d="M 6 38 L 18 26 L 26 32 L 42 12"/>
@@ -2169,7 +2170,7 @@
       <div class="liveops-number" id="histTileExecKm" data-final="0">&mdash;</div>
       <div class="liveops-label" data-i18n="liveops.histTile.execKm">Executed km · estimated</div>
     </div>
-    <div class="liveops-tile">
+    <div class="liveops-tile" style="display:none">
       <div class="liveops-icon" aria-hidden="true">
         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="24" cy="24" r="16"/>
@@ -2181,7 +2182,7 @@
       <div class="liveops-number"><span id="histTileDeliveryPct" data-final="0">&mdash;</span><span class="liveops-unit">%</span></div>
       <div class="liveops-label" data-i18n="liveops.histTile.delivery">Delivery rate (yesterday)</div>
     </div>
-    <div class="liveops-tile">
+    <div class="liveops-tile" style="display:none">
       <div class="liveops-icon" aria-hidden="true">
         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="24" cy="24" r="3" fill="currentColor"/>
@@ -2198,7 +2199,8 @@
     </div>
   </div>
 
-  <div class="liveops-grid">
+  <!-- HERO B TILES (Buses / Trips / Stops / Operators - last 6h) - HIDDEN until polling cadence stabilizes -->
+  <div class="liveops-grid" style="display:none">
     <div class="liveops-tile">
       <div class="liveops-icon" aria-hidden="true">
         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -2269,7 +2271,8 @@
     </div>
   </div>
 
-  <div class="liveops-footer reveal">
+  <!-- Footer with live timestamp - HIDDEN until polling cadence stabilizes -->
+  <div class="liveops-footer reveal" style="display:none">
     <p class="liveops-meta">
       <span data-i18n="liveops.updated">Last updated:</span> <span id="liveTimestamp">&mdash;</span>
       <span class="sep">·</span>
@@ -2514,7 +2517,7 @@
       'liveops.heroC.tail': ' &mdash; <strong>daily reckoning</strong> estimated from GTFS-RT open data, finalized automatically each night.',
       'liveops.heroC.badge': 'Daily reckoning · INFRAMIND analytics',
       'liveops.heroC.note': 'Estimate based on trip observations in the GTFS-RT feed throughout the day. Margin ±3–15%. Some trips may not have been observed.',
-      'liveops.histTile.planKm':  'Planned km (yesterday)',
+      'liveops.histTile.planKm':  'Planned km (today)',
       'liveops.histTile.execKm':  'Executed km · estimated',
       'liveops.histTile.delivery':'Delivery rate (yesterday)',
       'liveops.histTile.polls':   'Observations · sampling polls',
@@ -2637,7 +2640,7 @@
       'liveops.heroC.tail': ' &mdash; <strong>απολογιστική εκτίμηση</strong> από τα ανοιχτά δεδομένα GTFS-RT, οριστικοποιείται αυτόματα κάθε νύχτα.',
       'liveops.heroC.badge': 'Ημερήσιος απολογισμός · INFRAMIND analytics',
       'liveops.heroC.note': 'Εκτίμηση βασισμένη στην παρατήρηση των trips στο GTFS-RT feed κατά τη διάρκεια της ημέρας. Σφάλμα ±3–15%. Ορισμένα trips ενδέχεται να μην παρατηρήθηκαν.',
-      'liveops.histTile.planKm':  'Προγραμματισμένα χλμ. (χθες)',
+      'liveops.histTile.planKm':  'Προγραμματισμένα χλμ. (σήμερα)',
       'liveops.histTile.execKm':  'Εκτελεσμένα χλμ. · εκτιμώμενα',
       'liveops.histTile.delivery':'Βαθμός παροχής (χθες)',
       'liveops.histTile.polls':   'Παρατηρήσεις · δειγματοληψίες',
@@ -3463,6 +3466,19 @@
         setData('planVehicles',  vehicles);
         setData('planStops',     stops);
         setData('planOperators', operators);
+        // Planned km (today) tile — sourced from planned.json directly since
+        // daily_history rollover is not yet proven reliable.
+        if (typeof p.km_planned === 'number') {
+          setData('histTilePlanKm', Math.round(p.km_planned));
+          // Trigger tile animation if already in view
+          const tipEl = document.getElementById('histTilePlanKm');
+          if (tipEl) {
+            const tile = tipEl.closest('.liveops-tile');
+            if (tile && tile.classList.contains('in-view') && !tipEl.dataset.animated) {
+              triggerTileCount(tile);
+            }
+          }
+        }
         // Footnote with date + peak info if available
         const note = document.getElementById('planFootnote');
         if (note && p.date) {
