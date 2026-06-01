@@ -3500,10 +3500,8 @@
         setData('planVehicles',  vehicles);
         setData('planStops',     stops);
         setData('planOperators', operators);
-        // Planned km (today) tile — from planned.json directly, independent of daily_history
-        if (typeof p.km_planned === 'number') {
-          setData('histTilePlanKm', Math.round(p.km_planned));
-        }
+        // Hero C planned-km tile is intentionally NOT populated from planned.json (full-day
+        // total) — it tracks cumulative-by-now from daily_executed.json.progress instead.
         // Footnote with date + peak info if available
         const note = document.getElementById('planFootnote');
         if (note && p.date) {
