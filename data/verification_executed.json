@@ -1,20 +1,20 @@
 {
   "schema": "v1.0-verification-executed",
-  "verified_at_utc": "2026-06-01T07:56:36.519512+00:00",
+  "verified_at_utc": "2026-06-01T08:00:30.255338+00:00",
   "date": "2026-06-01",
   "progress": {
-    "cyprus_hour": 10,
-    "expected_trips_by_now": 2063,
-    "expected_km_by_now": 45237.3,
-    "expected_pct_of_day": 36.1,
-    "observed_trips": 356,
+    "cyprus_hour": 11,
+    "expected_trips_by_now": 2394,
+    "expected_km_by_now": 52495.4,
+    "expected_pct_of_day": 41.9,
+    "observed_trips": 373,
     "observed_km": 0.0,
-    "delivery_ratio_trips": 0.173,
+    "delivery_ratio_trips": 0.156,
     "delivery_ratio_km": 0.0,
     "delivery_pct_vs_expected": 0.0
   },
   "issues": [
-    "BELOW_EXPECTED:0.17"
+    "BELOW_EXPECTED:0.16"
   ],
   "verdict": "WARN"
 }
