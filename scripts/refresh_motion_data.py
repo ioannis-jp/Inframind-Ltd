@@ -495,6 +495,18 @@ def planned_needs_refresh():
     p = DATA_DIR / "planned.json"
     if not p.exists():
         return True
+    # Also regenerate if the trip_distances cache is missing/empty — otherwise
+    # update_daily_executed will compute km as 0 even when trips are observed.
+    if not TRIP_DIST_PATH.exists():
+        return True
+    try:
+        td = json.loads(TRIP_DIST_PATH.read_text())
+        if not td.get("trip_distances_m"):
+            return True
+        if td.get("date") != now_cyprus().date().isoformat():
+            return True
+    except Exception:
+        return True
     try:
         existing = json.loads(p.read_text())
         return existing.get("date") != now_cyprus().date().isoformat()
