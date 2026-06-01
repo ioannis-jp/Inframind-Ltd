@@ -1131,6 +1131,16 @@
       vertical-align: top;
       letter-spacing: 0;
     }
+    /* Append a unit suffix via CSS ::after — survives animation textContent rewrites */
+    .liveops-number[data-suffix]::after {
+      content: " " attr(data-suffix);
+      font-size: 0.5em;
+      font-weight: 500;
+      color: var(--grey);
+      margin-left: 6px;
+      vertical-align: top;
+      letter-spacing: 0;
+    }
     /* Hero C tile grid sits under Hero C narrative — same visual rhythm */
     .liveops-grid-hist {
       margin-top: 32px;
@@ -2099,6 +2109,105 @@
     <p class="narr-freshness" id="heroBFreshness" aria-live="polite">&mdash;</p>
   </div>
 
+  <!-- HERO C — REAL-TIME DELIVERY vs schedule-cumulative-by-now (NOT full-day totals) -->
+  <div class="liveops-narrative" id="heroC" data-anim-set="hist">
+    <div class="narr-pulse-row">
+      <span class="narr-pulse-dot" aria-hidden="true"></span>
+      <span data-i18n="liveops.heroC.label">Real-time delivery · vs schedule-cumulative-by-now</span>
+    </div>
+    <p class="narr-body">
+      <span class="lead" data-i18n="liveops.heroC.lead">Έως τώρα σήμερα, το δίκτυο πρόσφερε εκτιμώμενα</span>
+      <span class="narr-stat stat1">
+        <span class="narr-num" id="histExecKm" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.heroC.kmexec">χλμ.</span>
+      </span>
+      <span class="narr-stat stat2">
+        <span data-i18n="liveops.heroC.conn1">· από</span>
+        <span class="narr-num" id="histPlanKm" data-final="0">—</span>
+        <span class="narr-noun" data-i18n="liveops.heroC.kmplan">χλμ. προγραμματισμένα έως τώρα</span>
+      </span>
+      <span class="narr-stat stat3">
+        <span data-i18n="liveops.heroC.conn2">· βαθμός παροχής</span>
+        <span class="narr-num" id="histExecPct" data-final="0">—</span>
+        <span class="narr-noun">%</span>
+      </span>
+      <span class="tail" data-i18n-html="liveops.heroC.tail">.</span>
+    </p>
+    <div class="narr-attribution">
+      <span class="attr-badge attr-inframind">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="14" x2="10" y2="14"/>
+          <line x1="13" y1="14" x2="17" y2="14"/>
+        </svg>
+        <span data-i18n="liveops.heroC.badge">Real-time delivery · INFRAMIND analytics</span>
+      </span>
+      <span class="attr-text" id="histFootnote" data-i18n="liveops.heroC.note">Πραγματικός χρόνος · GTFS-RT open data · INFRAMIND analytics</span>
+    </div>
+    <p class="narr-freshness" id="heroCFreshness" aria-live="polite">&mdash;</p>
+  </div>
+
+  <!-- HERO C TILES — yesterday's daily reckoning (4-tile grid) -->
+  <div class="liveops-grid liveops-grid-hist">
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="10" width="36" height="28" rx="2"/>
+          <line x1="6" y1="18" x2="42" y2="18"/>
+          <line x1="14" y1="6" x2="14" y2="14"/>
+          <line x1="34" y1="6" x2="34" y2="14"/>
+          <line x1="12" y1="26" x2="20" y2="26"/>
+          <line x1="24" y1="26" x2="32" y2="26"/>
+          <line x1="12" y1="32" x2="20" y2="32"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="histTilePlanKm" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.histTile.planKm">Scheduled km · cumulative by now</div>
+    </div>
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 6 38 L 18 26 L 26 32 L 42 12"/>
+          <polyline points="34 12 42 12 42 20"/>
+          <circle cx="18" cy="26" r="1.8" fill="currentColor"/>
+          <circle cx="26" cy="32" r="1.8" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="histTileExecKm" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.histTile.execKm">Executed km · observed</div>
+    </div>
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="24" cy="24" r="16"/>
+          <path d="M 24 8 A 16 16 0 0 1 38 32 L 24 24 Z" fill="currentColor" fill-opacity="0.15" stroke="none"/>
+          <line x1="24" y1="24" x2="24" y2="8"/>
+          <line x1="24" y1="24" x2="38" y2="32"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="histTileDeliveryPct" data-final="0" data-suffix="%">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.histTile.delivery">Delivery rate · now</div>
+    </div>
+    <div class="liveops-tile">
+      <div class="liveops-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="24" cy="24" r="3" fill="currentColor"/>
+          <circle cx="24" cy="24" r="9"/>
+          <circle cx="24" cy="24" r="16"/>
+          <line x1="24" y1="8" x2="24" y2="12"/>
+          <line x1="24" y1="36" x2="24" y2="40"/>
+          <line x1="8" y1="24" x2="12" y2="24"/>
+          <line x1="36" y1="24" x2="40" y2="24"/>
+        </svg>
+      </div>
+      <div class="liveops-number" id="histTilePolls" data-final="0">&mdash;</div>
+      <div class="liveops-label" data-i18n="liveops.histTile.polls">Observations · cumulative polls</div>
+    </div>
+  </div>
+
   <!-- Tile grid — last 6h executed (from GTFS-RT rolling window) -->
   <div class="liveops-grid">
     <div class="liveops-tile">
@@ -2407,6 +2516,19 @@
       'liveops.narr.badge.motion': 'Public open data · MOTION ITS',
       'liveops.narr.badge.inframind': 'Quality monitoring · INFRAMIND',
       'liveops.narr.note': 'The <strong>backbone</strong> of Cyprus public transport: 7 operators, nationwide, continuous operation. Data is <strong>freely available</strong> as a public GTFS-Realtime feed — INFRAMIND continuously monitors its reliability.',
+      'liveops.heroC.label': 'Real-time delivery · vs schedule-cumulative-by-now',
+      'liveops.heroC.lead': 'So far today, the network has run an estimated',
+      'liveops.heroC.kmexec': 'km',
+      'liveops.heroC.conn1': '· out of',
+      'liveops.heroC.kmplan': 'km scheduled by this hour',
+      'liveops.heroC.conn2': '· delivery rate',
+      'liveops.heroC.tail': '.',
+      'liveops.heroC.badge': 'Real-time delivery · INFRAMIND analytics',
+      'liveops.heroC.note': 'Real-time · GTFS-RT open data · INFRAMIND analytics',
+      'liveops.histTile.planKm':  'Scheduled km · cumulative by now',
+      'liveops.histTile.execKm':  'Executed km · observed',
+      'liveops.histTile.delivery':'Delivery rate · now',
+      'liveops.histTile.polls':   'Observations · cumulative polls',
       'liveops.heroC.label': 'Daily delivery · estimated from open data',
       'liveops.heroC.lead': 'Yesterday, the network ran an estimated',
       'liveops.heroC.kmexec': 'km',
@@ -2571,6 +2693,19 @@
       'liveops.narr.badge.motion': 'Public open data · MOTION ITS',
       'liveops.narr.badge.inframind': 'Quality monitoring · INFRAMIND',
       'liveops.narr.note': 'Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.',
+      'liveops.heroC.label': 'Παροχή σε πραγματικό χρόνο · σε σχέση με το προγραμματισμένο έως τώρα',
+      'liveops.heroC.lead': 'Έως τώρα σήμερα, το δίκτυο πρόσφερε εκτιμώμενα',
+      'liveops.heroC.kmexec': 'χλμ.',
+      'liveops.heroC.conn1': '· από',
+      'liveops.heroC.kmplan': 'χλμ. προγραμματισμένα έως τώρα',
+      'liveops.heroC.conn2': '· βαθμός παροχής',
+      'liveops.heroC.tail': '.',
+      'liveops.heroC.badge': 'Παροχή σε πραγματικό χρόνο · INFRAMIND analytics',
+      'liveops.heroC.note': 'Πραγματικός χρόνος · GTFS-RT open data · INFRAMIND analytics',
+      'liveops.histTile.planKm':  'Προγραμματισμένα χλμ. · σωρευτικά έως τώρα',
+      'liveops.histTile.execKm':  'Εκτελεσμένα χλμ. · παρατηρημένα',
+      'liveops.histTile.delivery':'Βαθμός παροχής · τώρα',
+      'liveops.histTile.polls':   'Παρατηρήσεις · σωρευτικές δειγματοληψίες',
       'philosophy.label': 'Φιλοσοφία',
       'philosophy.title': 'Τεχνοφιλία — <span class="light">τεχνολογία με σκοπό</span>',
       'philosophy.body': 'Η τεχνολογία δεν παρουσιάζεται ως αυτοσκοπός. Είναι μέσο για να παράγονται <strong>καλύτερες υπηρεσίες</strong>, πιο ήρεμες και καθαρές εμπειρίες για τον πολίτη, πιο λειτουργικές πόλεις και συστήματα, και έργα με <strong>πραγματικό κοινωνικό αντίκτυπο</strong>.<br><br>Κάθε έργο πρέπει να συνδυάζει λειτουργικότητα και αισθητική. Το έργο πρέπει να αποπνέει <strong>σεβασμό, παιδεία, αρμονία και διαχρονικότητα</strong>. Η κοινωνία πρέπει να λαμβάνει πίσω πραγματική αξία — όχι «ψηφιακές βιτρίνες».<br><br>Η πραγματική τεχνολογία δεν ζητά προσοχή. Γίνεται συνήθεια.',
@@ -3131,8 +3266,14 @@
       { id: 'planStops',     delay: 1900, duration: 1600 },
       { id: 'planOperators', delay: 2500, duration: 1100 },
     ];
+    const HIST_NUMS = [
+      { id: 'histExecKm',  delay: 700,  duration: 1800 },
+      { id: 'histPlanKm',  delay: 1300, duration: 1800 },
+      { id: 'histExecPct', delay: 1900, duration: 1200 },
+    ];
     function numsForNarrative(el) {
       if (!el) return NARR_NUMS;
+      if (el.id === 'heroC' || el.dataset.animSet === 'hist') return HIST_NUMS;
       return el === narratives[0] ? PLAN_NUMS : NARR_NUMS;
     }
     function triggerNarrativeBlock(block, nums) {
@@ -3359,6 +3500,10 @@
         setData('planVehicles',  vehicles);
         setData('planStops',     stops);
         setData('planOperators', operators);
+        // Planned km (today) tile — from planned.json directly, independent of daily_history
+        if (typeof p.km_planned === 'number') {
+          setData('histTilePlanKm', Math.round(p.km_planned));
+        }
         // Footnote with date + peak info if available
         const note = document.getElementById('planFootnote');
         if (note && p.date) {
@@ -3374,6 +3519,77 @@
         }
       })
       .catch(() => {});
+
+    // Hero C — TODAY's REAL-TIME delivery vs expected-by-now (NOT vs full-day total).
+    // The script writes progress + verification fields into daily_executed.json on every
+    // Cloudflare-triggered poll. We surface observed_so_far AND expected_by_now (cumulative
+    // schedule up to current hour from hour_distribution) — the only meaningful ratio.
+    fetch(DATA_BASE + '/daily_executed.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        if (!d) return;
+        const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+        const setData = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && typeof val === 'number') el.setAttribute('data-final', val);
+        };
+        const prog = d.progress || {};
+        const expectedKmByNow = Math.round(prog.expected_km_by_now || 0);
+        const observedKm      = Math.round(prog.observed_km || d.km_executed_estimated || 0);
+        const deliveryPct     = Math.round(prog.delivery_pct_vs_expected || 0);
+        const polls           = d.poll_count || 0;
+        const hour            = prog.cyprus_hour;
+
+        // Tiles — labels say "(ΕΩΣ ΤΩΡΑ)" not "(ΣΗΜΕΡΑ)" because they're cumulative
+        // up to the current Cyprus hour, not full-day totals.
+        setData('histTilePlanKm',      expectedKmByNow);
+        setData('histTileExecKm',      observedKm);
+        setData('histTileDeliveryPct', deliveryPct);
+        setData('histTilePolls',       polls);
+        // Narrative numbers (mirror of tiles)
+        setData('histPlanKm',  expectedKmByNow);
+        setData('histExecKm',  observedKm);
+        setData('histExecPct', deliveryPct);
+
+        // Footer + tile labels reflect the "by now" framing
+        const planLabel = document.querySelector('.liveops-grid-hist .liveops-tile:nth-child(1) .liveops-label');
+        const execLabel = document.querySelector('.liveops-grid-hist .liveops-tile:nth-child(2) .liveops-label');
+        const dlvLabel  = document.querySelector('.liveops-grid-hist .liveops-tile:nth-child(3) .liveops-label');
+        const pollLabel = document.querySelector('.liveops-grid-hist .liveops-tile:nth-child(4) .liveops-label');
+        if (planLabel) planLabel.textContent = lang === 'en' ? `Scheduled km (by ${hour ?? '—'}:00)` : `Προγραμματισμένα χλμ. (έως ${hour ?? '—'}:00)`;
+        if (execLabel) execLabel.textContent = lang === 'en' ? 'Executed km · observed' : 'Εκτελεσμένα χλμ. · παρατηρημένα';
+        if (dlvLabel)  dlvLabel.textContent  = lang === 'en' ? 'Delivery rate (now)' : 'Βαθμός παροχής (τώρα)';
+        if (pollLabel) pollLabel.textContent = lang === 'en' ? 'Observations · cumulative' : 'Παρατηρήσεις · σωρευτικές';
+
+        // Narrative connector and lead — rewrite to reflect the real-time framing
+        const leadEl = document.querySelector('#heroC .narr-body .lead');
+        if (leadEl) leadEl.textContent = lang === 'en' ? `By ${hour ?? '—'}:00 today, the network had run an estimated` : `Έως τις ${hour ?? '—'}:00 σήμερα, το δίκτυο πρόσφερε εκτιμώμενα`;
+        const kmplanLabel = document.querySelector('#heroC .narr-body .stat2 .narr-noun');
+        if (kmplanLabel) kmplanLabel.textContent = lang === 'en' ? 'km scheduled by this hour' : 'χλμ. προγραμματισμένα έως τώρα';
+
+        const note = document.getElementById('histFootnote');
+        if (note) {
+          note.textContent = lang === 'en'
+            ? `${d.date} · real-time · GTFS-RT open data · INFRAMIND analytics`
+            : `${d.date} · πραγματικός χρόνος · GTFS-RT open data · INFRAMIND analytics`;
+        }
+        setFreshness('heroCFreshness', d.last_updated_utc);
+
+        const heroC = document.getElementById('heroC');
+        if (heroC && heroC.classList.contains('in-view') && !heroC.dataset.animated) {
+          delete heroC.dataset.animated;
+          triggerNarrativeBlock(heroC, HIST_NUMS);
+        }
+      })
+      .catch(() => {
+        const note = document.getElementById('histFootnote');
+        if (note) {
+          const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+          note.textContent = lang === 'en'
+            ? 'Real-time delivery metric will appear once the polling pipeline is producing data.'
+            : 'Ο βαθμός παροχής θα εμφανιστεί μόλις ο μηχανισμός πολίνγκ αρχίσει να παράγει δεδομένα.';
+        }
+      });
 
   })();
 

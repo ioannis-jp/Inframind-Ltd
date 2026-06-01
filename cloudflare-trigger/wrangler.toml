@@ -1,0 +1,21 @@
+name = "inframind-motion-trigger"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+# Cron triggers — Cloudflare runs reliably at the configured cadence.
+# Run 24/7 every 5 minutes — Cyprus PT has trips even in the late-night and
+# early-morning hours (intercity, airport routes), so we don't skip any window.
+# 288 dispatches/day, well within Cloudflare free tier (100,000 req/day).
+[triggers]
+crons = ["*/5 * * * *"]
+
+# Plain-text vars (visible in Worker config; do NOT put secrets here)
+[vars]
+GITHUB_OWNER  = "ioannis-jp"
+GITHUB_REPO   = "Inframind-Ltd"
+WORKFLOW_FILE = "refresh-motion.yml"
+GITHUB_REF    = "main"
+
+# Secrets (set via CLI, NOT in this file):
+#   wrangler secret put GITHUB_PAT
+#   wrangler secret put TRIGGER_KEY   # optional, for HTTPS /trigger endpoint

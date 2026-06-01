@@ -1,10 +1,19 @@
 {
-  "schema": "v1.0-planned",
+  "schema": "v1.2-planned",
   "date": "2026-06-01",
-  "generated_at_utc": "2026-06-01T05:47:19.027033+00:00",
+  "generated_at_utc": "2026-06-01T06:46:32.753091+00:00",
   "trips_planned": 5715,
   "stops_planned": 5211,
   "vehicles_ceiling": 731,
+  "km_planned": 125318.0,
+  "km_planned_raw": 117119.6,
+  "verification": {
+    "verdict": "WARN",
+    "issues": [
+      "DELTA_VS_BASELINE>20%:today=117120_baseline=78273"
+    ],
+    "verified_at_utc": "2026-06-01T06:46:32.752518+00:00"
+  },
   "operators_active": 7,
   "operators_list": [
     "ΟΣΥΠΑ",
