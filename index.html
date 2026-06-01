@@ -2050,8 +2050,8 @@
     <p class="narr-freshness" id="heroAFreshness" aria-live="polite">&mdash;</p>
   </div>
 
-  <!-- HERO B — EXECUTED LAST 6H (GTFS-RT rolling window) — HIDDEN until polling cadence stabilizes -->
-  <div class="liveops-narrative" style="display:none">
+  <!-- HERO B — EXECUTED LAST 6H (GTFS-RT rolling window) -->
+  <div class="liveops-narrative">
     <div class="narr-pulse-row">
       <span class="narr-pulse-dot" aria-hidden="true"></span>
       <span data-i18n="liveops.narr.live">Continuous operation · public GTFS-RT open data</span>
@@ -2099,108 +2099,8 @@
     <p class="narr-freshness" id="heroBFreshness" aria-live="polite">&mdash;</p>
   </div>
 
-  <!-- HERO C — DAILY DELIVERY (planned vs executed km) — HIDDEN until daily rollover proven reliable -->
-  <div class="liveops-narrative" id="heroC" data-anim-set="hist" style="display:none">
-    <div class="narr-pulse-row">
-      <span class="narr-pulse-dot" aria-hidden="true"></span>
-      <span data-i18n="liveops.heroC.label">Daily delivery · estimated from open data</span>
-    </div>
-    <p class="narr-body">
-      <span class="lead" data-i18n="liveops.heroC.lead">Χθες, το δίκτυο πρόσφερε εκτιμώμενα</span>
-      <span class="narr-stat stat1">
-        <span class="narr-num" id="histExecKm" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.heroC.kmexec">χλμ.</span>
-      </span>
-      <span class="narr-stat stat2">
-        <span data-i18n="liveops.heroC.conn1">· από</span>
-        <span class="narr-num" id="histPlanKm" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.heroC.kmplan">χλμ. προγραμματισμένα</span>
-      </span>
-      <span class="narr-stat stat3">
-        <span data-i18n="liveops.heroC.conn2">· βαθμός παροχής</span>
-        <span class="narr-num" id="histExecPct" data-final="0">—</span>
-        <span class="narr-noun">%</span>
-      </span>
-      <span class="tail" data-i18n-html="liveops.heroC.tail"> &mdash; <strong>απολογιστική εκτίμηση</strong> από τα ανοιχτά δεδομένα GTFS-RT, οριστικοποιείται αυτόματα κάθε νύχτα.</span>
-    </p>
-    <div class="narr-attribution">
-      <span class="attr-badge attr-inframind">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="16" rx="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="14" x2="10" y2="14"/>
-          <line x1="13" y1="14" x2="17" y2="14"/>
-        </svg>
-        <span data-i18n="liveops.heroC.badge">Daily reckoning · INFRAMIND analytics</span>
-      </span>
-      <span class="attr-text" id="histFootnote" data-i18n="liveops.heroC.note">Εκτίμηση βασισμένη στην παρατήρηση των trips στο GTFS-RT feed κατά τη διάρκεια της ημέρας. Σφάλμα ±3–15%. Ορισμένα trips ενδέχεται να μην παρατηρήθηκαν.</span>
-    </div>
-    <p class="narr-freshness" id="heroCFreshness" aria-live="polite">&mdash;</p>
-  </div>
-
-  <!-- All Hero C tiles HIDDEN — show only Hero A narrative until pipeline is reliable -->
-  <div class="liveops-grid liveops-grid-hist" style="display:none">
-    <div class="liveops-tile">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="6" y="10" width="36" height="28" rx="2"/>
-          <line x1="6" y1="18" x2="42" y2="18"/>
-          <line x1="14" y1="6" x2="14" y2="14"/>
-          <line x1="34" y1="6" x2="34" y2="14"/>
-          <line x1="12" y1="26" x2="20" y2="26"/>
-          <line x1="24" y1="26" x2="32" y2="26"/>
-          <line x1="12" y1="32" x2="20" y2="32"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="histTilePlanKm" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.histTile.planKm">Planned km (today)</div>
-    </div>
-    <!-- Executed km / Delivery rate / Polls tiles HIDDEN until polling cadence stabilizes -->
-    <div class="liveops-tile" style="display:none">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M 6 38 L 18 26 L 26 32 L 42 12"/>
-          <polyline points="34 12 42 12 42 20"/>
-          <circle cx="18" cy="26" r="1.8" fill="currentColor"/>
-          <circle cx="26" cy="32" r="1.8" fill="currentColor"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="histTileExecKm" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.histTile.execKm">Executed km · estimated</div>
-    </div>
-    <div class="liveops-tile" style="display:none">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="24" cy="24" r="16"/>
-          <path d="M 24 8 A 16 16 0 0 1 38 32 L 24 24 Z" fill="currentColor" fill-opacity="0.15" stroke="none"/>
-          <line x1="24" y1="24" x2="24" y2="8"/>
-          <line x1="24" y1="24" x2="38" y2="32"/>
-        </svg>
-      </div>
-      <div class="liveops-number"><span id="histTileDeliveryPct" data-final="0">&mdash;</span><span class="liveops-unit">%</span></div>
-      <div class="liveops-label" data-i18n="liveops.histTile.delivery">Delivery rate (yesterday)</div>
-    </div>
-    <div class="liveops-tile" style="display:none">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="24" cy="24" r="3" fill="currentColor"/>
-          <circle cx="24" cy="24" r="9"/>
-          <circle cx="24" cy="24" r="16"/>
-          <line x1="24" y1="8" x2="24" y2="12"/>
-          <line x1="24" y1="36" x2="24" y2="40"/>
-          <line x1="8" y1="24" x2="12" y2="24"/>
-          <line x1="36" y1="24" x2="40" y2="24"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="histTilePolls" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.histTile.polls">Observations · sampling polls</div>
-    </div>
-  </div>
-
-  <!-- HERO B TILES (Buses / Trips / Stops / Operators - last 6h) - HIDDEN until polling cadence stabilizes -->
-  <div class="liveops-grid" style="display:none">
+  <!-- Tile grid — last 6h executed (from GTFS-RT rolling window) -->
+  <div class="liveops-grid">
     <div class="liveops-tile">
       <div class="liveops-icon" aria-hidden="true">
         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -2271,8 +2171,7 @@
     </div>
   </div>
 
-  <!-- Footer with live timestamp - HIDDEN until polling cadence stabilizes -->
-  <div class="liveops-footer reveal" style="display:none">
+  <div class="liveops-footer reveal">
     <p class="liveops-meta">
       <span data-i18n="liveops.updated">Last updated:</span> <span id="liveTimestamp">&mdash;</span>
       <span class="sep">·</span>
@@ -3232,14 +3131,8 @@
       { id: 'planStops',     delay: 1900, duration: 1600 },
       { id: 'planOperators', delay: 2500, duration: 1100 },
     ];
-    const HIST_NUMS = [
-      { id: 'histExecKm',  delay: 700,  duration: 1800 },
-      { id: 'histPlanKm',  delay: 1300, duration: 1800 },
-      { id: 'histExecPct', delay: 1900, duration: 1200 },
-    ];
     function numsForNarrative(el) {
       if (!el) return NARR_NUMS;
-      if (el.id === 'heroC' || el.dataset.animSet === 'hist') return HIST_NUMS;
       return el === narratives[0] ? PLAN_NUMS : NARR_NUMS;
     }
     function triggerNarrativeBlock(block, nums) {
@@ -3361,7 +3254,7 @@
           setData('liveStops',     s);
           setData('liveOperators', o);
         } else if (snap) {
-          // Backward-compat: single-snapshot schema — apply hard ceilings here too
+          // Backward-compat single-snapshot schema with hard ceilings
           const snapV = Math.min(snap.unique_vehicles || 0, VEHICLES_MAX);
           const snapS = Math.min(snap.unique_stops || snap.stops_live || 0, STOPS_MAX);
           setData('narrTrips',     snap.trip_updates);
@@ -3466,19 +3359,6 @@
         setData('planVehicles',  vehicles);
         setData('planStops',     stops);
         setData('planOperators', operators);
-        // Planned km (today) tile — sourced from planned.json directly since
-        // daily_history rollover is not yet proven reliable.
-        if (typeof p.km_planned === 'number') {
-          setData('histTilePlanKm', Math.round(p.km_planned));
-          // Trigger tile animation if already in view
-          const tipEl = document.getElementById('histTilePlanKm');
-          if (tipEl) {
-            const tile = tipEl.closest('.liveops-tile');
-            if (tile && tile.classList.contains('in-view') && !tipEl.dataset.animated) {
-              triggerTileCount(tile);
-            }
-          }
-        }
         // Footnote with date + peak info if available
         const note = document.getElementById('planFootnote');
         if (note && p.date) {
@@ -3495,76 +3375,6 @@
       })
       .catch(() => {});
 
-    // Hero C — Yesterday's planned vs executed (daily history, finalized at midnight Cyprus)
-    fetch(DATA_BASE + '/daily_history.json', { cache: 'no-store' })
-      .then(r => r.ok ? r.json() : Promise.reject())
-      .then(h => {
-        if (!h || !h.entries || !h.entries.length) {
-          // No history yet — show placeholder
-          const note = document.getElementById('histFootnote');
-          if (note) {
-            const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
-            note.textContent = lang === 'en'
-              ? 'Building first daily reckoning — first reliable figure publishes after one full operating day.'
-              : 'Συγκέντρωση πρώτου ημερήσιου απολογισμού — η πρώτη αξιόπιστη μέτρηση δημοσιεύεται μετά από μία πλήρη ημέρα λειτουργίας.';
-          }
-          return;
-        }
-        // Most recent finalized entry
-        const entries = h.entries.slice().sort((a,b) => (a.date||'').localeCompare(b.date||''));
-        const latest = entries[entries.length - 1];
-        const setData = (id, val) => {
-          const el = document.getElementById(id);
-          if (el && typeof val === 'number') el.setAttribute('data-final', val);
-        };
-        // Display km in thousands (e.g., 78.3 → "78") — clean monumental number
-        const planKm = Math.round(latest.km_planned || 0);
-        const execKm = Math.round(latest.km_executed_estimated || 0);
-        const pct    = Math.round(latest.executed_pct_estimate || 0);
-        const polls  = latest.poll_count || 0;
-        setData('histPlanKm', planKm);
-        setData('histExecKm', execKm);
-        setData('histExecPct', pct);
-        // Hero C tiles (mirror the narrative numbers in tile form)
-        setData('histTilePlanKm',      planKm);
-        setData('histTileExecKm',      execKm);
-        setData('histTileDeliveryPct', pct);
-        setData('histTilePolls',       polls);
-        const note = document.getElementById('histFootnote');
-        if (note) {
-          const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
-          const polls = latest.poll_count || 0;
-          note.textContent = lang === 'en'
-            ? `${latest.date} · ${polls} polls during day · estimated ±3–15% accuracy from sparse observation.`
-            : `${latest.date} · ${polls} δειγματοληψίες κατά την ημέρα · εκτιμώμενη ακρίβεια ±3–15% από αραιή παρατήρηση.`;
-        }
-        setFreshness('heroCFreshness', latest.finalized_at_utc);
-        // 7-day comparison (only when ≥7 finalized days available)
-        if (entries.length >= 7) {
-          const last7 = entries.slice(-7);
-          const avgExec = last7.reduce((s,e) => s + (e.km_executed_estimated||0), 0) / last7.length;
-          const delta = avgExec > 0 ? Math.round(100 * (execKm - avgExec) / avgExec) : 0;
-          // Future hook: render a +X%/-X% chip next to histExecKm
-          const cmpEl = document.getElementById('histExec7dDelta');
-          if (cmpEl) cmpEl.textContent = (delta >= 0 ? '+' : '') + delta + '%';
-        }
-        // Trigger animation if Hero C already in view
-        const heroC = document.getElementById('heroC');
-        if (heroC && heroC.classList.contains('in-view') && !heroC.dataset.animated) {
-          delete heroC.dataset.animated;
-          triggerNarrativeBlock(heroC, ['histExecKm', 'histPlanKm', 'histExecPct']);
-        }
-      })
-      .catch(() => {
-        // history file doesn't exist yet → soft placeholder already handled inside .then if entries=0
-        const note = document.getElementById('histFootnote');
-        if (note) {
-          const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
-          note.textContent = lang === 'en'
-            ? 'Daily reckoning will appear here after the first complete operating day.'
-            : 'Ο ημερήσιος απολογισμός θα εμφανιστεί εδώ μετά την πρώτη πλήρη ημέρα λειτουργίας.';
-        }
-      });
   })();
 
   // ── HERO CANVAS NETWORK (morphing) ──

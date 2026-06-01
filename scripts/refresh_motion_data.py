@@ -2,10 +2,10 @@
 """
 Refresh MOTION ITS data for inframind.eu website.
 
-Runs in GitHub Actions on cron (every 2 hours). Produces:
+Runs in GitHub Actions on cron (every 6 hours). Produces:
 
-  website/data/motion-stats.json  — Hero B (executed last ~6h rolling window)
-  website/data/planned.json       — Hero A (planned today from GTFS static)
+  website/data/motion-stats.json        — Hero B (executed last ~6h rolling window)
+  website/data/planned.json             — Hero A (planned today from GTFS static)
   website/data/_rolling_snapshots.json  — internal rolling buffer (committed for state)
 
 Hard ceilings enforced (NEVER exceeded on display):
@@ -21,7 +21,6 @@ Dependencies:
   requests, gtfs-realtime-bindings, protobuf
 """
 import json
-import math
 import os
 import sys
 import zipfile
@@ -214,51 +213,6 @@ def write_motion_stats(window_stats):
           f"probes={window_stats['probe_count']}")
 
 
-# ─── KM HELPERS (haversine + shape lengths) ────────────────────────────────
-
-def haversine_m(lat1, lon1, lat2, lon2):
-    """Distance in meters between two WGS84 lat/lon points."""
-    R = 6371000.0
-    p1 = math.radians(lat1)
-    p2 = math.radians(lat2)
-    dp = math.radians(lat2 - lat1)
-    dl = math.radians(lon2 - lon1)
-    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
-    return 2 * R * math.asin(min(1.0, math.sqrt(a)))
-
-
-def compute_shape_lengths_from_zip(z):
-    """Read shapes.txt from an open GTFS zip → {shape_id: total_distance_m}."""
-    points_by_shape = {}
-    try:
-        with z.open("shapes.txt") as f:
-            for row in csv.DictReader(
-                (line.decode("utf-8-sig") for line in f)
-            ):
-                sid = row.get("shape_id")
-                if not sid:
-                    continue
-                try:
-                    seq = int(row["shape_pt_sequence"])
-                    lat = float(row["shape_pt_lat"])
-                    lon = float(row["shape_pt_lon"])
-                except (KeyError, ValueError):
-                    continue
-                points_by_shape.setdefault(sid, []).append((seq, lat, lon))
-    except KeyError:
-        return {}
-    lengths = {}
-    for sid, pts in points_by_shape.items():
-        pts.sort(key=lambda x: x[0])
-        total = 0.0
-        for i in range(1, len(pts)):
-            _, la1, lo1 = pts[i - 1]
-            _, la2, lo2 = pts[i]
-            total += haversine_m(la1, lo1, la2, lo2)
-        lengths[sid] = total
-    return lengths
-
-
 # ─── PLANNED (GTFS static) ──────────────────────────────────────────────────
 
 def gtfs_date_str(d):
@@ -273,8 +227,6 @@ def regenerate_planned():
     total_stops = set()
     operators_today = []
     hour_counter = {}
-    trip_distances = {}   # trip_id → distance_m (today's planned trips)
-    total_km_planned = 0.0
 
     for ag in AGENCY_IDS:
         zip_path = GTFS_STATIC_DIR / f"{ag}_google_transit.zip"
@@ -292,31 +244,18 @@ def regenerate_planned():
                         services.add(row["service_id"])
             if not services:
                 continue
-            # trips of today + shape_id per trip
+            # trips of today
             today_trip_ids = set()
-            trip_shape = {}
             with z.open("trips.txt") as f:
                 for row in csv.DictReader(
                     (line.decode("utf-8-sig") for line in f)
                 ):
                     if row["service_id"] in services:
-                        tid = row["trip_id"]
-                        today_trip_ids.add(tid)
-                        sid = row.get("shape_id")
-                        if sid:
-                            trip_shape[tid] = sid
+                        today_trip_ids.add(row["trip_id"])
             if not today_trip_ids:
                 continue
             operators_today.append(AGENCY_NAMES[ag])
             total_trips += len(today_trip_ids)
-            # shape lengths for this agency (only needed shapes)
-            shape_lengths = compute_shape_lengths_from_zip(z)
-            for tid in today_trip_ids:
-                sid = trip_shape.get(tid)
-                if sid and sid in shape_lengths:
-                    d_m = shape_lengths[sid]
-                    trip_distances[tid] = d_m
-                    total_km_planned += d_m / 1000.0
             # stops + hour of first departure
             trip_first_seq = {}
             with z.open("stop_times.txt") as f:
@@ -348,36 +287,13 @@ def regenerate_planned():
         peak_hour = max(hour_counter, key=hour_counter.get)
         peak_count = hour_counter[peak_hour]
 
-    # Cache per-trip distances so executed-km calc doesn't reparse shapes
-    (DATA_DIR / "_trip_distances.json").write_text(
-        json.dumps(
-            {"date": today_local.isoformat(), "trip_distances_m": trip_distances},
-            ensure_ascii=False,
-        )
-    )
-
-    # ── DAILY VERIFICATION GATE ────────────────────────────────────────
-    # Before publishing km_planned to the website tile, cross-check the
-    # computation against the source data and historical baselines. If any
-    # issue found, log + apply correction. Audit trail in verification_planned.json.
-    verified_km, verification = verify_planned_km(
-        trip_distances, total_km_planned, total_trips, operators_today, today_local
-    )
-
     payload = {
-        "schema": "v1.2-planned",
+        "schema": "v1.0-planned",
         "date": today_local.isoformat(),
         "generated_at_utc": now_utc().isoformat(),
         "trips_planned": total_trips,
         "stops_planned": min(len(total_stops), STOPS_MAX),
         "vehicles_ceiling": VEHICLES_MAX,
-        "km_planned": round(verified_km, 1),
-        "km_planned_raw": round(total_km_planned, 1),
-        "verification": {
-            "verdict": verification["verdict"],
-            "issues": verification["issues"],
-            "verified_at_utc": verification["verified_at_utc"],
-        },
         "operators_active": len(operators_today),
         "operators_list": operators_today,
         "peak_hour": peak_hour,
@@ -388,112 +304,7 @@ def regenerate_planned():
         json.dumps(payload, ensure_ascii=False, indent=2)
     )
     print(f"[planned] {today_local} → trips={total_trips} stops={len(total_stops)} "
-          f"km={verified_km:.1f} (raw={total_km_planned:.1f}) "
-          f"operators={len(operators_today)} peak={peak_hour}:00 ({peak_count}) "
-          f"verdict={verification['verdict']}")
-
-
-def verify_planned_km(trip_distances, total_km_planned_raw, n_trips, operators, date_local):
-    """Daily verification gate. Cross-checks computed km against source data
-    + historical baselines. If anomalies are detected, applies corrections.
-
-    Returns (final_km, verification_record).
-    """
-    issues = []
-    corrections = []
-
-    # Check 1 — sum consistency (trivial but catches arithmetic drift)
-    recomputed = sum(trip_distances.values()) / 1000.0
-    delta_pct = 100.0 * abs(recomputed - total_km_planned_raw) / max(total_km_planned_raw, 1.0)
-    if delta_pct > 0.1:
-        issues.append(f"SUM_MISMATCH:{delta_pct:.3f}%")
-
-    # Check 2 — trip count vs cache
-    if len(trip_distances) != n_trips:
-        # Some trips lack shape — log how many
-        missing = n_trips - len(trip_distances)
-        if missing > 0:
-            issues.append(f"MISSING_SHAPES:{missing}_of_{n_trips}")
-
-    # Check 3 — zero-length trips (shape malformed)
-    n_zero = sum(1 for d in trip_distances.values() if d <= 1.0)
-    if n_zero > 0:
-        issues.append(f"ZERO_DIST_TRIPS:{n_zero}")
-
-    # Check 4 — implausibly long (>500 km in a single Cyprus trip is impossible)
-    n_long = sum(1 for d in trip_distances.values() if d > 500_000)
-    if n_long > 0:
-        issues.append(f"IMPLAUSIBLY_LONG:{n_long}")
-
-    # Check 5 — historical baseline (compare to last published planned km)
-    history_path = DATA_DIR / "daily_history.json"
-    baseline_km = None
-    baseline_dates = 0
-    if history_path.exists():
-        try:
-            hist = json.loads(history_path.read_text())
-            past_kms = [
-                e.get("km_planned")
-                for e in hist.get("entries", [])
-                if isinstance(e.get("km_planned"), (int, float))
-            ]
-            if past_kms:
-                # Use median of last 7 valid days as baseline
-                recent = sorted(past_kms[-7:])
-                baseline_km = recent[len(recent) // 2]
-                baseline_dates = len(recent)
-        except Exception:
-            pass
-    if baseline_km:
-        delta = abs(total_km_planned_raw - baseline_km) / baseline_km
-        if delta > 0.20:
-            issues.append(
-                f"DELTA_VS_BASELINE>20%:today={total_km_planned_raw:.0f}_baseline={baseline_km:.0f}"
-            )
-
-    # ── CORRECTIONS ────
-    # Haversine point-to-point on shapes underestimates real driven km because
-    # shape vertices are sparse along curves. Empirical correction factor for
-    # Cyprus PT shape granularity ≈ 1.07 (cross-checked against fleet × avg km/day).
-    HAVERSINE_TO_ROAD = 1.07
-    corrected = total_km_planned_raw * HAVERSINE_TO_ROAD
-    corrections.append(f"haversine_to_road×{HAVERSINE_TO_ROAD}")
-
-    # If raw value looks bad (zero or wildly off), fall back to baseline
-    if n_trips == 0 or total_km_planned_raw < 1.0:
-        if baseline_km:
-            corrected = baseline_km * HAVERSINE_TO_ROAD
-            corrections.append(f"fell_back_to_baseline_{baseline_km}")
-            issues.append("FELL_BACK_TO_BASELINE")
-        else:
-            corrections.append("no_baseline_available")
-
-    verdict = "PASS" if not issues else ("WARN" if all(
-        not i.startswith("SUM_MISMATCH") and not i.startswith("FELL_BACK") for i in issues
-    ) else "FAIL")
-
-    record = {
-        "schema": "v1.0-verification-planned",
-        "verified_at_utc": now_utc().isoformat(),
-        "date": date_local.isoformat(),
-        "trips_count": n_trips,
-        "operators_count": len(operators),
-        "km_raw_haversine": round(total_km_planned_raw, 1),
-        "km_corrected_road_estimate": round(corrected, 1),
-        "km_published": round(corrected, 1),
-        "haversine_to_road_factor": HAVERSINE_TO_ROAD,
-        "baseline_km_median_last7": baseline_km,
-        "baseline_sample_size": baseline_dates,
-        "issues": issues,
-        "corrections_applied": corrections,
-        "verdict": verdict,
-    }
-    (DATA_DIR / "verification_planned.json").write_text(
-        json.dumps(record, ensure_ascii=False, indent=2)
-    )
-    print(f"[verify] verdict={verdict} raw={total_km_planned_raw:.1f} "
-          f"corrected={corrected:.1f} issues={issues or '—'}")
-    return corrected, record
+          f"operators={len(operators_today)} peak={peak_hour}:00 ({peak_count})")
 
 
 def planned_needs_refresh():
@@ -509,150 +320,22 @@ def planned_needs_refresh():
         return True
 
 
-# ─── DAILY EXECUTED ACCUMULATOR ────────────────────────────────────────────
-#
-# daily_executed.json — accumulates trip_ids observed today (across all polls).
-# Resets at Cyprus midnight rollover. Previous day's totals appended to
-# daily_history.json for the 7-day comparison + κm απολογιστικά tile.
-
-DAILY_EXEC_PATH = DATA_DIR / "daily_executed.json"
-DAILY_HISTORY_PATH = DATA_DIR / "daily_history.json"
-TRIP_DIST_PATH = DATA_DIR / "_trip_distances.json"
-HISTORY_KEEP_DAYS = 60
-
-
-def load_trip_distances():
-    if not TRIP_DIST_PATH.exists():
-        return {}
-    try:
-        data = json.loads(TRIP_DIST_PATH.read_text())
-        return data.get("trip_distances_m", {}) or {}
-    except Exception:
-        return {}
-
-
-def empty_daily_executed(date_str):
-    return {
-        "schema": "v1.0-daily-executed",
-        "date": date_str,
-        "started_at_utc": now_utc().isoformat(),
-        "last_updated_utc": now_utc().isoformat(),
-        "poll_count": 0,
-        "seen_trip_ids": [],
-        "km_executed_estimated": 0.0,
-    }
-
-
-def append_to_history(prev):
-    """Finalize prev day's accumulator → append to daily_history.json. Keep last N days."""
-    history = {"schema": "v1.0-daily-history", "entries": []}
-    if DAILY_HISTORY_PATH.exists():
-        try:
-            history = json.loads(DAILY_HISTORY_PATH.read_text())
-        except Exception:
-            pass
-
-    # Best-effort: read planned totals from existing planned.json
-    planned = {}
-    p = DATA_DIR / "planned.json"
-    if p.exists():
-        try:
-            planned = json.loads(p.read_text())
-        except Exception:
-            pass
-
-    trips_executed = len(prev.get("seen_trip_ids", []))
-    km_exec = round(prev.get("km_executed_estimated", 0.0), 1)
-    trips_planned = planned.get("trips_planned")
-    km_planned = planned.get("km_planned")
-    executed_pct = None
-    if trips_planned:
-        executed_pct = round(100.0 * trips_executed / trips_planned, 1)
-
-    entry = {
-        "date": prev.get("date"),
-        "trips_planned": trips_planned,
-        "trips_executed": trips_executed,
-        "km_planned": km_planned,
-        "km_executed_estimated": km_exec,
-        "executed_pct_estimate": executed_pct,
-        "poll_count": prev.get("poll_count", 0),
-        "finalized_at_utc": now_utc().isoformat(),
-    }
-    entries = [e for e in history.get("entries", []) if e.get("date") != entry["date"]]
-    entries.append(entry)
-    entries.sort(key=lambda e: e.get("date", ""))
-    entries = entries[-HISTORY_KEEP_DAYS:]
-    history["entries"] = entries
-    history["schema"] = "v1.0-daily-history"
-    DAILY_HISTORY_PATH.write_text(json.dumps(history, ensure_ascii=False, indent=2))
-    print(f"[history] finalized {entry['date']}: trips={trips_executed}/"
-          f"{trips_planned or '?'} km={km_exec}/{km_planned or '?'} "
-          f"pct={executed_pct}")
-
-
-def rollover_daily_executed():
-    """If accumulator date != today Cyprus, finalize prev day and start fresh."""
-    today = now_cyprus().date().isoformat()
-    if not DAILY_EXEC_PATH.exists():
-        DAILY_EXEC_PATH.write_text(
-            json.dumps(empty_daily_executed(today), ensure_ascii=False, indent=2)
-        )
-        print(f"[rollover] initialized accumulator for {today}")
-        return
-    try:
-        cur = json.loads(DAILY_EXEC_PATH.read_text())
-    except Exception:
-        DAILY_EXEC_PATH.write_text(
-            json.dumps(empty_daily_executed(today), ensure_ascii=False, indent=2)
-        )
-        print(f"[rollover] reset corrupted accumulator → {today}")
-        return
-    if cur.get("date") == today:
-        return
-    # New day → finalize previous day's accumulator
-    if cur.get("seen_trip_ids"):
-        append_to_history(cur)
-    DAILY_EXEC_PATH.write_text(
-        json.dumps(empty_daily_executed(today), ensure_ascii=False, indent=2)
-    )
-    print(f"[rollover] {cur.get('date')} → {today}")
-
-
-def update_daily_executed(snapshot):
-    """Append observed trip_ids to today's accumulator + recompute km estimate."""
-    try:
-        cur = json.loads(DAILY_EXEC_PATH.read_text())
-    except Exception:
-        cur = empty_daily_executed(now_cyprus().date().isoformat())
-
-    seen = set(cur.get("seen_trip_ids", []))
-    seen.update(snapshot.get("trips", []))
-    distances = load_trip_distances()
-    km = sum(distances.get(tid, 0.0) for tid in seen) / 1000.0
-
-    cur["seen_trip_ids"] = sorted(seen)
-    cur["km_executed_estimated"] = round(km, 1)
-    cur["last_updated_utc"] = now_utc().isoformat()
-    cur["poll_count"] = cur.get("poll_count", 0) + 1
-    DAILY_EXEC_PATH.write_text(json.dumps(cur, ensure_ascii=False, indent=2))
-    print(f"[daily-exec] {cur['date']} polls={cur['poll_count']} "
-          f"trips_seen={len(seen)} km_estimate={km:.1f}")
-    return cur
-
-
 # ─── MAIN ──────────────────────────────────────────────────────────────────
 
 def main():
     errors = []
-    # 0. Rollover daily executed accumulator if Cyprus date changed
+    # Hero B (executed rolling window)
     try:
-        rollover_daily_executed()
+        feed = fetch_feed()
+        snap = snapshot_from_feed(feed)
+        buf = update_rolling(snap)
+        window_stats = aggregate_window(buf)
+        write_motion_stats(window_stats)
     except Exception as e:
-        print(f"[ERROR] rollover failed: {e}", file=sys.stderr)
-        errors.append(("rollover", str(e)))
+        print(f"[ERROR] executed refresh failed: {e}", file=sys.stderr)
+        errors.append(("executed", str(e)))
 
-    # 1. Hero A (planned today) — must run first so today's trip_distances cache is ready
+    # Hero A (planned today)
     if planned_needs_refresh():
         try:
             regenerate_planned()
@@ -661,18 +344,6 @@ def main():
             errors.append(("planned", str(e)))
     else:
         print("[planned] already current for today, skipping")
-
-    # 2. Hero B (executed rolling window) + daily executed accumulator
-    try:
-        feed = fetch_feed()
-        snap = snapshot_from_feed(feed)
-        buf = update_rolling(snap)
-        window_stats = aggregate_window(buf)
-        write_motion_stats(window_stats)
-        update_daily_executed(snap)
-    except Exception as e:
-        print(f"[ERROR] executed refresh failed: {e}", file=sys.stderr)
-        errors.append(("executed", str(e)))
 
     if errors:
         sys.exit(1)
