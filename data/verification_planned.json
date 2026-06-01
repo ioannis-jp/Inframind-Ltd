@@ -1,18 +1,20 @@
 {
   "schema": "v1.0-verification-planned",
-  "verified_at_utc": "2026-05-31T15:47:13.275629+00:00",
-  "date": "2026-05-31",
-  "trips_count": 3453,
-  "operators_count": 6,
-  "km_raw_haversine": 73152.6,
-  "km_corrected_road_estimate": 78273.3,
-  "km_published": 78273.3,
+  "verified_at_utc": "2026-06-01T05:17:44.516168+00:00",
+  "date": "2026-06-01",
+  "trips_count": 5715,
+  "operators_count": 7,
+  "km_raw_haversine": 117119.6,
+  "km_corrected_road_estimate": 125318.0,
+  "km_published": 125318.0,
   "haversine_to_road_factor": 1.07,
-  "baseline_km_median_last7": null,
-  "baseline_sample_size": 0,
-  "issues": [],
+  "baseline_km_median_last7": 78273.3,
+  "baseline_sample_size": 1,
+  "issues": [
+    "DELTA_VS_BASELINE>20%:today=117120_baseline=78273"
+  ],
   "corrections_applied": [
     "haversine_to_road×1.07"
   ],
-  "verdict": "PASS"
+  "verdict": "WARN"
 }
