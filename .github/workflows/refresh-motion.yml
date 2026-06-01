@@ -46,28 +46,31 @@ jobs:
 
       - name: Commit and push if changed
         run: |
+          set -e
           git config user.name  "inframind-bot"
           git config user.email "bot@inframind.eu"
-          git add \
-            data/motion-stats.json \
-            data/planned.json \
-            data/_rolling_snapshots.json \
-            data/daily_executed.json \
-            data/daily_history.json \
-            data/_trip_distances.json \
-            2>/dev/null || true
+          # Stage ALL changed/new files in data/ — covers verification_planned.json,
+          # _trip_distances.json, and any new files the script may produce.
+          git add -A data/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0
           fi
           ts=$(date -u +"%Y-%m-%d %H:%M UTC")
-          # [skip netlify] in message — site reads data from raw.githubusercontent.com,
-          # no rebuild needed on data refreshes.
-          git commit -m "chore(data): refresh MOTION stats — $ts [skip netlify]"
-          # Resilient push (concurrent run may have just pushed)
+          # Site reads data from raw.githubusercontent.com — Netlify rebuild not needed
+          # on data-only commits. The skip directive is in the commit BODY (next line),
+          # not in this human-readable subject, so editors that show subjects only stay clean.
+          git commit -m "chore(data): refresh MOTION stats - $ts" -m "skip-netlify-build"
+          # Resilient push: retry with rebase if a concurrent bot run pushed first.
+          # Always stash any unstaged residue before rebasing so we never block.
+          push_ok=0
           for i in 1 2 3; do
-            if git push; then exit 0; fi
-            echo "push failed (attempt $i), rebasing..."
-            git pull --rebase
+            if git push; then push_ok=1; break; fi
+            echo "push failed (attempt $i), syncing with remote..."
+            git stash -u 2>/dev/null || true
+            git pull --rebase --autostash || true
+            git stash pop 2>/dev/null || true
           done
-          git push
+          if [ "$push_ok" != "1" ]; then
+            git push || (echo "final push failed" && exit 1)
+          fi
