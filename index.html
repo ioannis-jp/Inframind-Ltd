@@ -1571,27 +1571,74 @@
       text-transform: uppercase;
       color: var(--grey);
     }
-    /* SVG metric icons — sit quietly to the left of the number, never compete with it */
+    /* Glossy black icon chips — each metric gets its own polished badge
+       with a white SVG inside. Subtle inset highlight, soft outer shadow,
+       diagonal sheen overlay. Sized just under the number they accompany. */
     .dw-metric-icon {
+      box-sizing: border-box;
       flex-shrink: 0;
-      color: var(--grey);
-      opacity: 0.78;
-      transition: opacity 0.3s ease, color 0.3s ease;
+      color: #ffffff;
+      background:
+        linear-gradient(135deg,
+          rgba(255,255,255,0.10) 0%,
+          rgba(255,255,255,0.02) 38%,
+          rgba(255,255,255,0)    52%,
+          rgba(0,0,0,0.18)       100%),
+        linear-gradient(160deg, #1f1f21 0%, #0b0b0c 100%);
+      border-radius: 7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        inset 0 -1px 0 rgba(0,0,0,0.55),
+        inset 0 0 0 1px rgba(255,255,255,0.06),
+        0 4px 12px rgba(0,0,0,0.16),
+        0 1px 3px  rgba(0,0,0,0.20);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    /* Crisp white strokes that don't get squashed at small chip sizes */
+    .dw-metric-icon path,
+    .dw-metric-icon line,
+    .dw-metric-icon rect:not([fill]),
+    .dw-metric-icon circle {
+      vector-effect: non-scaling-stroke;
+      stroke-width: 1.85;
+    }
+    .dw-metric-icon path,
+    .dw-metric-icon line,
+    .dw-metric-icon rect:not([fill]) {
+      filter: drop-shadow(0 0 1.5px rgba(255,255,255,0.35));
     }
     .dw-metric-primary .dw-metric-icon {
-      width: 30px;
-      height: 30px;
-      margin-right: 4px;
+      width: 52px;
+      height: 52px;
+      padding: 10px;
+      margin-right: 14px;
       align-self: center;
     }
     .dw-metric:not(.dw-metric-primary) .dw-metric-icon {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
+      width: 32px;
+      height: 32px;
+      padding: 7px;
+      margin-bottom: 12px;
     }
-    .dualwindow-panel.in-view .dw-metric-icon { opacity: 0.85; }
-    .dualwindow-panel.in-view:hover .dw-metric-icon { opacity: 1; color: var(--black); }
-    .dw-observed .dw-metric-primary .dw-metric-icon { color: #0E7C7B; opacity: 0.75; }
+    .dualwindow-panel.in-view:hover .dw-metric-icon {
+      transform: translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.22),
+        inset 0 -1px 0 rgba(0,0,0,0.55),
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 6px 16px rgba(0,0,0,0.22),
+        0 2px 4px  rgba(0,0,0,0.22);
+    }
+    /* Observed primary icon gets a faint teal undertone in the gloss */
+    .dw-observed .dw-metric-primary .dw-metric-icon {
+      background:
+        linear-gradient(135deg,
+          rgba(255,255,255,0.10) 0%,
+          rgba(255,255,255,0.02) 38%,
+          rgba(255,255,255,0)    52%,
+          rgba(14,124,123,0.22)  100%),
+        linear-gradient(160deg, #1f2425 0%, #0a0e0e 100%);
+    }
 
     /* Subtle thin underline on observed primary number — a quiet live indicator */
     .dw-observed .dw-metric-primary .dw-num {
