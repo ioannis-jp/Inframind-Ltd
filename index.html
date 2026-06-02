@@ -1212,11 +1212,11 @@
       50%      { opacity: 0.55; transform: scale(0.85); }
     }
     .dw-board-text {
-      font-family: 'Georgia', 'Times New Roman', serif;
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
       font-size: clamp(28px, 4.2vw, 58px);
       line-height: 1.22;
-      font-weight: 400;
-      letter-spacing: -0.018em;
+      font-weight: 600;
+      letter-spacing: -0.022em;
       margin: 0;
       min-height: 1.5em;
       /* Glossy base — the typer span gets the strong gradient; the cursor stays solid white */
@@ -1225,19 +1225,20 @@
     .dw-board-typer {
       display: inline;
       font-style: normal;
-      /* Glossy text: top-bright, mid-soft, faint silver bottom — like polished metal */
+      /* Glossy text: bright top, brighter mid, faint silver bottom — like polished metal */
       background: linear-gradient(180deg,
         #ffffff 0%,
-        #f4f7fa 38%,
-        #ffffff 55%,
+        #ffffff 42%,
+        #f4f7fa 58%,
         #d6dee5 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       color: transparent;
-      /* Subtle outer halo to lift the type off the dark board */
-      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.10))
-              drop-shadow(0 0 18px rgba(255,255,255,0.07));
+      /* Brighter outer halo to lift the type off the dark board */
+      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.18))
+              drop-shadow(0 0 22px rgba(255,255,255,0.18))
+              drop-shadow(0 0 40px rgba(255,255,255,0.08));
     }
     .dw-board-typer .dw-num-accent {
       font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
@@ -1248,24 +1249,30 @@
       /* Numbers get a brighter, sharper gloss + a teal undertone tying back to the live pulse */
       background: linear-gradient(180deg,
         #ffffff 0%,
-        #ffffff 45%,
+        #ffffff 50%,
         #c8e3e2 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.22))
-              drop-shadow(0 1px 0 rgba(14,124,123,0.18));
+      filter: drop-shadow(0 0 16px rgba(255,255,255,0.32))
+              drop-shadow(0 0 36px rgba(200,227,226,0.18))
+              drop-shadow(0 1px 0 rgba(14,124,123,0.22));
     }
     .dw-board-typer .dw-noun-accent {
-      font-weight: 400;
-      font-style: italic;
-      /* Slightly softer, more muted than the rest, like an aside */
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: -0.015em;
+      /* Same family as numbers, slightly softer luminosity */
       background: linear-gradient(180deg,
-        rgba(255,255,255,0.82) 0%,
-        rgba(220,228,234,0.72) 100%);
+        #ffffff 0%,
+        #ffffff 48%,
+        #e3eaf0 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 14px rgba(255,255,255,0.20))
+              drop-shadow(0 1px 0 rgba(255,255,255,0.10));
     }
     .dw-board-cursor {
       display: inline-block;
@@ -1288,15 +1295,15 @@
       top: 0;
       left: -20%;
       bottom: 0;
-      width: 18%;
+      width: 22%;
       background: linear-gradient(115deg,
         transparent 0%,
-        rgba(255,255,255,0.04) 45%,
-        rgba(255,255,255,0.12) 50%,
-        rgba(255,255,255,0.04) 55%,
+        rgba(255,255,255,0.06) 42%,
+        rgba(255,255,255,0.22) 50%,
+        rgba(255,255,255,0.06) 58%,
         transparent 100%);
       pointer-events: none;
-      animation: dwBoardSheen 8s ease-in-out infinite;
+      animation: dwBoardSheen 11s ease-in-out infinite;
       animation-delay: 1.5s;
       z-index: 0;
     }
@@ -4346,9 +4353,9 @@
       let msgIdx = 0;
       let charIdx = 0;
       let phase = 'type';  // 'type' → 'hold' → 'erase' → next
-      const TYPE_MS = 85;
-      const ERASE_MS = 35;
-      const HOLD_MS = 4200;
+      const TYPE_MS = 140;
+      const ERASE_MS = 55;
+      const HOLD_MS = 6500;
 
       // To keep HTML tags intact while typing, we track the "visible plain
       // text length" and re-render the substring up to that length while
