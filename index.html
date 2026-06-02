@@ -1164,6 +1164,104 @@
     }
     .liveops-link:hover { opacity: 0.6; }
 
+    /* ── PRESENTATION BOARD — typewriter announcement strip ── */
+    .dw-board {
+      margin: 56px 0 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #161617 100%);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .dw-board.in-view { opacity: 1; transform: none; }
+    .dw-board::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+    }
+    .dw-board::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(14,124,123,0.45) 50%, transparent 100%);
+    }
+    .dw-board-inner {
+      padding: 48px 56px 52px;
+      max-width: 980px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .dw-board-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+    }
+    .dw-board-pulse {
+      width: 7px; height: 7px;
+      background: #0E7C7B;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(14,124,123,0.8);
+      animation: dwBoardPulse 2s infinite;
+    }
+    @keyframes dwBoardPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.55; transform: scale(0.85); }
+    }
+    .dw-board-text {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(24px, 3.4vw, 44px);
+      line-height: 1.25;
+      font-weight: 300;
+      letter-spacing: -0.015em;
+      color: rgba(255,255,255,0.95);
+      margin: 0;
+      min-height: 1.5em;
+    }
+    .dw-board-typer {
+      display: inline;
+      font-style: normal;
+    }
+    .dw-board-typer .dw-num-accent {
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin: 0 2px;
+    }
+    .dw-board-typer .dw-noun-accent {
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      font-style: italic;
+    }
+    .dw-board-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: #ffffff;
+      vertical-align: -0.12em;
+      margin-left: 4px;
+      animation: dwBoardBlink 0.8s step-end infinite;
+    }
+    @keyframes dwBoardBlink {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+    @media (max-width: 720px) {
+      .dw-board-inner { padding: 36px 28px 38px; }
+      .dw-board-text { font-size: clamp(20px, 6vw, 28px); }
+    }
+
     /* ── DUAL-WINDOW WIDGET — next 6h planned · last 6h observed ── */
     .dualwindow-frame {
       margin: 56px 0 28px;
@@ -1213,20 +1311,33 @@
     }
     .dw-window-tag {
       position: relative;
-      padding-left: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--black);
     }
-    .dw-window-tag::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 50%;
-      width: 7px; height: 7px;
-      background: var(--grey);
-      border-radius: 50%;
-      transform: translateY(-50%);
+    .dw-arrow {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      flex-shrink: 0;
+      vertical-align: middle;
     }
-    .dw-window-tag.is-live::before {
+    /* Forward (planned, future): solid black accent + subtle right-shift */
+    .dw-window-tag.dw-forward .dw-arrow {
+      color: var(--black);
+    }
+    /* Backward (observed, past): green-teal accent that pulses with the live dot */
+    .dw-window-tag.dw-backward .dw-arrow {
+      color: #0E7C7B;
+    }
+    .dw-window-tag.is-live::after {
+      content: '';
+      display: inline-block;
+      width: 7px; height: 7px;
       background: #0E7C7B;
+      border-radius: 50%;
+      margin-left: 6px;
       animation: dwPulse 2s infinite;
     }
     @keyframes dwPulse {
@@ -1235,6 +1346,41 @@
       100% { box-shadow: 0 0 0 0   rgba(14,124,123,0);    }
     }
     .dw-source-tag { color: var(--grey); opacity: 0.8; }
+    /* Concrete Cyprus-time range under the eyebrow — the strongest temporal signal */
+    .dw-timerange {
+      margin: 0 0 16px;
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--grey);
+      font-variant-numeric: tabular-nums;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dw-timerange .dw-time {
+      color: var(--black);
+      font-weight: 700;
+    }
+    .dw-timerange .dw-time-now {
+      color: var(--black);
+      font-weight: 700;
+      padding: 1px 8px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: var(--light-grey);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .dw-timerange .dw-range-arrow {
+      color: var(--grey);
+      opacity: 0.6;
+    }
+    /* Slight tint differentiation: planned panel slightly cooler/lighter, observed warmer */
+    .dw-planned   { background: var(--white); }
+    .dw-observed  { background: linear-gradient(180deg, var(--white) 0%, rgba(14,124,123,0.025) 100%); }
     .dw-title {
       font-family: 'Georgia', 'Times New Roman', serif;
       font-size: clamp(36px, 4vw, 56px);
@@ -2335,6 +2481,19 @@
     providing live information to every citizen, business, and application built on top of it.
   </p>
 
+  <!-- PRESENTATION BOARD — typewriter announcement above the widget -->
+  <div class="dw-board" id="dwBoard" aria-hidden="true">
+    <div class="dw-board-inner">
+      <div class="dw-board-eyebrow">
+        <span class="dw-board-pulse" aria-hidden="true"></span>
+        <span data-i18n="dw.board.eyebrow">Cyprus public transport · live operations</span>
+      </div>
+      <p class="dw-board-text">
+        <span class="dw-board-typer" id="dwBoardTyper"></span><span class="dw-board-cursor"></span>
+      </p>
+    </div>
+  </div>
+
   <!-- DUAL-WINDOW WIDGET — next 6h planned · last 6h observed -->
   <div class="dualwindow-frame">
     <div class="dualwindow-grid">
@@ -2342,11 +2501,15 @@
       <article class="dualwindow-panel dw-planned" id="dwPlanned">
         <header class="dw-head">
           <div class="dw-eyebrow">
-            <span class="dw-window-tag" data-i18n="dw.planned.window">Επόμενες 6 ώρες</span>
+            <span class="dw-window-tag dw-forward">
+              <svg class="dw-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+              <span data-i18n="dw.planned.window">Επόμενες 6 ώρες</span>
+            </span>
             <span class="dw-source-tag" data-i18n="dw.planned.sourceTag">GTFS static</span>
           </div>
+          <p class="dw-timerange" id="dwPlannedRange" aria-live="polite">&mdash;</p>
           <h3 class="dw-title" data-i18n="dw.planned.title">Programmed</h3>
-          <p class="dw-sub" data-i18n="dw.planned.sub">Τι έχει προγραμματιστεί να εκτελεστεί στις επόμενες έξι ώρες.</p>
+          <p class="dw-sub" data-i18n="dw.planned.sub">Όσα θα εκτελεστούν από τώρα και τις επόμενες έξι ώρες.</p>
         </header>
         <div class="dw-metrics">
           <div class="dw-metric dw-metric-primary">
@@ -2376,11 +2539,15 @@
       <article class="dualwindow-panel dw-observed" id="dwObserved">
         <header class="dw-head">
           <div class="dw-eyebrow">
-            <span class="dw-window-tag is-live" data-i18n="dw.observed.window">Τελευταίες 6 ώρες</span>
+            <span class="dw-window-tag dw-backward is-live">
+              <svg class="dw-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>
+              <span data-i18n="dw.observed.window">Προηγούμενες 6 ώρες</span>
+            </span>
             <span class="dw-source-tag" data-i18n="dw.observed.sourceTag">GTFS-RT</span>
           </div>
+          <p class="dw-timerange" id="dwObservedRange" aria-live="polite">&mdash;</p>
           <h3 class="dw-title" data-i18n="dw.observed.title">Executed</h3>
-          <p class="dw-sub" data-i18n="dw.observed.sub">Τι πραγματικά εκτελέστηκε τις τελευταίες έξι ώρες.</p>
+          <p class="dw-sub" data-i18n="dw.observed.sub">Όσα πραγματικά μετρήθηκαν τις τελευταίες έξι ώρες, μέχρι τώρα.</p>
         </header>
         <div class="dw-metrics">
           <div class="dw-metric dw-metric-primary">
@@ -2695,6 +2862,7 @@
       'liveops.histTile.delivery':'Delivery rate (yesterday)',
       'liveops.histTile.polls':   'Observations · sampling polls',
       // ─── DUAL-WINDOW WIDGET ───
+      'dw.board.eyebrow':         'Cyprus public transport · live operations',
       'dw.planned.window':        'Next 6 hours',
       'dw.planned.sourceTag':     'GTFS static',
       'dw.planned.title':         'Programmed',
@@ -2872,6 +3040,7 @@
       'liveops.narr.badge.inframind': 'Quality monitoring · INFRAMIND',
       'liveops.narr.note': 'Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.',
       // ─── DUAL-WINDOW WIDGET ───
+      'dw.board.eyebrow':         'Δημόσιες μεταφορές Κύπρου · ζωντανή λειτουργία',
       'dw.planned.window':        'Επόμενες 6 ώρες',
       'dw.planned.sourceTag':     'GTFS static',
       'dw.planned.title':         'Προγραμματισμένα',
@@ -2988,12 +3157,16 @@
     if (philState !== 'idle') startPhilTypewriter(lang);
 
     // re-render relative-time freshness labels in new language
-    document.querySelectorAll('.narr-freshness[data-iso]').forEach(el => {
+    document.querySelectorAll('.narr-freshness[data-iso], .dw-freshness[data-iso]').forEach(el => {
       const iso = el.dataset.iso;
       if (iso && typeof window.__setFreshness === 'function') {
         window.__setFreshness(el.id, iso);
       }
     });
+    // Restart the dual-window typewriter board in the new language
+    if (typeof window.__dwBoardRestart === 'function') {
+      window.__dwBoardRestart();
+    }
     // re-run typewriter after textContent replacement
     const tipP = document.querySelector('.tip-principle');
     if (tipP) tipP.dataset.original = '';   // reset cache so new language picks up
@@ -3498,6 +3671,143 @@
       ao.observe(analyticsSection);
     }
 
+    // ── Presentation board: typewriter rotation of summary lines ────────
+    const dwBoard = document.getElementById('dwBoard');
+    const dwBoardTyper = document.getElementById('dwBoardTyper');
+    let __boardMessages = [];        // HTML strings to type
+    let __boardTimer = null;
+    let __boardStarted = false;
+
+    function buildBoardMessages(planned, observed) {
+      const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+      const num = (n) => `<span class="dw-num-accent">${(n || 0).toLocaleString('el-GR')}</span>`;
+      const noun = (s) => `<span class="dw-noun-accent">${s}</span>`;
+      const obsTrips = observed.trips || 0;
+      const planTrips = planned.trips || 0;
+      if (lang === 'en') {
+        return [
+          `Cyprus public transport &mdash; ${noun('read in six-hour windows.')}`,
+          `${num(obsTrips)} ${noun('trips already moved')} &mdash; in the last six hours.`,
+          `${num(planTrips)} ${noun('trips programmed')} &mdash; for the next six hours.`,
+        ];
+      }
+      return [
+        `Δημόσιες μεταφορές Κύπρου &mdash; ${noun('σε παράθυρα έξι ωρών.')}`,
+        `${num(obsTrips)} ${noun('δρομολόγια εκτελέστηκαν')} &mdash; τις τελευταίες έξι ώρες.`,
+        `${num(planTrips)} ${noun('δρομολόγια προγραμματίστηκαν')} &mdash; για τις επόμενες έξι ώρες.`,
+      ];
+    }
+
+    function stopBoardTyper() {
+      if (__boardTimer) { clearTimeout(__boardTimer); __boardTimer = null; }
+    }
+
+    function startBoardTyper() {
+      if (!dwBoardTyper || !__boardMessages.length) return;
+      stopBoardTyper();
+      let msgIdx = 0;
+      let charIdx = 0;
+      let phase = 'type';  // 'type' → 'hold' → 'erase' → next
+      const TYPE_MS = 28;
+      const ERASE_MS = 14;
+      const HOLD_MS = 2400;
+
+      // To keep HTML tags intact while typing, we track the "visible plain
+      // text length" and re-render the substring up to that length while
+      // skipping past HTML tags character-by-character.
+      function renderSlice(htmlMsg, visibleChars) {
+        let out = '';
+        let seen = 0;
+        let i = 0;
+        while (i < htmlMsg.length && seen < visibleChars) {
+          if (htmlMsg[i] === '<') {
+            const close = htmlMsg.indexOf('>', i);
+            if (close === -1) { out += htmlMsg.slice(i); break; }
+            out += htmlMsg.slice(i, close + 1);
+            i = close + 1;
+          } else if (htmlMsg[i] === '&') {
+            // entity: &xxx; counts as 1 visible char
+            const semi = htmlMsg.indexOf(';', i);
+            if (semi === -1) { out += htmlMsg[i]; i++; seen++; }
+            else { out += htmlMsg.slice(i, semi + 1); i = semi + 1; seen++; }
+          } else {
+            out += htmlMsg[i];
+            i++; seen++;
+          }
+        }
+        // Append any trailing close-tags so the DOM stays balanced
+        while (i < htmlMsg.length && htmlMsg[i] === '<') {
+          const close = htmlMsg.indexOf('>', i);
+          if (close === -1) break;
+          out += htmlMsg.slice(i, close + 1);
+          i = close + 1;
+        }
+        return out;
+      }
+      function visibleLength(htmlMsg) {
+        // Strip tags + count entities as 1
+        return htmlMsg
+          .replace(/<[^>]+>/g, '')
+          .replace(/&[a-z]+;/g, ' ')
+          .length;
+      }
+
+      function step() {
+        const msg = __boardMessages[msgIdx];
+        const totalChars = visibleLength(msg);
+        if (phase === 'type') {
+          charIdx++;
+          dwBoardTyper.innerHTML = renderSlice(msg, charIdx);
+          if (charIdx >= totalChars) { phase = 'hold'; __boardTimer = setTimeout(step, HOLD_MS); return; }
+          __boardTimer = setTimeout(step, TYPE_MS);
+          return;
+        }
+        if (phase === 'hold') {
+          phase = 'erase';
+          __boardTimer = setTimeout(step, ERASE_MS);
+          return;
+        }
+        if (phase === 'erase') {
+          charIdx--;
+          dwBoardTyper.innerHTML = renderSlice(msg, Math.max(0, charIdx));
+          if (charIdx <= 0) {
+            phase = 'type';
+            msgIdx = (msgIdx + 1) % __boardMessages.length;
+            __boardTimer = setTimeout(step, 200);
+            return;
+          }
+          __boardTimer = setTimeout(step, ERASE_MS);
+          return;
+        }
+      }
+      __boardStarted = true;
+      step();
+    }
+
+    // Restart typewriter on language switch (so messages re-render in new lang)
+    window.__dwBoardRestart = () => {
+      // Re-build with current numbers parsed back from DOM data-final attributes
+      const planTrips = parseFloat(document.getElementById('dwPlannedTrips')?.getAttribute('data-final') || '0');
+      const obsTrips  = parseFloat(document.getElementById('dwObservedTrips')?.getAttribute('data-final') || '0');
+      __boardMessages = buildBoardMessages({trips: planTrips}, {trips: obsTrips});
+      startBoardTyper();
+    };
+
+    // Reveal the board when it enters view, but only start typing after data arrives
+    if (dwBoard) {
+      const bo = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            bo.unobserve(e.target);
+            // If data already arrived (rare race), start typing immediately
+            if (__boardMessages.length && !__boardStarted) startBoardTyper();
+          }
+        });
+      }, { threshold: 0.20 });
+      bo.observe(dwBoard);
+    }
+
     // ── Per-panel freshness helper ("Updated 3 min ago")
     function formatRelative(isoUtc) {
       if (!isoUtc) return '—';
@@ -3576,6 +3886,51 @@
         }
         setFreshness('dwPlannedFreshness',  d.generated_at_utc);
         setFreshness('dwObservedFreshness', observed.last_probe_utc || d.generated_at_utc);
+
+        // Build the typewriter board messages with the real numbers and start
+        __boardMessages = buildBoardMessages(planned, observed);
+        if (dwBoard && dwBoard.classList.contains('in-view') && !__boardStarted) {
+          startBoardTyper();
+        }
+
+        // Concrete Cyprus-time range under each eyebrow — strongest temporal signal
+        function fmtHHMM(d) {
+          const h = String(d.getHours()).padStart(2, '0');
+          const m = String(d.getMinutes()).padStart(2, '0');
+          return `${h}:${m}`;
+        }
+        function setRange(elId, fromTime, toTime, isForward) {
+          const el = document.getElementById(elId);
+          if (!el) return;
+          const nowLabel = lang === 'en' ? 'now' : 'τώρα';
+          const arrow = '→';
+          // Forward (planned): now → +6h ;  Backward (observed): -6h → now
+          if (isForward) {
+            el.innerHTML =
+              `<span class="dw-time-now">${nowLabel}</span>` +
+              `<span class="dw-range-arrow">${arrow}</span>` +
+              `<span class="dw-time">${toTime}</span>`;
+          } else {
+            el.innerHTML =
+              `<span class="dw-time">${fromTime}</span>` +
+              `<span class="dw-range-arrow">${arrow}</span>` +
+              `<span class="dw-time-now">${nowLabel}</span>`;
+          }
+        }
+        try {
+          // Parse cyprus_local_time as a wall-clock string (drop timezone suffix,
+          // treat as Cyprus local) — using Date constructor gives us a JS Date in
+          // browser-local TZ which is fine since we only format HH:MM.
+          const raw = (d.cyprus_local_time || '').replace(/\+\d{2}:\d{2}$/, '');
+          const now = raw ? new Date(raw) : new Date();
+          if (!isNaN(now.getTime())) {
+            const wh = d.window_hours || 6;
+            const plus = new Date(now.getTime() + wh * 3600 * 1000);
+            const minus = new Date(now.getTime() - wh * 3600 * 1000);
+            setRange('dwPlannedRange',  fmtHHMM(now),   fmtHHMM(plus),  true);
+            setRange('dwObservedRange', fmtHHMM(minus), fmtHHMM(now),   false);
+          }
+        } catch (e) { /* leave em-dash placeholders */ }
 
         // Re-trigger panels if they entered view before data arrived
         panels.forEach(p => {
