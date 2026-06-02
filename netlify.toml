@@ -1,0 +1,22 @@
+# Netlify build configuration for inframind.eu
+#
+# CRITICAL — credit-burn prevention:
+# The MOTION data refresh bot pushes commits to main every few minutes.
+# The website fetches data directly from raw.githubusercontent.com so it
+# never needs a Netlify rebuild on data-only commits. Two protections:
+#
+#   1. The bot commit subject includes "[skip ci]" — Netlify's official
+#      skip directive (substring match anywhere in commit message).
+#   2. The ignore command below tells Netlify to skip the build when the
+#      diff vs the last deploy only touches data/ paths.
+#
+# A Netlify build is triggered (= 15 credits) only when index.html,
+# scripts/, the workflow yaml, or any non-data path changes. Run
+# `npx netlify-cli deploy --build` locally to force-test if needed.
+
+[build]
+  publish = "."
+  # `git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ':!data/'` exits 0
+  # when the only changes between deploys are inside data/. Netlify treats
+  # exit 0 as "ignore this build" → no deploy, no credits charged.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ':!data/'"
