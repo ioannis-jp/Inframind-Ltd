@@ -4494,24 +4494,35 @@
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(d => {
         if (!d) return;
-        const setData = (id, val) => {
-          const el = document.getElementById(id);
-          if (el && Number.isFinite(val)) el.setAttribute('data-final', String(val));
-        };
 
         const planned  = d.planned_next_6h  || {};
         const observed = d.observed_last_6h || {};
 
-        // Apply hard ceilings (defence in depth — pipeline already caps these)
-        setData('dwPlannedTrips',    planned.trips);
-        setData('dwPlannedKm',       Math.round(planned.km || 0));
-        setData('dwPlannedStops',    Math.min(planned.stops || 0, STOPS_MAX));
-        setData('dwPlannedVehicles', Math.min(planned.vehicles_estimate || 0, VEHICLES_MAX));
+        // Direct value application — sets data-final AND fires animation
+        // immediately, no dependency on IntersectionObserver. Bulletproof.
+        function applyMetric(id, val, format, delay, duration) {
+          const el = document.getElementById(id);
+          if (!el || !Number.isFinite(val)) return;
+          const fmt = format || ((v) => Math.floor(v).toLocaleString('el-GR'));
+          el.setAttribute('data-final', String(val));
+          // Fallback: even if animation never fires, the number is visible
+          el.textContent = fmt(val);
+          if (val > 0) {
+            // Reset to 0 then animate up — this overwrites the fallback above
+            setTimeout(() => { el.textContent = fmt(0); animateNumber(el, val, fmt, duration || 1300); }, delay || 100);
+          }
+        }
 
-        setData('dwObservedTrips',    observed.trips);
-        setData('dwObservedKm',       Math.round(observed.km || 0));
-        setData('dwObservedStops',    Math.min(observed.stops || 0, STOPS_MAX));
-        setData('dwObservedVehicles', Math.min(observed.vehicles_in_motion || 0, VEHICLES_MAX));
+        // Apply hard ceilings (defence in depth — pipeline already caps these)
+        applyMetric('dwPlannedTrips',    planned.trips,                                  formatInt, 100, 1500);
+        applyMetric('dwPlannedKm',       Math.round(planned.km || 0),                    formatKm,  280, 1300);
+        applyMetric('dwPlannedStops',    Math.min(planned.stops || 0, STOPS_MAX),        formatInt, 460, 1200);
+        applyMetric('dwPlannedVehicles', Math.min(planned.vehicles_estimate || 0, VEHICLES_MAX), formatInt, 640, 1000);
+
+        applyMetric('dwObservedTrips',    observed.trips,                                 formatInt, 260, 1500);
+        applyMetric('dwObservedKm',       Math.round(observed.km || 0),                   formatKm,  440, 1300);
+        applyMetric('dwObservedStops',    Math.min(observed.stops || 0, STOPS_MAX),       formatInt, 620, 1200);
+        applyMetric('dwObservedVehicles', Math.min(observed.vehicles_in_motion || 0, VEHICLES_MAX), formatInt, 800, 1000);
 
         // Footer timestamp + per-panel freshness
         const ts = document.getElementById('liveTimestamp');
@@ -4570,17 +4581,9 @@
           }
         } catch (e) { /* leave em-dash placeholders */ }
 
-        // Re-trigger panels if they entered view before data arrived
-        panels.forEach(p => {
-          if (p.classList.contains('in-view') && p.dataset.animated !== '1') {
-            delete p.dataset.animated;
-            if (p.classList.contains('dw-planned')) {
-              triggerPanelAnimation(p, PLANNED_METRICS);
-            } else if (p.classList.contains('dw-observed')) {
-              triggerPanelAnimation(p, OBSERVED_METRICS);
-            }
-          }
-        });
+        // Mark panels animated so the IntersectionObserver doesn't trigger
+        // a second animation pass (numbers already animated by applyMetric).
+        panels.forEach(p => { p.dataset.animated = '1'; });
       })
       .catch(() => {
         const ts = document.getElementById('liveTimestamp');
