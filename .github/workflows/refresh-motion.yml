@@ -2,10 +2,18 @@ name: Refresh MOTION data
 
 on:
   schedule:
-    # Every 6 hours, 4 times a day during active hours, plus midnight (Cyprus)
-    # Cron in UTC; Cyprus = UTC+3 (EEST). So 03:00, 09:00, 15:00, 21:00 UTC ≈ 06/12/18/00 Cyprus
+    # Native GitHub cron is unreliable at sub-hour cadences. We keep a low-rate
+    # safety cron here, but the primary trigger is the Cloudflare Worker which
+    # fires workflow_dispatch every 5 minutes (data refresh) + at 6h boundaries
+    # with deploy=true to fire a Netlify rebuild.
     - cron: "0 3,9,15,21 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: "Set to 'true' to OMIT [skip ci] so Netlify rebuilds. Default 'false' = data-only commit."
+        required: false
+        default: "false"
+        type: string
 
 permissions:
   contents: write
@@ -41,27 +49,35 @@ jobs:
         run: python scripts/refresh_motion_data.py
 
       - name: Commit and push if changed
+        env:
+          DEPLOY_INPUT: ${{ github.event.inputs.deploy }}
         run: |
           set -e
           git config user.name  "inframind-bot"
           git config user.email "bot@inframind.eu"
-          # Stage ALL changed/new files in data/ — covers verification_planned.json,
-          # _trip_distances.json, and any new files the script may produce.
+          # Stage ALL data/ changes incl. new files (trip_distances, today_schedule, etc.)
           git add -A data/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0
           fi
           ts=$(date -u +"%Y-%m-%d %H:%M UTC")
-          # Site reads data from raw.githubusercontent.com — Netlify rebuild NOT needed
-          # for data-only commits. [skip ci] is Netlify's official directive (substring
-          # match anywhere in commit message). It MUST be in the subject to be picked up
-          # reliably; "skip-netlify-build" in the body is NOT recognized by Netlify and
-          # was causing every bot commit to trigger a production deploy (15 credits each).
-          # netlify.toml has an ignore rule too as defense-in-depth.
-          git commit -m "chore(data): refresh MOTION stats - $ts [skip ci]"
-          # Resilient push: retry with rebase if a concurrent bot run pushed first.
-          # Always stash any unstaged residue before rebasing so we never block.
+
+          # Default commits use [skip ci] so Netlify does NOT rebuild (data is
+          # fetched directly from raw.githubusercontent.com — no rebuild needed).
+          # Every 6 hours, the Cloudflare Worker calls workflow_dispatch with
+          # deploy=true → we OMIT [skip ci] → Netlify rebuilds. 4 deploys/day
+          # cap = 60 credits/day instead of ~4,320.
+          if [ "${DEPLOY_INPUT:-false}" = "true" ]; then
+            COMMIT_MSG="chore(data): refresh MOTION stats - $ts (6h deploy)"
+            echo "[commit] Deploy commit (no [skip ci]) — Netlify WILL rebuild."
+          else
+            COMMIT_MSG="chore(data): refresh MOTION stats - $ts [skip ci]"
+            echo "[commit] Data-only commit ([skip ci]) — Netlify will skip."
+          fi
+          git commit -m "$COMMIT_MSG"
+
+          # Resilient push: retry with rebase if a concurrent run pushed first.
           push_ok=0
           for i in 1 2 3; do
             if git push; then push_ok=1; break; fi

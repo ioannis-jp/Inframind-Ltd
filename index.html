@@ -1164,6 +1164,333 @@
     }
     .liveops-link:hover { opacity: 0.6; }
 
+    /* ── DUAL-WINDOW WIDGET — next 6h planned · last 6h observed ── */
+    .dualwindow-frame {
+      margin: 56px 0 28px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .dualwindow-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      position: relative;
+    }
+    .dualwindow-grid::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+      transform: translateX(-0.5px);
+    }
+    .dualwindow-panel {
+      padding: 56px 44px 48px;
+      background: var(--white);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .dualwindow-panel.in-view { opacity: 1; transform: none; }
+    .dualwindow-panel.dw-planned.in-view  { transition-delay: 0.05s; }
+    .dualwindow-panel.dw-observed.in-view { transition-delay: 0.25s; }
+    .dw-head {
+      margin-bottom: 44px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dw-eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 16px;
+      margin-bottom: 22px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .dw-window-tag {
+      position: relative;
+      padding-left: 16px;
+      color: var(--black);
+    }
+    .dw-window-tag::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      width: 7px; height: 7px;
+      background: var(--grey);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .dw-window-tag.is-live::before {
+      background: #0E7C7B;
+      animation: dwPulse 2s infinite;
+    }
+    @keyframes dwPulse {
+      0%   { box-shadow: 0 0 0 0   rgba(14,124,123,0.55); }
+      70%  { box-shadow: 0 0 0 10px rgba(14,124,123,0);   }
+      100% { box-shadow: 0 0 0 0   rgba(14,124,123,0);    }
+    }
+    .dw-source-tag { color: var(--grey); opacity: 0.8; }
+    .dw-title {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--black);
+      margin: 0 0 10px;
+    }
+    .dw-sub {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(15px, 1.4vw, 17px);
+      color: var(--grey);
+      margin: 0;
+      line-height: 1.5;
+      max-width: 380px;
+    }
+    .dw-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    .dw-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .dw-metric-primary .dw-num {
+      font-size: clamp(42px, 5.2vw, 68px);
+    }
+    .dw-num {
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-weight: 800;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1;
+      color: var(--black);
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .dw-noun {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .dw-foot {
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11.5px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--grey);
+      font-variant-numeric: tabular-nums;
+    }
+    .dw-source-detail { color: var(--grey); opacity: 0.85; }
+    .dw-freshness { color: var(--grey); }
+    @media (max-width: 820px) {
+      .dualwindow-grid { grid-template-columns: 1fr; }
+      .dualwindow-grid::before {
+        left: 0; right: 0; top: 50%; bottom: auto;
+        width: auto; height: 1px;
+        transform: translateY(-0.5px);
+      }
+      .dualwindow-panel { padding: 40px 28px 36px; }
+      .dw-metrics { gap: 28px 20px; }
+    }
+
+    /* ── ANALYTICS SECTION — Inframind as real-time analytics consultancy ── */
+    #analytics {
+      background: var(--white);
+      padding: 120px 5%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    #analytics::before,
+    #analytics::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent 0%, var(--black) 50%, transparent 100%);
+      opacity: 0.14;
+    }
+    #analytics::before { top: 0; }
+    #analytics::after  { bottom: 0; }
+    .analytics-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .analytics-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin: 0 0 28px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .analytics-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--grey);
+      vertical-align: middle;
+      margin-right: 14px;
+      margin-bottom: 3px;
+    }
+    .analytics-title {
+      font-size: clamp(36px, 5.5vw, 72px);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--black);
+      margin: 0 0 40px;
+      max-width: 980px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 1.0s ease 0.15s, transform 1.0s ease 0.15s;
+    }
+    .analytics-title em {
+      font-style: normal;
+      font-weight: 600;
+    }
+    .analytics-title .light {
+      font-weight: 300;
+      color: var(--grey);
+    }
+    .analytics-lead {
+      font-size: clamp(17px, 1.7vw, 21px);
+      line-height: 1.65;
+      color: var(--black);
+      max-width: 820px;
+      margin: 0 0 56px;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 1.0s ease 0.35s, transform 1.0s ease 0.35s;
+    }
+    .analytics-lead strong { font-weight: 600; }
+    .analytics-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 0 0 64px;
+    }
+    .analytics-pillar {
+      padding: 36px 28px 32px;
+      border-right: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .analytics-pillar:last-child { border-right: none; }
+    #analytics.in-view .analytics-eyebrow { opacity: 1; transform: none; }
+    #analytics.in-view .analytics-title   { opacity: 1; transform: none; }
+    #analytics.in-view .analytics-lead    { opacity: 1; transform: none; }
+    #analytics.in-view .analytics-pillar:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.55s; }
+    #analytics.in-view .analytics-pillar:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.70s; }
+    #analytics.in-view .analytics-pillar:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.85s; }
+    .ap-num {
+      display: block;
+      font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      color: var(--grey);
+      margin-bottom: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+    .ap-text {
+      display: block;
+      font-size: clamp(17px, 1.75vw, 21px);
+      line-height: 1.4;
+      font-weight: 400;
+      color: var(--black);
+    }
+    .analytics-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease 1.0s, transform 0.9s ease 1.0s;
+    }
+    #analytics.in-view .analytics-cta { opacity: 1; transform: none; }
+    .analytics-cta-body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-size: clamp(18px, 1.9vw, 24px);
+      line-height: 1.55;
+      color: var(--grey);
+      margin: 0;
+      max-width: 760px;
+      font-weight: 300;
+    }
+    .analytics-cta-body strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .btn-analytics {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 36px;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: 1px solid var(--black);
+      transition: background 0.25s, color 0.25s, transform 0.25s ease;
+    }
+    .btn-analytics::after {
+      content: '→';
+      font-size: 16px;
+      letter-spacing: 0;
+      transition: transform 0.25s ease;
+    }
+    .btn-analytics:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+    .btn-analytics:hover::after { transform: translateX(6px); }
+    @media (max-width: 820px) {
+      #analytics { padding: 80px 7vw; }
+      .analytics-pillars { grid-template-columns: 1fr; }
+      .analytics-pillar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .analytics-pillar:last-child { border-bottom: none; }
+    }
+
     /* ── QUOTE INTERLUDE — dark cinematic with procedural wireframe ── */
     #liveops-quote {
       position: relative;
@@ -1718,6 +2045,7 @@
       <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
       <li><a href="#live-ops" data-i18n="nav.openData">Open Data</a></li>
       <li><a href="#tech-in-practice" data-i18n="nav.practice">In Practice</a></li>
+      <li><a href="#analytics" data-i18n="nav.analytics">Analytics</a></li>
       <li><a href="#philosophy" data-i18n="nav.philosophy">Philosophy</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
@@ -1739,6 +2067,7 @@
   <a href="#projects" onclick="closeMobile()" data-i18n="nav.projects">Projects</a>
   <a href="#live-ops" onclick="closeMobile()" data-i18n="nav.openData">Open Data</a>
   <a href="#tech-in-practice" onclick="closeMobile()" data-i18n="nav.practice">In Practice</a>
+  <a href="#analytics" onclick="closeMobile()" data-i18n="nav.analytics">Analytics</a>
   <a href="#philosophy" onclick="closeMobile()" data-i18n="nav.philosophy">Philosophy</a>
   <a href="#contact" onclick="closeMobile()" data-i18n="nav.contact">Contact</a>
   <div class="mobile-lang" id="mobileLangSwitch">
@@ -2006,168 +2335,76 @@
     providing live information to every citizen, business, and application built on top of it.
   </p>
 
-  <!-- HERO A — PLANNED TODAY (GTFS static) -->
-  <div class="liveops-narrative" style="margin-bottom:2rem;">
-    <div class="narr-pulse-row">
-      <span class="narr-pulse-dot" aria-hidden="true" style="background:#5fb04d;"></span>
-      <span data-i18n="liveops.heroA.label">Today's plan · GTFS static open data</span>
-    </div>
-    <p class="narr-body">
-      <span class="lead" data-i18n="liveops.heroA.lead">Σήμερα η Κύπρος έχει προγραμματίσει</span>
-      <span class="narr-stat stat1">
-        <span class="narr-num" id="planTrips" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.trips">δρομολόγια</span>
-      </span>
-      <span class="narr-stat stat2">
-        <span data-i18n="liveops.heroA.conn1">· με στόλο έως</span>
-        <span class="narr-num" id="planVehicles" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.vehicles">λεωφορεία</span>
-      </span>
-      <span class="narr-stat stat3">
-        <span data-i18n="liveops.narr.conn2">· εξυπηρετώντας</span>
-        <span class="narr-num" id="planStops" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.stops">στάσεις</span>
-      </span>
-      <span class="narr-stat stat4">
-        <span data-i18n="liveops.narr.conn3">· μέσω</span>
-        <span class="narr-num" id="planOperators" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.operators">παρόχων</span>
-      </span>
-      <span class="tail" data-i18n-html="liveops.heroA.tail"> σε όλη την επικράτεια &mdash; <strong>επίσημο πρόγραμμα</strong> όπως δημοσιεύεται καθημερινά στο GTFS static feed του MOTION ITS.</span>
-    </p>
-    <div class="narr-attribution">
-      <span class="attr-badge attr-motion">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="16" rx="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-        </svg>
-        <span data-i18n="liveops.heroA.badge">Programmed daily · MOTION ITS</span>
-      </span>
-      <span class="attr-text" id="planFootnote" data-i18n="liveops.heroA.note">Επίσημο πρόγραμμα ημέρας · ανανεώνεται καθημερινά από το GTFS static</span>
-    </div>
-    <p class="narr-freshness" id="heroAFreshness" aria-live="polite">&mdash;</p>
-  </div>
+  <!-- DUAL-WINDOW WIDGET — next 6h planned · last 6h observed -->
+  <div class="dualwindow-frame">
+    <div class="dualwindow-grid">
+      <!-- LEFT: PROGRAMMED — next 6h, from GTFS static -->
+      <article class="dualwindow-panel dw-planned" id="dwPlanned">
+        <header class="dw-head">
+          <div class="dw-eyebrow">
+            <span class="dw-window-tag" data-i18n="dw.planned.window">Επόμενες 6 ώρες</span>
+            <span class="dw-source-tag" data-i18n="dw.planned.sourceTag">GTFS static</span>
+          </div>
+          <h3 class="dw-title" data-i18n="dw.planned.title">Programmed</h3>
+          <p class="dw-sub" data-i18n="dw.planned.sub">Τι έχει προγραμματιστεί να εκτελεστεί στις επόμενες έξι ώρες.</p>
+        </header>
+        <div class="dw-metrics">
+          <div class="dw-metric dw-metric-primary">
+            <span class="dw-num" id="dwPlannedTrips" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.trips">δρομολόγια</span>
+          </div>
+          <div class="dw-metric dw-metric-primary">
+            <span class="dw-num" id="dwPlannedKm" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.km">χιλιόμετρα</span>
+          </div>
+          <div class="dw-metric">
+            <span class="dw-num" id="dwPlannedStops" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.stops">στάσεις</span>
+          </div>
+          <div class="dw-metric">
+            <span class="dw-num" id="dwPlannedOperators" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.operators">πάροχοι</span>
+          </div>
+        </div>
+        <footer class="dw-foot">
+          <span class="dw-source-detail" data-i18n="dw.planned.sourceDetail">MOTION ITS · GTFS static feed</span>
+          <span class="dw-freshness" id="dwPlannedFreshness">&mdash;</span>
+        </footer>
+      </article>
 
-  <!-- HERO B — EXECUTED LAST 6H (GTFS-RT rolling window) -->
-  <div class="liveops-narrative">
-    <div class="narr-pulse-row">
-      <span class="narr-pulse-dot" aria-hidden="true"></span>
-      <span data-i18n="liveops.narr.live">Continuous operation · public GTFS-RT open data</span>
-    </div>
-    <p class="narr-body">
-      <span class="lead" data-i18n="liveops.narr.lead">Τις τελευταίες 6 ώρες, η πλατφόρμα κατέγραψε</span>
-      <span class="narr-stat stat1">
-        <span class="narr-num" id="narrTrips" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.trips">δρομολόγια</span>
-      </span>
-      <span class="narr-stat stat2">
-        <span data-i18n="liveops.narr.conn1">· από</span>
-        <span class="narr-num" id="narrVehicles" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.vehicles">λεωφορεία</span>
-      </span>
-      <span class="narr-stat stat3">
-        <span data-i18n="liveops.narr.conn2">· εξυπηρετώντας</span>
-        <span class="narr-num" id="narrStops" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.stops">στάσεις</span>
-      </span>
-      <span class="narr-stat stat4">
-        <span data-i18n="liveops.narr.conn3">· μέσω</span>
-        <span class="narr-num" id="narrOperators" data-final="0">—</span>
-        <span class="narr-noun" data-i18n="liveops.narr.operators">παρόχων</span>
-      </span>
-      <span class="tail" data-i18n-html="liveops.narr.tail"> σε όλη την Κύπρο &mdash; <strong>ζωντανά δεδομένα</strong> διαθέσιμα δημόσια ως <em>open data</em>, ώστε πολίτες, επιχειρήσεις και τρίτες εφαρμογές να αξιοποιούν αυτή την κρίσιμη ψηφιακή υποδομή.</span>
-    </p>
-    <div class="narr-attribution">
-      <span class="attr-badge attr-motion">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-          <polyline points="22 4 12 14.01 9 11.01"/>
-        </svg>
-        <span data-i18n="liveops.narr.badge.motion">Public open data · MOTION ITS</span>
-      </span>
-      <span class="attr-badge attr-inframind">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <polyline points="12 6 12 12 16 14"/>
-        </svg>
-        <span data-i18n="liveops.narr.badge.inframind">Quality monitoring · INFRAMIND</span>
-      </span>
-      <span class="attr-text" data-i18n-html="liveops.narr.note">Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.</span>
-    </div>
-    <p class="narr-freshness" id="heroBFreshness" aria-live="polite">&mdash;</p>
-  </div>
-
-  <!-- Tile grid — last 6h executed (from GTFS-RT rolling window) -->
-  <div class="liveops-grid">
-    <div class="liveops-tile">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="8" y="12" width="32" height="22" rx="2"/>
-          <line x1="8" y1="24" x2="40" y2="24"/>
-          <rect x="11" y="15" width="5" height="6"/>
-          <rect x="18" y="15" width="5" height="6"/>
-          <rect x="25" y="15" width="5" height="6"/>
-          <rect x="32" y="15" width="5" height="6"/>
-          <line x1="8" y1="34" x2="8" y2="40"/>
-          <line x1="40" y1="34" x2="40" y2="40"/>
-          <circle cx="14" cy="38" r="2.5"/>
-          <circle cx="34" cy="38" r="2.5"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="liveVehicles" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.vehicles">Buses in motion</div>
-    </div>
-    <div class="liveops-tile">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M 8 38 Q 14 14, 24 24 T 40 10"/>
-          <circle cx="8" cy="38" r="3" fill="currentColor"/>
-          <circle cx="40" cy="10" r="3" fill="currentColor"/>
-          <circle cx="20" cy="22" r="1.5" fill="currentColor"/>
-          <circle cx="28" cy="20" r="1.5" fill="currentColor"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="liveTrips" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.trips">Active trips</div>
-    </div>
-    <div class="liveops-tile">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="24" y1="22" x2="24" y2="42"/>
-          <rect x="11" y="8" width="26" height="16" rx="1.5"/>
-          <line x1="16" y1="13" x2="32" y2="13"/>
-          <line x1="16" y1="17" x2="28" y2="17"/>
-          <line x1="16" y1="21" x2="30" y2="21"/>
-          <line x1="20" y1="42" x2="28" y2="42"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="liveStops" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.stops">Stops served</div>
-    </div>
-    <div class="liveops-tile">
-      <div class="liveops-icon" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="24" cy="24" r="4"/>
-          <circle cx="10" cy="10" r="3"/>
-          <circle cx="38" cy="10" r="3"/>
-          <circle cx="10" cy="38" r="3"/>
-          <circle cx="38" cy="38" r="3"/>
-          <circle cx="24" cy="6" r="2"/>
-          <circle cx="6" cy="24" r="2"/>
-          <circle cx="42" cy="24" r="2"/>
-          <line x1="12.5" y1="12.5" x2="20.5" y2="20.5"/>
-          <line x1="35.5" y1="12.5" x2="27.5" y2="20.5"/>
-          <line x1="12.5" y1="35.5" x2="20.5" y2="27.5"/>
-          <line x1="35.5" y1="35.5" x2="27.5" y2="27.5"/>
-          <line x1="24" y1="8" x2="24" y2="20"/>
-          <line x1="8" y1="24" x2="20" y2="24"/>
-          <line x1="40" y1="24" x2="28" y2="24"/>
-        </svg>
-      </div>
-      <div class="liveops-number" id="liveOperators" data-final="0">&mdash;</div>
-      <div class="liveops-label" data-i18n="liveops.operators">Operators online</div>
+      <!-- RIGHT: EXECUTED — last 6h, from GTFS-RT -->
+      <article class="dualwindow-panel dw-observed" id="dwObserved">
+        <header class="dw-head">
+          <div class="dw-eyebrow">
+            <span class="dw-window-tag is-live" data-i18n="dw.observed.window">Τελευταίες 6 ώρες</span>
+            <span class="dw-source-tag" data-i18n="dw.observed.sourceTag">GTFS-RT</span>
+          </div>
+          <h3 class="dw-title" data-i18n="dw.observed.title">Executed</h3>
+          <p class="dw-sub" data-i18n="dw.observed.sub">Τι πραγματικά εκτελέστηκε τις τελευταίες έξι ώρες.</p>
+        </header>
+        <div class="dw-metrics">
+          <div class="dw-metric dw-metric-primary">
+            <span class="dw-num" id="dwObservedTrips" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.trips">δρομολόγια</span>
+          </div>
+          <div class="dw-metric dw-metric-primary">
+            <span class="dw-num" id="dwObservedKm" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.km">χιλιόμετρα</span>
+          </div>
+          <div class="dw-metric">
+            <span class="dw-num" id="dwObservedStops" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.stops">στάσεις</span>
+          </div>
+          <div class="dw-metric">
+            <span class="dw-num" id="dwObservedVehicles" data-final="0">&mdash;</span>
+            <span class="dw-noun" data-i18n="dw.metric.vehicles">λεωφορεία</span>
+          </div>
+        </div>
+        <footer class="dw-foot">
+          <span class="dw-source-detail" data-i18n="dw.observed.sourceDetail">MOTION ITS · GTFS-Realtime feed</span>
+          <span class="dw-freshness" id="dwObservedFreshness">&mdash;</span>
+        </footer>
+      </article>
     </div>
   </div>
 
@@ -2212,6 +2449,42 @@
     <p class="tip-attribution" data-i18n-html="tip.attribution">
       A category, not a one-off: <strong>interconnection &amp; services for daily citizen use</strong>. This is the approach &mdash; new examples join this category as cities, operators, and public services come together.
     </p>
+  </div>
+</section>
+
+<!-- ANALYTICS — Inframind as real-time analytics consultancy -->
+<section id="analytics">
+  <div class="analytics-inner">
+    <p class="analytics-eyebrow" data-i18n="analytics.eyebrow">Real-time analytics &middot; engineered to last</p>
+    <h2 class="analytics-title" data-i18n-html="analytics.title">Σχεδιάζεται. <em>Μετριέται.</em> <span class="light">Εμπιστεύεται.</span></h2>
+    <p class="analytics-lead" data-i18n-html="analytics.lead">
+      Η <strong>INFRAMIND</strong> μελετά και υλοποιεί συστήματα real-time analytics για φορείς δημόσιας υποδομής
+      &mdash; από τον αισθητήρα στο dashboard, από το πρωτότυπο στην καθημερινή χρήση. Συστήματα που δίνουν στους
+      φορείς ποσοτικοποιημένη εικόνα της λειτουργίας τους, σε πραγματικό χρόνο, με αυστηρή τεκμηρίωση.
+    </p>
+
+    <div class="analytics-pillars">
+      <div class="analytics-pillar">
+        <span class="ap-num">01</span>
+        <span class="ap-text" data-i18n="analytics.pillar.1">Από τον αισθητήρα στο dashboard &mdash; ολοκληρωμένα.</span>
+      </div>
+      <div class="analytics-pillar">
+        <span class="ap-num">02</span>
+        <span class="ap-text" data-i18n="analytics.pillar.2">Από το πρωτότυπο στην καθημερινή χρήση &mdash; χωρίς εκπτώσεις.</span>
+      </div>
+      <div class="analytics-pillar">
+        <span class="ap-num">03</span>
+        <span class="ap-text" data-i18n="analytics.pillar.3">Κάθε υπολογισμός ελέγξιμος, κάθε αποτέλεσμα τεκμηριωμένο.</span>
+      </div>
+    </div>
+
+    <div class="analytics-cta">
+      <p class="analytics-cta-body" data-i18n-html="analytics.cta.body">
+        Για εξειδικευμένες ανάγκες &mdash; <strong>επικοινωνήστε μαζί μας</strong>. Η συζήτηση γίνεται με
+        τεχνικούς όρους, η πρόταση με μετρήσιμα παραδοτέα.
+      </p>
+      <a href="#contact" class="btn-analytics" data-i18n="analytics.cta.btn">Συζητήστε τις ανάγκες σας</a>
+    </div>
   </div>
 </section>
 
@@ -2315,6 +2588,7 @@
       'nav.projects': 'Projects',
       'nav.openData': 'Open Data',
       'nav.practice': 'In Practice',
+      'nav.analytics': 'Analytics',
       'nav.philosophy': 'Philosophy',
       'nav.contact': 'Contact',
       'hero.tagline': 'When Technology meets Purpose',
@@ -2420,6 +2694,31 @@
       'liveops.histTile.execKm':  'Executed km · estimated',
       'liveops.histTile.delivery':'Delivery rate (yesterday)',
       'liveops.histTile.polls':   'Observations · sampling polls',
+      // ─── DUAL-WINDOW WIDGET ───
+      'dw.planned.window':        'Next 6 hours',
+      'dw.planned.sourceTag':     'GTFS static',
+      'dw.planned.title':         'Programmed',
+      'dw.planned.sub':           'What the schedule says will run in the next six hours.',
+      'dw.planned.sourceDetail':  'MOTION ITS · GTFS static feed',
+      'dw.observed.window':       'Last 6 hours',
+      'dw.observed.sourceTag':    'GTFS-RT',
+      'dw.observed.title':        'Executed',
+      'dw.observed.sub':          'What actually ran during the last six hours.',
+      'dw.observed.sourceDetail': 'MOTION ITS · GTFS-Realtime feed',
+      'dw.metric.trips':          'trips',
+      'dw.metric.km':             'kilometres',
+      'dw.metric.stops':          'stops',
+      'dw.metric.operators':      'operators',
+      'dw.metric.vehicles':       'vehicles',
+      // ─── ANALYTICS SECTION ───
+      'analytics.eyebrow':   'Real-time analytics · engineered to last',
+      'analytics.title':     'Designed. <em>Measured.</em> <span class="light">Trusted.</span>',
+      'analytics.lead':      '<strong>INFRAMIND</strong> designs and engineers real-time analytics systems for public infrastructure operators &mdash; from sensor to dashboard, from prototype to daily citizen use. Systems that give operators a quantified view of their operation, in real time, with strict accountability.',
+      'analytics.pillar.1':  'From sensor to dashboard &mdash; end to end.',
+      'analytics.pillar.2':  'From prototype to daily use &mdash; no compromises.',
+      'analytics.pillar.3':  'Every computation verifiable, every result accountable.',
+      'analytics.cta.body':  'For specialised requirements &mdash; <strong>get in touch</strong>. The conversation is technical; the proposal, measurable deliverables.',
+      'analytics.cta.btn':   'Discuss your requirements',
       'tip.eyebrow': 'Technophilia in Practice · Interconnection for daily citizen use',
       'tip.title': 'Two services.<br><span class="tip-title-light">One wallet — whichever you already have.</span>',
       'tip.lead': 'Two separate mobility services, accessible through a single digital wallet — whichever one the citizen already has. The systems handle the bridge underneath; the citizen does nothing extra.',
@@ -2458,6 +2757,7 @@
       'nav.projects': 'Έργα',
       'nav.openData': 'Δεδομένα',
       'nav.practice': 'Στην Πράξη',
+      'nav.analytics': 'Analytics',
       'nav.philosophy': 'Φιλοσοφία',
       'nav.contact': 'Επικοινωνία',
       'hero.tagline': 'Όταν η Τεχνολογία συναντά τον Σκοπό',
@@ -2571,6 +2871,31 @@
       'liveops.narr.badge.motion': 'Public open data · MOTION ITS',
       'liveops.narr.badge.inframind': 'Quality monitoring · INFRAMIND',
       'liveops.narr.note': 'Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.',
+      // ─── DUAL-WINDOW WIDGET ───
+      'dw.planned.window':        'Επόμενες 6 ώρες',
+      'dw.planned.sourceTag':     'GTFS static',
+      'dw.planned.title':         'Προγραμματισμένα',
+      'dw.planned.sub':           'Όσα ορίζει το πρόγραμμα να εκτελεστούν στις επόμενες έξι ώρες.',
+      'dw.planned.sourceDetail':  'MOTION ITS · GTFS static feed',
+      'dw.observed.window':       'Τελευταίες 6 ώρες',
+      'dw.observed.sourceTag':    'GTFS-RT',
+      'dw.observed.title':        'Εκτελεσθέντα',
+      'dw.observed.sub':          'Όσα πραγματικά εκτελέστηκαν στις τελευταίες έξι ώρες.',
+      'dw.observed.sourceDetail': 'MOTION ITS · GTFS-Realtime feed',
+      'dw.metric.trips':          'δρομολόγια',
+      'dw.metric.km':             'χιλιόμετρα',
+      'dw.metric.stops':          'στάσεις',
+      'dw.metric.operators':      'πάροχοι',
+      'dw.metric.vehicles':       'λεωφορεία',
+      // ─── ANALYTICS SECTION ───
+      'analytics.eyebrow':   'Real-time analytics · σχεδιασμένα για να αντέχουν',
+      'analytics.title':     'Σχεδιάζεται. <em>Μετριέται.</em> <span class="light">Εμπιστεύεται.</span>',
+      'analytics.lead':      'Η <strong>INFRAMIND</strong> μελετά και υλοποιεί συστήματα real-time analytics για φορείς δημόσιας υποδομής &mdash; από τον αισθητήρα στο dashboard, από το πρωτότυπο στην καθημερινή χρήση. Συστήματα που δίνουν στους φορείς ποσοτικοποιημένη εικόνα της λειτουργίας τους, σε πραγματικό χρόνο, με αυστηρή τεκμηρίωση.',
+      'analytics.pillar.1':  'Από τον αισθητήρα στο dashboard &mdash; ολοκληρωμένα.',
+      'analytics.pillar.2':  'Από το πρωτότυπο στην καθημερινή χρήση &mdash; χωρίς εκπτώσεις.',
+      'analytics.pillar.3':  'Κάθε υπολογισμός ελέγξιμος, κάθε αποτέλεσμα τεκμηριωμένο.',
+      'analytics.cta.body':  'Για εξειδικευμένες ανάγκες &mdash; <strong>επικοινωνήστε μαζί μας</strong>. Η συζήτηση γίνεται με τεχνικούς όρους, η πρόταση με μετρήσιμα παραδοτέα.',
+      'analytics.cta.btn':   'Συζητήστε τις ανάγκες σας',
       'philosophy.label': 'Φιλοσοφία',
       'philosophy.title': 'Τεχνοφιλία — <span class="light">τεχνολογία με σκοπό</span>',
       'philosophy.body': 'Η τεχνολογία δεν παρουσιάζεται ως αυτοσκοπός. Είναι μέσο για να παράγονται <strong>καλύτερες υπηρεσίες</strong>, πιο ήρεμες και καθαρές εμπειρίες για τον πολίτη, πιο λειτουργικές πόλεις και συστήματα, και έργα με <strong>πραγματικό κοινωνικό αντίκτυπο</strong>.<br><br>Κάθε έργο πρέπει να συνδυάζει λειτουργικότητα και αισθητική. Το έργο πρέπει να αποπνέει <strong>σεβασμό, παιδεία, αρμονία και διαχρονικότητα</strong>. Η κοινωνία πρέπει να λαμβάνει πίσω πραγματική αξία — όχι «ψηφιακές βιτρίνες».<br><br>Η πραγματική τεχνολογία δεν ζητά προσοχή. Γίνεται συνήθεια.',
@@ -3086,11 +3411,195 @@
     }
   }
 
-  // ── LIVE OPS — MOTION ITS narrative + tiles (v2 Σκέψη 3) ──
+  // ── LIVE OPS — MOTION ITS dual-window widget (v3.0 schema) ──
+  (function() {
+    const panels = document.querySelectorAll('#live-ops .dualwindow-panel');
+    if (!panels.length) return;
+
+    // ── Number animation (count-up with easeOutCubic) ─────────────────────
+    function animateNumber(el, target, formatter, duration) {
+      duration = duration || 1500;
+      const fmt = formatter || ((v) => Math.floor(v).toLocaleString('el-GR'));
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = fmt(target * eased);
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = fmt(target);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function formatKm(v) {
+      const n = Math.floor(v);
+      // Cyprus: keep raw thousands with locale separator (e.g. 28.543)
+      return n.toLocaleString('el-GR');
+    }
+    function formatInt(v) {
+      return Math.floor(v).toLocaleString('el-GR');
+    }
+
+    // Metric definitions per panel — keep in order matching dw-metrics grid
+    const PLANNED_METRICS = [
+      { id: 'dwPlannedTrips',     format: formatInt, delay:   80, duration: 1300 },
+      { id: 'dwPlannedKm',        format: formatKm,  delay:  280, duration: 1500 },
+      { id: 'dwPlannedStops',     format: formatInt, delay:  480, duration: 1300 },
+      { id: 'dwPlannedOperators', format: formatInt, delay:  680, duration:  900 },
+    ];
+    const OBSERVED_METRICS = [
+      { id: 'dwObservedTrips',     format: formatInt, delay:  240, duration: 1300 },
+      { id: 'dwObservedKm',        format: formatKm,  delay:  440, duration: 1500 },
+      { id: 'dwObservedStops',     format: formatInt, delay:  640, duration: 1300 },
+      { id: 'dwObservedVehicles',  format: formatInt, delay:  840, duration:  900 },
+    ];
+
+    function triggerPanelAnimation(panel, metrics) {
+      if (!panel || panel.dataset.animated === '1') return;
+      let anyAnimated = false;
+      metrics.forEach(m => {
+        const el = document.getElementById(m.id);
+        if (!el) return;
+        const raw = el.getAttribute('data-final') || '0';
+        const target = parseFloat(raw);
+        if (target > 0) {
+          anyAnimated = true;
+          setTimeout(() => animateNumber(el, target, m.format, m.duration), m.delay);
+        }
+      });
+      if (anyAnimated) panel.dataset.animated = '1';
+    }
+
+    // ── IntersectionObserver: reveal panels + analytics + retrigger counts
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in-view');
+        if (entry.target.classList.contains('dw-planned')) {
+          triggerPanelAnimation(entry.target, PLANNED_METRICS);
+        } else if (entry.target.classList.contains('dw-observed')) {
+          triggerPanelAnimation(entry.target, OBSERVED_METRICS);
+        }
+      });
+    }, { threshold: 0.20 });
+    panels.forEach(p => obs.observe(p));
+
+    // Reveal observer for #analytics section (separate but lives here for grouping)
+    const analyticsSection = document.getElementById('analytics');
+    if (analyticsSection) {
+      const ao = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            ao.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.20 });
+      ao.observe(analyticsSection);
+    }
+
+    // ── Per-panel freshness helper ("Updated 3 min ago")
+    function formatRelative(isoUtc) {
+      if (!isoUtc) return '—';
+      const then = new Date(isoUtc);
+      if (isNaN(then.getTime())) return '—';
+      const sec = Math.max(0, Math.floor((Date.now() - then.getTime()) / 1000));
+      const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+      const L = {
+        el: { now: 'μόλις τώρα', min: 'λεπτά', hour: 'ώρες', day: 'μέρες', ago: 'πριν' },
+        en: { now: 'just now',   min: 'min',    hour: 'h',    day: 'd',     ago: 'ago' },
+      }[lang];
+      if (sec < 45) return L.now;
+      if (sec < 3600) return `${L.ago} ${Math.round(sec/60)} ${L.min}`;
+      if (sec < 86400) return `${L.ago} ${Math.round(sec/3600)} ${L.hour}`;
+      return `${L.ago} ${Math.round(sec/86400)} ${L.day}`;
+    }
+    function setFreshness(elId, isoUtc) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+      const prefix = lang === 'en' ? 'Updated' : 'Ενημερώθηκε';
+      el.textContent = `${prefix} ${formatRelative(isoUtc)}`;
+      el.dataset.iso = isoUtc || '';
+    }
+    window.__setFreshness = setFreshness;
+    setInterval(() => {
+      document.querySelectorAll('.dw-freshness[data-iso]').forEach(el => {
+        if (el.dataset.iso) setFreshness(el.id, el.dataset.iso);
+      });
+    }, 30000);
+
+    // ── Fetch v3.0 dual-window data ─────────────────────────────────────
+    // The site reads MOTION data directly from raw.githubusercontent.com so
+    // data refreshes do not trigger a Netlify rebuild. On localhost preview,
+    // fall back to local ./data so you can see new-schema output before pushing.
+    const DATA_BASE = (location.protocol === 'file:' ||
+                       location.hostname === 'localhost' ||
+                       location.hostname === '127.0.0.1')
+      ? './data'
+      : 'https://raw.githubusercontent.com/ioannis-jp/Inframind-Ltd/main/data';
+
+    const STOPS_MAX = 5314;
+    const VEHICLES_MAX = 731;
+
+    fetch(DATA_BASE + '/motion-stats.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        if (!d) return;
+        const setData = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && Number.isFinite(val)) el.setAttribute('data-final', String(val));
+        };
+
+        const planned  = d.planned_next_6h  || {};
+        const observed = d.observed_last_6h || {};
+
+        // Apply hard ceilings (defence in depth — pipeline already caps these)
+        setData('dwPlannedTrips',     planned.trips);
+        setData('dwPlannedKm',        Math.round(planned.km || 0));
+        setData('dwPlannedStops',     Math.min(planned.stops     || 0, STOPS_MAX));
+        setData('dwPlannedOperators', planned.operators);
+
+        setData('dwObservedTrips',    observed.trips);
+        setData('dwObservedKm',       Math.round(observed.km || 0));
+        setData('dwObservedStops',    Math.min(observed.stops || 0, STOPS_MAX));
+        setData('dwObservedVehicles', Math.min(observed.vehicles_in_motion || 0, VEHICLES_MAX));
+
+        // Footer timestamp + per-panel freshness
+        const ts = document.getElementById('liveTimestamp');
+        const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+        if (ts) {
+          const cyprusTime = d.cyprus_local_time ? d.cyprus_local_time.split('T').join(' ').replace(/\+\d{2}:\d{2}$/, '') : '';
+          const wh = d.window_hours || 6;
+          const windowLabel = lang === 'en' ? `${wh}h windows` : `παράθυρα ${wh}h`;
+          ts.textContent = `${cyprusTime} · ${windowLabel}`;
+        }
+        setFreshness('dwPlannedFreshness',  d.generated_at_utc);
+        setFreshness('dwObservedFreshness', observed.last_probe_utc || d.generated_at_utc);
+
+        // Re-trigger panels if they entered view before data arrived
+        panels.forEach(p => {
+          if (p.classList.contains('in-view') && p.dataset.animated !== '1') {
+            delete p.dataset.animated;
+            if (p.classList.contains('dw-planned')) {
+              triggerPanelAnimation(p, PLANNED_METRICS);
+            } else if (p.classList.contains('dw-observed')) {
+              triggerPanelAnimation(p, OBSERVED_METRICS);
+            }
+          }
+        });
+      })
+      .catch(() => {
+        const ts = document.getElementById('liveTimestamp');
+        if (ts) ts.textContent = '—';
+      });
+
+  })();
+
+  // ── LIVE OPS LEGACY DEAD CODE (kept for safety, no-ops on v3.0 markup) ─
   (function() {
     const tiles = document.querySelectorAll('#live-ops .liveops-tile');
     const narratives = document.querySelectorAll('.liveops-narrative');
-    const narrative = narratives[narratives.length - 1] || null;  // Hero B (executed) is the last one
     if (!tiles.length && !narratives.length) return;
 
     // Easing-based count-up
