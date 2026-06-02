@@ -1481,73 +1481,132 @@
       line-height: 1.55;
       max-width: 380px;
     }
-    /* Two-row metrics layout: top row = primary (large serif), bottom = secondary (smaller, refined) */
+    /* Layout: ONE dominant primary metric per row (the lead figure), with
+       three smaller stats beneath in a refined 3-column row. Asymmetric
+       hierarchy reads like a dashboard, not a flat 2×2 grid. */
     .dw-metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 44px 32px;
-    }
-    .dw-metric {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      position: relative;
+      gap: 40px;
     }
-    /* Primary metrics — serif tabular figures that harmonise with the title */
+    .dw-metric-row {
+      display: flex;
+      align-items: baseline;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    /* Primary metric — the headline number, sans-serif weight 600 with display tracking */
+    .dw-metric-primary {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
     .dw-metric-primary .dw-num {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      font-weight: 400;
-      font-size: clamp(48px, 6.2vw, 84px);
-      line-height: 0.95;
-      letter-spacing: -0.025em;
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(58px, 7.4vw, 104px);
+      line-height: 0.92;
+      letter-spacing: -0.045em;
       color: var(--black);
-      font-variant-numeric: tabular-nums lining-nums;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum", "lnum";
     }
-    /* Secondary metrics — smaller, calmer, with a quiet leader-line */
+    .dw-metric-primary .dw-noun {
+      font-size: clamp(13px, 1.2vw, 15px);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--grey);
+      font-style: italic;
+      font-family: 'Georgia', 'Times New Roman', serif;
+    }
+    /* Secondary stats — sit in a thin row beneath the primary, separated by hairline dividers */
+    .dw-metric-row.dw-secondary-row {
+      gap: 0;
+      padding-top: 28px;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      flex-wrap: nowrap;
+    }
     .dw-metric:not(.dw-metric-primary) {
-      padding-top: 26px;
-      position: relative;
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 18px;
+      border-right: 1px solid rgba(0,0,0,0.07);
+      min-width: 0;
     }
-    .dw-metric:not(.dw-metric-primary)::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 28px;
-      height: 1px;
-      background: var(--border);
-    }
+    .dw-metric:not(.dw-metric-primary):first-child { padding-left: 0; }
+    .dw-metric:not(.dw-metric-primary):last-child  { padding-right: 0; border-right: none; }
     .dw-metric:not(.dw-metric-primary) .dw-num {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      font-weight: 400;
-      font-size: clamp(28px, 3.4vw, 40px);
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 500;
+      font-size: clamp(24px, 2.6vw, 32px);
       line-height: 1;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.02em;
       color: var(--black);
-      font-variant-numeric: tabular-nums lining-nums;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum", "lnum";
+    }
+    .dw-metric:not(.dw-metric-primary) .dw-noun {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--grey);
     }
     .dw-num {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      font-weight: 400;
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 600;
       color: var(--black);
-      letter-spacing: -0.02em;
-      font-variant-numeric: tabular-nums lining-nums;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum", "lnum";
     }
     .dw-noun {
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--grey);
     }
-    .dw-metric-primary .dw-noun { letter-spacing: 0.20em; }
-    /* Subtle teal accent on observed primary metrics — ties to the live pulse */
+    /* SVG metric icons — sit quietly to the left of the number, never compete with it */
+    .dw-metric-icon {
+      flex-shrink: 0;
+      color: var(--grey);
+      opacity: 0.78;
+      transition: opacity 0.3s ease, color 0.3s ease;
+    }
+    .dw-metric-primary .dw-metric-icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 4px;
+      align-self: center;
+    }
+    .dw-metric:not(.dw-metric-primary) .dw-metric-icon {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+    }
+    .dualwindow-panel.in-view .dw-metric-icon { opacity: 0.85; }
+    .dualwindow-panel.in-view:hover .dw-metric-icon { opacity: 1; color: var(--black); }
+    .dw-observed .dw-metric-primary .dw-metric-icon { color: #0E7C7B; opacity: 0.75; }
+
+    /* Subtle thin underline on observed primary number — a quiet live indicator */
     .dw-observed .dw-metric-primary .dw-num {
-      background: linear-gradient(180deg, var(--black) 0%, #0E2D2C 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .dw-observed .dw-metric-primary .dw-num::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1.5px;
+      background: linear-gradient(90deg, #0E7C7B 0%, transparent 100%);
+      opacity: 0.55;
     }
     .dw-foot {
       margin-top: 48px;
@@ -1576,8 +1635,25 @@
         transform: translateY(-0.5px);
       }
       .dualwindow-panel { padding: 48px 28px 40px; }
-      .dw-metrics { gap: 36px 24px; }
+      .dw-metrics { gap: 32px; }
       .dualwindow-panel::before { top: 16px; right: 20px; }
+      .dw-metric-row.dw-secondary-row {
+        flex-wrap: wrap;
+        gap: 20px 0;
+      }
+      .dw-metric:not(.dw-metric-primary) {
+        flex: 0 0 50%;
+        padding: 0 14px;
+      }
+      .dw-metric:not(.dw-metric-primary):nth-child(2) {
+        border-right: none;
+      }
+      .dw-metric:not(.dw-metric-primary):nth-child(3) {
+        padding-left: 0;
+        padding-top: 18px;
+        margin-top: 4px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+      }
     }
 
     /* ── ANALYTICS SECTION — Inframind as real-time analytics consultancy ── */
@@ -2656,21 +2732,58 @@
           <p class="dw-sub" data-i18n="dw.planned.sub">Όσα θα εκτελεστούν από τώρα και τις επόμενες έξι ώρες.</p>
         </header>
         <div class="dw-metrics">
-          <div class="dw-metric dw-metric-primary">
-            <span class="dw-num" id="dwPlannedTrips" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.trips">δρομολόγια</span>
+          <div class="dw-metric-row dw-primary-row">
+            <div class="dw-metric dw-metric-primary">
+              <svg class="dw-metric-icon dw-icon-route" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M 8 38 Q 14 14, 24 24 T 40 10"/>
+                <circle cx="8"  cy="38" r="3" fill="currentColor"/>
+                <circle cx="40" cy="10" r="3" fill="currentColor"/>
+                <circle cx="20" cy="22" r="1.5" fill="currentColor"/>
+                <circle cx="28" cy="20" r="1.5" fill="currentColor"/>
+              </svg>
+              <span class="dw-num" id="dwPlannedTrips" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.trips">δρομολόγια</span>
+            </div>
           </div>
-          <div class="dw-metric dw-metric-primary">
-            <span class="dw-num" id="dwPlannedKm" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.km">χιλιόμετρα</span>
-          </div>
-          <div class="dw-metric">
-            <span class="dw-num" id="dwPlannedStops" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.stops">στάσεις</span>
-          </div>
-          <div class="dw-metric">
-            <span class="dw-num" id="dwPlannedOperators" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.operators">πάροχοι</span>
+          <div class="dw-metric-row dw-secondary-row">
+            <div class="dw-metric">
+              <svg class="dw-metric-icon dw-icon-km" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M 6 36 L 22 12 L 30 22 L 42 10"/>
+                <circle cx="22" cy="12" r="1.6" fill="currentColor"/>
+                <circle cx="30" cy="22" r="1.6" fill="currentColor"/>
+                <line x1="6" y1="42" x2="42" y2="42"/>
+              </svg>
+              <span class="dw-num" id="dwPlannedKm" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.km">χιλιόμετρα</span>
+            </div>
+            <div class="dw-metric">
+              <svg class="dw-metric-icon dw-icon-stop" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="24" y1="22" x2="24" y2="42"/>
+                <rect x="11" y="8" width="26" height="16" rx="1.5"/>
+                <line x1="16" y1="13" x2="32" y2="13"/>
+                <line x1="16" y1="17" x2="28" y2="17"/>
+                <line x1="16" y1="21" x2="30" y2="21"/>
+                <line x1="20" y1="42" x2="28" y2="42"/>
+              </svg>
+              <span class="dw-num" id="dwPlannedStops" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.stops">στάσεις</span>
+            </div>
+            <div class="dw-metric">
+              <svg class="dw-metric-icon dw-icon-bus" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="8"  y="12" width="32" height="22" rx="2"/>
+                <line x1="8"  y1="24" x2="40" y2="24"/>
+                <rect x="11" y="15" width="5" height="6"/>
+                <rect x="18" y="15" width="5" height="6"/>
+                <rect x="25" y="15" width="5" height="6"/>
+                <rect x="32" y="15" width="5" height="6"/>
+                <line x1="8"  y1="34" x2="8"  y2="40"/>
+                <line x1="40" y1="34" x2="40" y2="40"/>
+                <circle cx="14" cy="38" r="2.5"/>
+                <circle cx="34" cy="38" r="2.5"/>
+              </svg>
+              <span class="dw-num" id="dwPlannedVehicles" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.vehicles">λεωφορεία</span>
+            </div>
           </div>
         </div>
         <footer class="dw-foot">
@@ -2694,21 +2807,58 @@
           <p class="dw-sub" data-i18n="dw.observed.sub">Όσα πραγματικά μετρήθηκαν τις τελευταίες έξι ώρες, μέχρι τώρα.</p>
         </header>
         <div class="dw-metrics">
-          <div class="dw-metric dw-metric-primary">
-            <span class="dw-num" id="dwObservedTrips" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.trips">δρομολόγια</span>
+          <div class="dw-metric-row dw-primary-row">
+            <div class="dw-metric dw-metric-primary">
+              <svg class="dw-metric-icon dw-icon-route" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M 8 38 Q 14 14, 24 24 T 40 10"/>
+                <circle cx="8"  cy="38" r="3" fill="currentColor"/>
+                <circle cx="40" cy="10" r="3" fill="currentColor"/>
+                <circle cx="20" cy="22" r="1.5" fill="currentColor"/>
+                <circle cx="28" cy="20" r="1.5" fill="currentColor"/>
+              </svg>
+              <span class="dw-num" id="dwObservedTrips" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.trips">δρομολόγια</span>
+            </div>
           </div>
-          <div class="dw-metric dw-metric-primary">
-            <span class="dw-num" id="dwObservedKm" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.km">χιλιόμετρα</span>
-          </div>
-          <div class="dw-metric">
-            <span class="dw-num" id="dwObservedStops" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.stops">στάσεις</span>
-          </div>
-          <div class="dw-metric">
-            <span class="dw-num" id="dwObservedVehicles" data-final="0">&mdash;</span>
-            <span class="dw-noun" data-i18n="dw.metric.vehicles">λεωφορεία</span>
+          <div class="dw-metric-row dw-secondary-row">
+            <div class="dw-metric">
+              <svg class="dw-metric-icon dw-icon-km" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M 6 36 L 22 12 L 30 22 L 42 10"/>
+                <circle cx="22" cy="12" r="1.6" fill="currentColor"/>
+                <circle cx="30" cy="22" r="1.6" fill="currentColor"/>
+                <line x1="6" y1="42" x2="42" y2="42"/>
+              </svg>
+              <span class="dw-num" id="dwObservedKm" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.km">χιλιόμετρα</span>
+            </div>
+            <div class="dw-metric">
+              <svg class="dw-metric-icon dw-icon-stop" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="24" y1="22" x2="24" y2="42"/>
+                <rect x="11" y="8" width="26" height="16" rx="1.5"/>
+                <line x1="16" y1="13" x2="32" y2="13"/>
+                <line x1="16" y1="17" x2="28" y2="17"/>
+                <line x1="16" y1="21" x2="30" y2="21"/>
+                <line x1="20" y1="42" x2="28" y2="42"/>
+              </svg>
+              <span class="dw-num" id="dwObservedStops" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.stops">στάσεις</span>
+            </div>
+            <div class="dw-metric">
+              <svg class="dw-metric-icon dw-icon-bus" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="8"  y="12" width="32" height="22" rx="2"/>
+                <line x1="8"  y1="24" x2="40" y2="24"/>
+                <rect x="11" y="15" width="5" height="6"/>
+                <rect x="18" y="15" width="5" height="6"/>
+                <rect x="25" y="15" width="5" height="6"/>
+                <rect x="32" y="15" width="5" height="6"/>
+                <line x1="8"  y1="34" x2="8"  y2="40"/>
+                <line x1="40" y1="34" x2="40" y2="40"/>
+                <circle cx="14" cy="38" r="2.5"/>
+                <circle cx="34" cy="38" r="2.5"/>
+              </svg>
+              <span class="dw-num" id="dwObservedVehicles" data-final="0">&mdash;</span>
+              <span class="dw-noun" data-i18n="dw.metric.vehicles">λεωφορεία</span>
+            </div>
           </div>
         </div>
         <footer class="dw-foot">
@@ -3766,16 +3916,16 @@
 
     // Metric definitions per panel — keep in order matching dw-metrics grid
     const PLANNED_METRICS = [
-      { id: 'dwPlannedTrips',     format: formatInt, delay:   80, duration: 1300 },
-      { id: 'dwPlannedKm',        format: formatKm,  delay:  280, duration: 1500 },
-      { id: 'dwPlannedStops',     format: formatInt, delay:  480, duration: 1300 },
-      { id: 'dwPlannedOperators', format: formatInt, delay:  680, duration:  900 },
+      { id: 'dwPlannedTrips',     format: formatInt, delay:   80, duration: 1500 },
+      { id: 'dwPlannedKm',        format: formatKm,  delay:  380, duration: 1300 },
+      { id: 'dwPlannedStops',     format: formatInt, delay:  560, duration: 1200 },
+      { id: 'dwPlannedVehicles',  format: formatInt, delay:  740, duration: 1000 },
     ];
     const OBSERVED_METRICS = [
-      { id: 'dwObservedTrips',     format: formatInt, delay:  240, duration: 1300 },
-      { id: 'dwObservedKm',        format: formatKm,  delay:  440, duration: 1500 },
-      { id: 'dwObservedStops',     format: formatInt, delay:  640, duration: 1300 },
-      { id: 'dwObservedVehicles',  format: formatInt, delay:  840, duration:  900 },
+      { id: 'dwObservedTrips',     format: formatInt, delay:  240, duration: 1500 },
+      { id: 'dwObservedKm',        format: formatKm,  delay:  540, duration: 1300 },
+      { id: 'dwObservedStops',     format: formatInt, delay:  720, duration: 1200 },
+      { id: 'dwObservedVehicles',  format: formatInt, delay:  900, duration: 1000 },
     ];
 
     function triggerPanelAnimation(panel, metrics) {
@@ -3859,9 +4009,9 @@
       let msgIdx = 0;
       let charIdx = 0;
       let phase = 'type';  // 'type' → 'hold' → 'erase' → next
-      const TYPE_MS = 28;
-      const ERASE_MS = 14;
-      const HOLD_MS = 2400;
+      const TYPE_MS = 85;
+      const ERASE_MS = 35;
+      const HOLD_MS = 4200;
 
       // To keep HTML tags intact while typing, we track the "visible plain
       // text length" and re-render the substring up to that length while
@@ -4016,10 +4166,10 @@
         const observed = d.observed_last_6h || {};
 
         // Apply hard ceilings (defence in depth — pipeline already caps these)
-        setData('dwPlannedTrips',     planned.trips);
-        setData('dwPlannedKm',        Math.round(planned.km || 0));
-        setData('dwPlannedStops',     Math.min(planned.stops     || 0, STOPS_MAX));
-        setData('dwPlannedOperators', planned.operators);
+        setData('dwPlannedTrips',    planned.trips);
+        setData('dwPlannedKm',       Math.round(planned.km || 0));
+        setData('dwPlannedStops',    Math.min(planned.stops || 0, STOPS_MAX));
+        setData('dwPlannedVehicles', Math.min(planned.vehicles_estimate || 0, VEHICLES_MAX));
 
         setData('dwObservedTrips',    observed.trips);
         setData('dwObservedKm',       Math.round(observed.km || 0));

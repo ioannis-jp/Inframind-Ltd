@@ -517,6 +517,8 @@ def update_rolling(snapshot):
 def compute_planned_next_6h(schedule):
     """Trips whose first scheduled departure is in [now_cyprus, now_cyprus + 6h].
     Handles GTFS-overflow times (>24:00) — they belong to today's calendar day.
+    Vehicles estimate: peak concurrent in 30-min buckets (typical trip ~45-60 min),
+    capped at the licensed fleet ceiling.
     """
     if not schedule:
         return _empty_panel("GTFS static · MOTION ITS")
@@ -536,9 +538,34 @@ def compute_planned_next_6h(schedule):
     n_trips = len(in_window)
     total_km = sum(t["km"] for _, t in in_window)
     agencies = sorted({t["agency"] for _, t in in_window})
+    routes = {t.get("route_id") for _, t in in_window if t.get("route_id")}
     stops = set()
     for _, t in in_window:
         stops.update(t.get("stops", []))
+
+    # ── Peak concurrent bus estimate ──
+    # Bucket 30-min slots. Assume each trip occupies ~3 buckets (~90 min) as a
+    # safe upper-bound for Cyprus PT (city routes shorter, intercity longer).
+    # Concurrent buses in slot N ≈ trips_starting_in_slot_N + trips_started_in_slots_(N-1,N-2)
+    BUCKET_SEC = 1800
+    TRIP_BUCKETS = 3  # how many 30-min buckets a typical trip spans
+    buckets = {}
+    for _, t in in_window:
+        dep = t["first_dep_sec"]
+        b = (dep - now_sec) // BUCKET_SEC
+        buckets[b] = buckets.get(b, 0) + 1
+    # Sliding sum of TRIP_BUCKETS consecutive buckets gives concurrent vehicles
+    bucket_keys = sorted(buckets.keys())
+    if bucket_keys:
+        max_b = max(bucket_keys)
+        peak_concurrent = 0
+        for i in range(0, max_b + 1):
+            s = sum(buckets.get(j, 0) for j in range(max(0, i - TRIP_BUCKETS + 1), i + 1))
+            if s > peak_concurrent:
+                peak_concurrent = s
+        vehicles_estimate = min(peak_concurrent, VEHICLES_MAX)
+    else:
+        vehicles_estimate = 0
 
     return {
         "trips": n_trips,
@@ -546,6 +573,8 @@ def compute_planned_next_6h(schedule):
         "stops": min(len(stops), STOPS_MAX),
         "operators": len(agencies),
         "operators_list": agencies,
+        "routes": len(routes),
+        "vehicles_estimate": vehicles_estimate,
         "fleet_capacity": VEHICLES_MAX,
         "source": "GTFS static · MOTION ITS",
         "window_start_cyprus_seconds": now_sec,
