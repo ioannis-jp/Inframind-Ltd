@@ -30,6 +30,7 @@ import os
 import sys
 import zipfile
 import csv
+import statistics
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -57,7 +58,7 @@ WINDOW_HOURS = int(os.environ.get("ROLLING_HOURS", "6"))
 WINDOW_SECONDS = WINDOW_HOURS * 3600
 PLANNED_REGEN = os.environ.get("PLANNED_REGEN", "auto")
 TRIP_DIST_STALE_DAYS = 7
-GTFS_STATIC_STALE_DAYS = int(os.environ.get("GTFS_STATIC_STALE_DAYS", "3"))
+GTFS_STATIC_STALE_DAYS = int(os.environ.get("GTFS_STATIC_STALE_DAYS", "1"))
 # A live RT fetch failure (e.g. MOTION returns HTTP 500) is treated as a
 # *transient* blip — non-fatal — only while the rolling buffer still holds a
 # probe newer than this many minutes. Past that, the data is going stale and
@@ -477,12 +478,17 @@ def fetch_feed():
 
 def snapshot_from_feed(feed):
     trips, vehicles, stops, routes = set(), set(), set(), set()
+    # trip_id -> route_id for THIS probe. Persisted so observed km can be
+    # estimated by route when a live trip_id is absent from the (slower-moving)
+    # trip_distances cache. route_ids stay stable while trip_ids churn daily.
+    trip_routes = {}
     for ent in feed.entity:
         tu = ent.trip_update if ent.HasField("trip_update") else None
         if tu:
             t = tu.trip
             if t.trip_id: trips.add(t.trip_id)
             if t.route_id: routes.add(t.route_id)
+            if t.trip_id and t.route_id: trip_routes[t.trip_id] = t.route_id
             if tu.vehicle and tu.vehicle.id:
                 vehicles.add(tu.vehicle.id)
             for stu in tu.stop_time_update:
@@ -495,12 +501,15 @@ def snapshot_from_feed(feed):
                 trips.add(v.trip.trip_id)
             if v.trip and v.trip.route_id:
                 routes.add(v.trip.route_id)
+            if v.trip and v.trip.trip_id and v.trip.route_id:
+                trip_routes.setdefault(v.trip.trip_id, v.trip.route_id)
     return {
         "ts_utc": now_utc().isoformat(),
         "trips": sorted(trips),
         "vehicles": sorted(vehicles),
         "stops": sorted(stops),
         "routes": sorted(routes),
+        "trip_routes": trip_routes,
     }
 
 
@@ -588,22 +597,57 @@ def compute_planned_next_6h(schedule):
     }
 
 
+def build_route_distance_table(trip_distances, meta):
+    """route_id -> median trip distance in METRES, derived from the cache.
+    route_ids are stable across days, so this table stays valid even when the
+    live RT trip_ids have advanced beyond the cached trip_distances keys."""
+    by_route = {}
+    for tid, m in meta.items():
+        r = m.get("route_id")
+        d = trip_distances.get(tid)
+        if r and d:
+            by_route.setdefault(r, []).append(d)
+    return {r: statistics.median(v) for r, v in by_route.items()}
+
+
 def compute_observed_last_6h(buf):
     """Aggregate the rolling buffer: unique trips/vehicles/stops in last 6h,
-    plus km derived from the Option A trip_distances cache."""
+    plus km. km is exact when the live trip_id is in the trip_distances cache;
+    otherwise it's estimated from the trip's route median (route-based fallback)
+    so the total survives the daily trip_id churn instead of collapsing to ~0."""
     if not buf:
         return _empty_panel("GTFS-RT · MOTION ITS")
 
     trips_seen, vehicles_seen, stops_seen, routes_seen = set(), set(), set(), set()
+    live_trip_route = {}  # trip_id -> route_id, merged across probes
     for s in buf:
         trips_seen.update(s.get("trips", []))
         vehicles_seen.update(s.get("vehicles", []))
         stops_seen.update(s.get("stops", []))
         routes_seen.update(s.get("routes", []))
+        tr = s.get("trip_routes")
+        if isinstance(tr, dict):
+            live_trip_route.update(tr)
 
-    # km via Option A unfiltered cache
-    trip_distances, _meta = load_trip_distances()
-    total_m = sum(trip_distances.get(tid, 0.0) for tid in trips_seen)
+    trip_distances, meta = load_trip_distances()
+    route_dist_m = build_route_distance_table(trip_distances, meta)
+
+    total_m = 0.0
+    n_exact = n_estimated = n_unmatched = 0
+    for tid in trips_seen:
+        d = trip_distances.get(tid)
+        if d:
+            total_m += d
+            n_exact += 1
+            continue
+        # Cache miss → estimate from the trip's route median.
+        route = live_trip_route.get(tid) or (meta.get(tid, {}) or {}).get("route_id")
+        rm = route_dist_m.get(route) if route else None
+        if rm:
+            total_m += rm
+            n_estimated += 1
+        else:
+            n_unmatched += 1
     total_km = total_m / 1000.0
 
     lookup = route_to_agency()
@@ -623,6 +667,10 @@ def compute_observed_last_6h(buf):
         "probe_count": len(buf),
         "first_probe_utc": first_ts,
         "last_probe_utc": last_ts,
+        # km provenance (transparency / monitoring; safe for the site to ignore)
+        "km_exact_trips": n_exact,
+        "km_estimated_trips": n_estimated,
+        "km_unmatched_trips": n_unmatched,
     }
 
 
