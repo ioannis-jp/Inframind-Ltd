@@ -58,6 +58,12 @@ WINDOW_SECONDS = WINDOW_HOURS * 3600
 PLANNED_REGEN = os.environ.get("PLANNED_REGEN", "auto")
 TRIP_DIST_STALE_DAYS = 7
 GTFS_STATIC_STALE_DAYS = int(os.environ.get("GTFS_STATIC_STALE_DAYS", "3"))
+# A live RT fetch failure (e.g. MOTION returns HTTP 500) is treated as a
+# *transient* blip — non-fatal — only while the rolling buffer still holds a
+# probe newer than this many minutes. Past that, the data is going stale and
+# the run is failed on purpose so the failure surfaces (email + skipped commit)
+# and the operator keeps control. Raise to tolerate longer MOTION outages.
+RT_STALE_MINUTES = int(os.environ.get("RT_STALE_MINUTES", "30"))
 GTFS_ZIP_URL_TMPL = (
     "https://motionbuscard.org.cy/opendata/downloadfile?"
     "file=GTFS%5C{ag}_google_transit.zip&rel=True"
@@ -627,12 +633,15 @@ def _empty_panel(source):
     }
 
 
-def write_motion_stats(planned, observed):
+def write_motion_stats(planned, observed, rt_degraded=False):
     payload = {
         "schema": "v3.0-dual-window",
         "generated_at_utc": now_utc().isoformat(),
         "cyprus_local_time": now_cyprus().isoformat(timespec="seconds"),
         "window_hours": WINDOW_HOURS,
+        # True when this refresh served buffered data because the live RT feed
+        # was unreachable but the buffer was still fresh (transient MOTION blip).
+        "rt_degraded": rt_degraded,
         "planned_next_6h": planned,
         "observed_last_6h": observed,
     }
@@ -683,26 +692,57 @@ def main():
 
     # 3. Fetch live feed + update rolling buffer
     buf = []
+    rt_degraded = False  # True when serving from a slightly-stale buffer
     try:
         feed = fetch_feed()
         snap = snapshot_from_feed(feed)
         buf = update_rolling(snap)
     except Exception as e:
-        print(f"[ERROR] RT fetch failed: {e}", file=sys.stderr)
-        errors.append(("rt_fetch", str(e)))
-        # Still try to read buffer from disk for the observed window
+        # Live RT fetch failed (e.g. MOTION HTTP 500). This is non-fatal ONLY
+        # if the rolling buffer still holds a recent probe — otherwise the data
+        # is going stale and we fail on purpose so the operator stays in control.
         if ROLLING_PATH.exists():
             try:
                 buf = json.loads(ROLLING_PATH.read_text())
             except Exception:
                 buf = []
 
+        buffer_age_min = None
+        if buf:
+            try:
+                last_probe = datetime.fromisoformat(buf[-1]["ts_utc"])
+                buffer_age_min = (now_utc() - last_probe).total_seconds() / 60.0
+            except Exception:
+                buffer_age_min = None
+
+        if buffer_age_min is not None and buffer_age_min <= RT_STALE_MINUTES:
+            # Transient blip — we still have fresh data. Warn, don't fail.
+            rt_degraded = True
+            print(
+                f"[WARN] RT fetch failed ({e}) — serving buffered data, "
+                f"last probe {buffer_age_min:.1f} min old "
+                f"(<= {RT_STALE_MINUTES} min threshold). Commit will proceed.",
+                file=sys.stderr,
+            )
+        else:
+            # No buffer, or buffer too old: real staleness — fail the run.
+            age_txt = (
+                f"{buffer_age_min:.1f} min old" if buffer_age_min is not None
+                else "no buffer on disk"
+            )
+            print(
+                f"[ERROR] RT fetch failed ({e}) and buffer is stale "
+                f"({age_txt} > {RT_STALE_MINUTES} min threshold). Failing run.",
+                file=sys.stderr,
+            )
+            errors.append(("rt_fetch", str(e)))
+
     # 4. Compute both windows and write dual-output
     try:
         schedule = load_today_schedule()
         planned = compute_planned_next_6h(schedule)
         observed = compute_observed_last_6h(buf)
-        write_motion_stats(planned, observed)
+        write_motion_stats(planned, observed, rt_degraded=rt_degraded)
     except Exception as e:
         print(f"[ERROR] dual-window write failed: {e}", file=sys.stderr)
         errors.append(("dual_window", str(e)))
