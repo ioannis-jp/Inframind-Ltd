@@ -4419,12 +4419,18 @@
     let __arrivalsTyped = false;
     let __arrivalsTimer = null;
 
-    function arrivalsBoardMessage(val) {
+    function arrivalsBoardMessage(val, buses) {
       const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
-      const num = `<span class="dw-num-accent">${(val || 0).toLocaleString('el-GR')}</span>`;
+      const num = (n) => `<span class="dw-num-accent">${(n || 0).toLocaleString('el-GR')}</span>`;
+      const noun = (s) => `<span class="dw-noun-accent">${s}</span>`;
+      if (buses > 0) {
+        return lang === 'en'
+          ? `${num(val)} ${noun('stop arrivals')} by ${num(buses)} ${noun('buses')} &mdash; in the last hour.`
+          : `${num(val)} ${noun('αφίξεις σε στάσεις')} από ${num(buses)} ${noun('λεωφορεία')} &mdash; την τελευταία ώρα.`;
+      }
       return lang === 'en'
-        ? `${num} <span class="dw-noun-accent">stop arrivals</span> &mdash; in the last hour.`
-        : `${num} <span class="dw-noun-accent">αφίξεις σε στάσεις</span> &mdash; την τελευταία ώρα.`;
+        ? `${num(val)} ${noun('stop arrivals')} &mdash; in the last hour.`
+        : `${num(val)} ${noun('αφίξεις σε στάσεις')} &mdash; την τελευταία ώρα.`;
     }
 
     function typeArrivalsBoard() {
@@ -4432,9 +4438,10 @@
       const typer = document.getElementById('dwArrivalsTyper');
       if (!board || !typer) return;
       const val = parseFloat(board.getAttribute('data-arrivals') || '0');
+      const buses = parseFloat(board.getAttribute('data-arrival-buses') || '0');
       if (!(val > 0)) return;
       if (__arrivalsTimer) { clearTimeout(__arrivalsTimer); __arrivalsTimer = null; }
-      const msg = arrivalsBoardMessage(val);
+      const msg = arrivalsBoardMessage(val, buses);
       // HTML-aware progressive slice (same technique as the main board typer)
       function slice(htmlMsg, visibleChars) {
         let out = '', seen = 0, i = 0;
@@ -4479,6 +4486,7 @@
       // Stays hidden until the hourly counter has real data (warm-up ≈ 1h)
       if (!(val > 0)) return;
       board.setAttribute('data-arrivals', String(val));
+      board.setAttribute('data-arrival-buses', String(observed.stop_arrivals_vehicles_last_hour || 0));
       board.style.display = '';
       const ob = new IntersectionObserver((entries) => {
         entries.forEach(e => {

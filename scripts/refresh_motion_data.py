@@ -495,6 +495,10 @@ def snapshot_from_feed(feed):
     # (validated in motion-arrivals-lab, 2026-06-10: TripUpdate arrival times
     # are populated 582/582; VehiclePosition current_status is not).
     trip_progress = {}
+    # trip_id -> vehicle.id, so arrival deltas can be attributed to distinct
+    # vehicles (transient — stripped from older rolling entries like
+    # trip_progress).
+    trip_vehicle = {}
     now_epoch = int(now_utc().timestamp())
     for ent in feed.entity:
         tu = ent.trip_update if ent.HasField("trip_update") else None
@@ -505,6 +509,8 @@ def snapshot_from_feed(feed):
             if t.trip_id and t.route_id: trip_routes[t.trip_id] = t.route_id
             if tu.vehicle and tu.vehicle.id:
                 vehicles.add(tu.vehicle.id)
+                if t.trip_id:
+                    trip_vehicle[t.trip_id] = tu.vehicle.id
             passed_seq = 0
             for stu in tu.stop_time_update:
                 if stu.stop_id: stops.add(stu.stop_id)
@@ -520,6 +526,8 @@ def snapshot_from_feed(feed):
                 vehicles.add(v.vehicle.id)
                 if v.vehicle.license_plate:
                     vehicle_plates[v.vehicle.id] = v.vehicle.license_plate
+                if v.trip and v.trip.trip_id:
+                    trip_vehicle.setdefault(v.trip.trip_id, v.vehicle.id)
             if v.trip and v.trip.trip_id:
                 trips.add(v.trip.trip_id)
             if v.trip and v.trip.route_id:
@@ -535,21 +543,28 @@ def snapshot_from_feed(feed):
         "trip_routes": trip_routes,
         "vehicle_plates": vehicle_plates,
         "trip_progress": trip_progress,
+        "trip_vehicle": trip_vehicle,
     }
 
 
-def _arrivals_delta(prev_progress, cur_progress):
+def _arrivals_delta(prev_progress, cur_progress, trip_vehicle=None):
     """Stop arrivals between two probes: sum of stop_sequence advances for
-    trips present in BOTH probes. New trips are not counted on first sight
-    (their past stops predate our observation) — same rule as the lab."""
+    trips present in BOTH probes, plus the distinct vehicles those advances
+    belong to. New trips are not counted on first sight (their past stops
+    predate our observation) — same rule as the lab."""
     if not isinstance(prev_progress, dict) or not prev_progress:
-        return 0
+        return 0, []
     total = 0
+    vehicles = set()
+    tv = trip_vehicle if isinstance(trip_vehicle, dict) else {}
     for tid, cur_seq in cur_progress.items():
         prev_seq = prev_progress.get(tid)
         if prev_seq is not None and cur_seq > prev_seq:
             total += cur_seq - prev_seq
-    return total
+            vid = tv.get(tid)
+            if vid:
+                vehicles.add(vid)
+    return total, sorted(vehicles)
 
 
 def update_rolling(snapshot):
@@ -562,17 +577,21 @@ def update_rolling(snapshot):
             buf = []
     # Count stop arrivals since the previous probe (TripUpdate progression)
     prev = buf[-1] if buf else None
-    snapshot["arrivals_delta"] = _arrivals_delta(
+    delta, arr_vehicles = _arrivals_delta(
         prev.get("trip_progress") if prev else None,
         snapshot.get("trip_progress") or {},
+        snapshot.get("trip_vehicle"),
     )
+    snapshot["arrivals_delta"] = delta
+    snapshot["arrival_vehicles"] = arr_vehicles
     buf.append(snapshot)
     cutoff = now_utc() - timedelta(hours=WINDOW_HOURS)
     buf = [s for s in buf if datetime.fromisoformat(s["ts_utc"]) >= cutoff]
-    # trip_progress is only needed to diff the NEXT probe — strip it from all
-    # but the newest entry so the rolling file stays lean.
+    # trip_progress / trip_vehicle are only needed to diff the NEXT probe —
+    # strip them from all but the newest entry so the rolling file stays lean.
     for s in buf[:-1]:
         s.pop("trip_progress", None)
+        s.pop("trip_vehicle", None)
     ROLLING_PATH.write_text(json.dumps(buf, ensure_ascii=False))
     return buf
 
@@ -702,13 +721,15 @@ def compute_observed_last_6h(buf):
     lookup = route_to_agency()
     operators = sorted({lookup[r] for r in routes_seen if r in lookup})
 
-    # Stop arrivals in the last hour: sum of per-probe progression deltas.
+    # Stop arrivals in the last hour: sum of per-probe progression deltas,
+    # plus the distinct vehicles that produced them.
     cutoff_1h = now_utc() - timedelta(hours=1)
-    arrivals_hour = sum(
-        int(s.get("arrivals_delta") or 0)
-        for s in buf
-        if datetime.fromisoformat(s["ts_utc"]) >= cutoff_1h
-    )
+    arrivals_hour = 0
+    arrival_vehicles_hour = set()
+    for s in buf:
+        if datetime.fromisoformat(s["ts_utc"]) >= cutoff_1h:
+            arrivals_hour += int(s.get("arrivals_delta") or 0)
+            arrival_vehicles_hour.update(s.get("arrival_vehicles") or [])
 
     first_ts = buf[0].get("ts_utc")
     last_ts = buf[-1].get("ts_utc")
@@ -721,6 +742,9 @@ def compute_observed_last_6h(buf):
         "operators_list": operators,
         "vehicles_in_motion": min(len(vehicles_seen), VEHICLES_MAX),
         "stop_arrivals_last_hour": min(arrivals_hour, ARRIVALS_HOUR_MAX),
+        "stop_arrivals_vehicles_last_hour": min(
+            len(arrival_vehicles_hour), VEHICLES_MAX
+        ),
         "source": "GTFS-RT · MOTION ITS",
         "probe_count": len(buf),
         "first_probe_utc": first_ts,
