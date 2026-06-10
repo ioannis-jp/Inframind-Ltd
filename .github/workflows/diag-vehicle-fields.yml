@@ -1,0 +1,32 @@
+name: Diag vehicle fields (one-off)
+
+# Manual-only diagnostic. Prints vehicle id/label/licensePlate coverage to the
+# run log. No data/ writes, no commits, no Netlify interaction.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests gtfs-realtime-bindings protobuf
+
+      - name: Run diagnostic
+        env:
+          MOTION_FEED_URL: ${{ secrets.MOTION_FEED_URL || 'http://20.19.98.194:8328/Api/api/gtfs-realtime' }}
+        run: python scripts/diag_vehicle_fields.py
