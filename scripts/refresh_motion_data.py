@@ -46,6 +46,7 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 TRIP_DIST_PATH = DATA_DIR / "_trip_distances.json"
 TODAY_SCHED_PATH = DATA_DIR / "_today_schedule.json"
 ROLLING_PATH = DATA_DIR / "_rolling_snapshots.json"
+VEHICLE_QA_PATH = DATA_DIR / "_vehicle_qa.json"
 MOTION_STATS_PATH = DATA_DIR / "motion-stats.json"
 PLANNED_PATH = DATA_DIR / "planned.json"
 
@@ -478,6 +479,10 @@ def fetch_feed():
 
 def snapshot_from_feed(feed):
     trips, vehicles, stops, routes = set(), set(), set(), set()
+    # vehicle.id -> license_plate (verified 2026-06-10: coverage 332/332,
+    # label == license_plate, id<->plate strictly 1:1). Stored per probe so
+    # the QA pass can detect if that 1:1 invariant ever breaks upstream.
+    vehicle_plates = {}
     # trip_id -> route_id for THIS probe. Persisted so observed km can be
     # estimated by route when a live trip_id is absent from the (slower-moving)
     # trip_distances cache. route_ids stay stable while trip_ids churn daily.
@@ -497,6 +502,8 @@ def snapshot_from_feed(feed):
             v = ent.vehicle
             if v.vehicle and v.vehicle.id:
                 vehicles.add(v.vehicle.id)
+                if v.vehicle.license_plate:
+                    vehicle_plates[v.vehicle.id] = v.vehicle.license_plate
             if v.trip and v.trip.trip_id:
                 trips.add(v.trip.trip_id)
             if v.trip and v.trip.route_id:
@@ -510,6 +517,7 @@ def snapshot_from_feed(feed):
         "stops": sorted(stops),
         "routes": sorted(routes),
         "trip_routes": trip_routes,
+        "vehicle_plates": vehicle_plates,
     }
 
 
@@ -674,6 +682,66 @@ def compute_observed_last_6h(buf):
     }
 
 
+def write_vehicle_qa(buf):
+    """Guard the vehicle-count integrity invariants across the rolling window.
+
+    Verified baseline (2026-06-10): every VehiclePosition carries id + plate,
+    and id<->plate is strictly 1:1. Our unique-vehicle counts dedup on
+    vehicle.id, so if the upstream feed ever breaks these invariants the
+    counts would silently drift. This writes aggregate totals only to
+    data/_vehicle_qa.json and prints loud warnings on violation.
+    """
+    if not buf:
+        return
+
+    merged = {}          # id -> set(plates) across the window
+    plate_ids = {}       # plate -> set(ids) across the window
+    ids_seen, ids_with_plate = set(), set()
+    for s in buf:
+        vp = s.get("vehicle_plates")
+        ids_seen.update(s.get("vehicles", []))
+        if not isinstance(vp, dict):
+            continue
+        for vid, plate in vp.items():
+            ids_with_plate.add(vid)
+            merged.setdefault(vid, set()).add(plate)
+            plate_ids.setdefault(plate, set()).add(vid)
+
+    ids_multi_plate = sum(1 for v in merged.values() if len(v) > 1)
+    plates_multi_id = sum(1 for v in plate_ids.values() if len(v) > 1)
+    coverage_pct = (
+        round(100.0 * len(ids_with_plate) / len(ids_seen), 1) if ids_seen else 0.0
+    )
+
+    payload = {
+        "generated_at_utc": now_utc().isoformat(),
+        "window_hours": WINDOW_HOURS,
+        "probe_count": len(buf),
+        "unique_vehicle_ids": len(ids_seen),
+        "ids_with_plate": len(ids_with_plate),
+        "plate_coverage_pct": coverage_pct,
+        "unique_plates": len(plate_ids),
+        "ids_mapping_to_multiple_plates": ids_multi_plate,
+        "plates_mapping_to_multiple_ids": plates_multi_id,
+        "invariant_1to1_ok": ids_multi_plate == 0 and plates_multi_id == 0,
+    }
+    VEHICLE_QA_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2))
+
+    if ids_multi_plate or plates_multi_id:
+        print(
+            f"[WARN][vehicle-qa] 1:1 invariant BROKEN — "
+            f"{ids_multi_plate} ids with >1 plate, "
+            f"{plates_multi_id} plates with >1 id. "
+            f"vehicles_in_motion may be over/under-counted.",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            f"[vehicle-qa] OK — {len(ids_seen)} ids, "
+            f"plate coverage {coverage_pct}%, 1:1 invariant holds"
+        )
+
+
 def _empty_panel(source):
     return {
         "trips": 0, "km": 0.0, "stops": 0, "operators": 0,
@@ -794,6 +862,12 @@ def main():
     except Exception as e:
         print(f"[ERROR] dual-window write failed: {e}", file=sys.stderr)
         errors.append(("dual_window", str(e)))
+
+    # 5. Vehicle-count QA (non-fatal — monitoring only)
+    try:
+        write_vehicle_qa(buf)
+    except Exception as e:
+        print(f"[WARN] vehicle-qa write failed: {e}", file=sys.stderr)
 
     if errors:
         sys.exit(1)
