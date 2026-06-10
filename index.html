@@ -1329,6 +1329,15 @@
       .dw-board-inner { padding: 36px 28px 38px; }
       .dw-board-text  { font-size: clamp(22px, 6.4vw, 32px); }
     }
+    /* Dedicated arrivals board — same glossy black aesthetic, sits under the
+       dual-window cards. Slightly more compact than the announcement board. */
+    .dw-arrivals-board { margin: 34px 0 0; }
+    .dw-arrivals-board .dw-board-inner { padding: 38px 56px 42px; }
+    .dw-arrivals-board .dw-board-text  { font-size: clamp(26px, 3.6vw, 50px); }
+    @media (max-width: 720px) {
+      .dw-arrivals-board .dw-board-inner { padding: 30px 28px 32px; }
+      .dw-arrivals-board .dw-board-text  { font-size: clamp(20px, 5.8vw, 28px); }
+    }
 
     /* ── DUAL-WINDOW WIDGET — next 6h planned · last 6h observed ── */
     .dualwindow-frame {
@@ -3189,6 +3198,19 @@
     </div>
   </div>
 
+  <!-- ARRIVALS BOARD — permanent hourly stop-arrivals counter (typed once, stays) -->
+  <div class="dw-board dw-arrivals-board" id="dwArrivalsBoard" aria-hidden="true" style="display:none">
+    <div class="dw-board-inner">
+      <div class="dw-board-eyebrow">
+        <span class="dw-board-pulse" aria-hidden="true"></span>
+        <span data-i18n="dw.arrivals.eyebrow">Αφίξεις σε στάσεις · κυλιόμενη ώρα</span>
+      </div>
+      <p class="dw-board-text">
+        <span class="dw-board-typer" id="dwArrivalsTyper"></span><span class="dw-board-cursor"></span>
+      </p>
+    </div>
+  </div>
+
   <div class="liveops-footer reveal">
     <p class="liveops-meta">
       <span data-i18n="liveops.updated">Last updated:</span> <span id="liveTimestamp">&mdash;</span>
@@ -3554,6 +3576,7 @@
       'liveops.histTile.polls':   'Observations · sampling polls',
       // ─── DUAL-WINDOW WIDGET ───
       'dw.board.eyebrow':         'Cyprus public transport · live operations',
+      'dw.arrivals.eyebrow':      'Stop arrivals · rolling hour',
       'dw.planned.window':        'Next 6 hours',
       'dw.planned.sourceTag':     'GTFS static',
       'dw.planned.title':         'Programmed',
@@ -3733,6 +3756,7 @@
       'liveops.narr.note': 'Η <strong>κρίσιμη ψηφιακή υποδομή</strong> των δημόσιων μεταφορών της Κύπρου: 7 πάροχοι, ολόκληρο το νησί, αδιάλειπτη λειτουργία. Τα δεδομένα είναι <strong>ελεύθερα διαθέσιμα</strong> ως δημόσιο GTFS-Realtime feed — η INFRAMIND παρακολουθεί την αξιοπιστία του συστήματος καθημερινά.',
       // ─── DUAL-WINDOW WIDGET ───
       'dw.board.eyebrow':         'Δημόσιες μεταφορές Κύπρου · ζωντανή λειτουργία',
+      'dw.arrivals.eyebrow':      'Αφίξεις σε στάσεις · κυλιόμενη ώρα',
       'dw.planned.window':        'Επόμενες 6 ώρες',
       'dw.planned.sourceTag':     'GTFS static',
       'dw.planned.title':         'Προγραμματισμένα',
@@ -4377,27 +4401,95 @@
       const noun = (s) => `<span class="dw-noun-accent">${s}</span>`;
       const obsTrips = observed.trips || 0;
       const planTrips = planned.trips || 0;
-      const arrHour = observed.stop_arrivals_last_hour || 0;
       if (lang === 'en') {
-        const msgs = [
+        return [
           `Cyprus public transport &mdash; ${noun('read in six-hour windows.')}`,
           `${num(obsTrips)} ${noun('trips already moved')} &mdash; in the last six hours.`,
           `${num(planTrips)} ${noun('trips programmed')} &mdash; for the next six hours.`,
         ];
-        if (arrHour > 0) {
-          msgs.push(`${num(arrHour)} ${noun('stop arrivals recorded')} &mdash; in the last hour.`);
-        }
-        return msgs;
       }
-      const msgs = [
+      return [
         `Δημόσιες μεταφορές Κύπρου &mdash; ${noun('σε παράθυρα έξι ωρών.')}`,
         `${num(obsTrips)} ${noun('δρομολόγια εκτελέστηκαν')} &mdash; τις τελευταίες έξι ώρες.`,
         `${num(planTrips)} ${noun('δρομολόγια προγραμματίστηκαν')} &mdash; για τις επόμενες έξι ώρες.`,
       ];
-      if (arrHour > 0) {
-        msgs.push(`${num(arrHour)} ${noun('αφίξεις σε στάσεις')} &mdash; την τελευταία ώρα.`);
+    }
+
+    // ── Dedicated arrivals board — one message, typed once, stays visible ──
+    let __arrivalsTyped = false;
+    let __arrivalsTimer = null;
+
+    function arrivalsBoardMessage(val) {
+      const lang = (document.documentElement.lang || 'el').toLowerCase().startsWith('en') ? 'en' : 'el';
+      const num = `<span class="dw-num-accent">${(val || 0).toLocaleString('el-GR')}</span>`;
+      return lang === 'en'
+        ? `${num} <span class="dw-noun-accent">stop arrivals</span> &mdash; in the last hour.`
+        : `${num} <span class="dw-noun-accent">αφίξεις σε στάσεις</span> &mdash; την τελευταία ώρα.`;
+    }
+
+    function typeArrivalsBoard() {
+      const board = document.getElementById('dwArrivalsBoard');
+      const typer = document.getElementById('dwArrivalsTyper');
+      if (!board || !typer) return;
+      const val = parseFloat(board.getAttribute('data-arrivals') || '0');
+      if (!(val > 0)) return;
+      if (__arrivalsTimer) { clearTimeout(__arrivalsTimer); __arrivalsTimer = null; }
+      const msg = arrivalsBoardMessage(val);
+      // HTML-aware progressive slice (same technique as the main board typer)
+      function slice(htmlMsg, visibleChars) {
+        let out = '', seen = 0, i = 0;
+        while (i < htmlMsg.length && seen < visibleChars) {
+          if (htmlMsg[i] === '<') {
+            const close = htmlMsg.indexOf('>', i);
+            if (close === -1) { out += htmlMsg.slice(i); break; }
+            out += htmlMsg.slice(i, close + 1);
+            i = close + 1;
+          } else if (htmlMsg[i] === '&') {
+            const semi = htmlMsg.indexOf(';', i);
+            if (semi === -1) { out += htmlMsg[i]; i++; seen++; }
+            else { out += htmlMsg.slice(i, semi + 1); i = semi + 1; seen++; }
+          } else {
+            out += htmlMsg[i];
+            i++; seen++;
+          }
+        }
+        while (i < htmlMsg.length && htmlMsg[i] === '<') {
+          const close = htmlMsg.indexOf('>', i);
+          if (close === -1) break;
+          out += htmlMsg.slice(i, close + 1);
+          i = close + 1;
+        }
+        return out;
       }
-      return msgs;
+      const totalVisible = msg.replace(/<[^>]*>/g, '').replace(/&[^;\s]+;/g, 'x').length;
+      let shown = 0;
+      typer.innerHTML = '';
+      function step() {
+        shown++;
+        typer.innerHTML = slice(msg, shown);
+        if (shown < totalVisible) __arrivalsTimer = setTimeout(step, 140);
+      }
+      __arrivalsTimer = setTimeout(step, 350);
+    }
+
+    function setupArrivalsBoard(observed) {
+      const board = document.getElementById('dwArrivalsBoard');
+      if (!board) return;
+      const val = observed.stop_arrivals_last_hour || 0;
+      // Stays hidden until the hourly counter has real data (warm-up ≈ 1h)
+      if (!(val > 0)) return;
+      board.setAttribute('data-arrivals', String(val));
+      board.style.display = '';
+      const ob = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            ob.unobserve(e.target);
+            if (!__arrivalsTyped) { __arrivalsTyped = true; typeArrivalsBoard(); }
+          }
+        });
+      }, { threshold: 0.20 });
+      ob.observe(board);
     }
 
     function stopBoardTyper() {
@@ -4493,6 +4585,8 @@
       const obsTrips  = parseFloat(document.getElementById('dwObservedTrips')?.getAttribute('data-final') || '0');
       __boardMessages = buildBoardMessages({trips: planTrips}, {trips: obsTrips});
       startBoardTyper();
+      // Re-render the dedicated arrivals board in the new language too
+      if (__arrivalsTyped) typeArrivalsBoard();
     };
 
     // Reveal the board when it enters view, but only start typing after data arrives
@@ -4605,6 +4699,9 @@
         if (dwBoard && dwBoard.classList.contains('in-view') && !__boardStarted) {
           startBoardTyper();
         }
+
+        // Dedicated arrivals board (permanent, typed once when scrolled into view)
+        setupArrivalsBoard(observed);
 
         // Concrete Cyprus-time range under each eyebrow — strongest temporal signal
         function fmtHHMM(d) {
