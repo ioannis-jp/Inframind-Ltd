@@ -30,7 +30,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          # Enough history for the self-scheduled deploy check below to see
+          # the last "(6h deploy)" commit (~12 data commits/h × 6h + margin).
+          fetch-depth: 150
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -65,10 +67,36 @@ jobs:
 
           # Default commits use [skip ci] so Netlify does NOT rebuild (data is
           # fetched directly from raw.githubusercontent.com — no rebuild needed).
-          # Every 6 hours, the Cloudflare Worker calls workflow_dispatch with
-          # deploy=true → we OMIT [skip ci] → Netlify rebuilds. 4 deploys/day
-          # cap = 60 credits/day instead of ~4,320.
+          #
+          # Deploy decision (self-scheduled — does NOT depend on the Cloudflare
+          # Worker version, which was found on 2026-06-10 to never send
+          # deploy=true):
+          #   1. Explicit workflow_dispatch input deploy=true always deploys.
+          #   2. Otherwise, during the 00/06/12/18 UTC hours, the FIRST run
+          #      that finds no "(6h deploy)" commit in the last 5 hours
+          #      deploys. Max 4 deploys/day = 60 credits/day cap.
+          DO_DEPLOY=0
           if [ "${DEPLOY_INPUT:-false}" = "true" ]; then
+            DO_DEPLOY=1
+            echo "[deploy-check] explicit deploy=true input"
+          else
+            hour=$(date -u +%H)
+            case "$hour" in
+              00|06|12|18)
+                if git log --since="5 hours ago" --grep="(6h deploy)" --oneline | grep -q .; then
+                  echo "[deploy-check] hour $hour UTC but a deploy already happened in the last 5h — skip"
+                else
+                  DO_DEPLOY=1
+                  echo "[deploy-check] hour $hour UTC, no deploy in last 5h — deploying"
+                fi
+                ;;
+              *)
+                echo "[deploy-check] hour $hour UTC — data-only"
+                ;;
+            esac
+          fi
+
+          if [ "$DO_DEPLOY" = "1" ]; then
             COMMIT_MSG="chore(data): refresh MOTION stats - $ts (6h deploy)"
             echo "[commit] Deploy commit (no [skip ci]) — Netlify WILL rebuild."
           else
