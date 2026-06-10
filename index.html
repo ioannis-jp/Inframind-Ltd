@@ -4377,18 +4377,27 @@
       const noun = (s) => `<span class="dw-noun-accent">${s}</span>`;
       const obsTrips = observed.trips || 0;
       const planTrips = planned.trips || 0;
+      const arrHour = observed.stop_arrivals_last_hour || 0;
       if (lang === 'en') {
-        return [
+        const msgs = [
           `Cyprus public transport &mdash; ${noun('read in six-hour windows.')}`,
           `${num(obsTrips)} ${noun('trips already moved')} &mdash; in the last six hours.`,
           `${num(planTrips)} ${noun('trips programmed')} &mdash; for the next six hours.`,
         ];
+        if (arrHour > 0) {
+          msgs.push(`${num(arrHour)} ${noun('stop arrivals recorded')} &mdash; in the last hour.`);
+        }
+        return msgs;
       }
-      return [
+      const msgs = [
         `Δημόσιες μεταφορές Κύπρου &mdash; ${noun('σε παράθυρα έξι ωρών.')}`,
         `${num(obsTrips)} ${noun('δρομολόγια εκτελέστηκαν')} &mdash; τις τελευταίες έξι ώρες.`,
         `${num(planTrips)} ${noun('δρομολόγια προγραμματίστηκαν')} &mdash; για τις επόμενες έξι ώρες.`,
       ];
+      if (arrHour > 0) {
+        msgs.push(`${num(arrHour)} ${noun('αφίξεις σε στάσεις')} &mdash; την τελευταία ώρα.`);
+      }
+      return msgs;
     }
 
     function stopBoardTyper() {

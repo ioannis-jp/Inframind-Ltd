@@ -73,6 +73,9 @@ GTFS_ZIP_URL_TMPL = (
 
 STOPS_MAX = 5314
 VEHICLES_MAX = 731
+# Defensive ceiling for the hourly stop-arrivals counter (731 vehicles × ~1
+# stop/min would be ~44k absolute theoretical max; normal peak is ~6-8k).
+ARRIVALS_HOUR_MAX = 20000
 
 AGENCY_NAMES = {
     "2": "ΟΣΥΠΑ", "4": "ΟΣΕΑ", "5": "INTERCITY",
@@ -487,6 +490,12 @@ def snapshot_from_feed(feed):
     # estimated by route when a live trip_id is absent from the (slower-moving)
     # trip_distances cache. route_ids stay stable while trip_ids churn daily.
     trip_routes = {}
+    # trip_id -> highest stop_sequence whose arrival time has already passed.
+    # The per-probe progression of this value counts actual stop arrivals
+    # (validated in motion-arrivals-lab, 2026-06-10: TripUpdate arrival times
+    # are populated 582/582; VehiclePosition current_status is not).
+    trip_progress = {}
+    now_epoch = int(now_utc().timestamp())
     for ent in feed.entity:
         tu = ent.trip_update if ent.HasField("trip_update") else None
         if tu:
@@ -496,8 +505,15 @@ def snapshot_from_feed(feed):
             if t.trip_id and t.route_id: trip_routes[t.trip_id] = t.route_id
             if tu.vehicle and tu.vehicle.id:
                 vehicles.add(tu.vehicle.id)
+            passed_seq = 0
             for stu in tu.stop_time_update:
                 if stu.stop_id: stops.add(stu.stop_id)
+                if (stu.HasField("arrival") and stu.arrival.time
+                        and stu.arrival.time <= now_epoch
+                        and stu.stop_sequence > passed_seq):
+                    passed_seq = stu.stop_sequence
+            if t.trip_id and passed_seq:
+                trip_progress[t.trip_id] = passed_seq
         if ent.HasField("vehicle"):
             v = ent.vehicle
             if v.vehicle and v.vehicle.id:
@@ -518,7 +534,22 @@ def snapshot_from_feed(feed):
         "routes": sorted(routes),
         "trip_routes": trip_routes,
         "vehicle_plates": vehicle_plates,
+        "trip_progress": trip_progress,
     }
+
+
+def _arrivals_delta(prev_progress, cur_progress):
+    """Stop arrivals between two probes: sum of stop_sequence advances for
+    trips present in BOTH probes. New trips are not counted on first sight
+    (their past stops predate our observation) — same rule as the lab."""
+    if not isinstance(prev_progress, dict) or not prev_progress:
+        return 0
+    total = 0
+    for tid, cur_seq in cur_progress.items():
+        prev_seq = prev_progress.get(tid)
+        if prev_seq is not None and cur_seq > prev_seq:
+            total += cur_seq - prev_seq
+    return total
 
 
 def update_rolling(snapshot):
@@ -529,9 +560,19 @@ def update_rolling(snapshot):
             buf = json.loads(ROLLING_PATH.read_text())
         except Exception:
             buf = []
+    # Count stop arrivals since the previous probe (TripUpdate progression)
+    prev = buf[-1] if buf else None
+    snapshot["arrivals_delta"] = _arrivals_delta(
+        prev.get("trip_progress") if prev else None,
+        snapshot.get("trip_progress") or {},
+    )
     buf.append(snapshot)
     cutoff = now_utc() - timedelta(hours=WINDOW_HOURS)
     buf = [s for s in buf if datetime.fromisoformat(s["ts_utc"]) >= cutoff]
+    # trip_progress is only needed to diff the NEXT probe — strip it from all
+    # but the newest entry so the rolling file stays lean.
+    for s in buf[:-1]:
+        s.pop("trip_progress", None)
     ROLLING_PATH.write_text(json.dumps(buf, ensure_ascii=False))
     return buf
 
@@ -661,6 +702,14 @@ def compute_observed_last_6h(buf):
     lookup = route_to_agency()
     operators = sorted({lookup[r] for r in routes_seen if r in lookup})
 
+    # Stop arrivals in the last hour: sum of per-probe progression deltas.
+    cutoff_1h = now_utc() - timedelta(hours=1)
+    arrivals_hour = sum(
+        int(s.get("arrivals_delta") or 0)
+        for s in buf
+        if datetime.fromisoformat(s["ts_utc"]) >= cutoff_1h
+    )
+
     first_ts = buf[0].get("ts_utc")
     last_ts = buf[-1].get("ts_utc")
 
@@ -671,6 +720,7 @@ def compute_observed_last_6h(buf):
         "operators": len(operators),
         "operators_list": operators,
         "vehicles_in_motion": min(len(vehicles_seen), VEHICLES_MAX),
+        "stop_arrivals_last_hour": min(arrivals_hour, ARRIVALS_HOUR_MAX),
         "source": "GTFS-RT · MOTION ITS",
         "probe_count": len(buf),
         "first_probe_utc": first_ts,
