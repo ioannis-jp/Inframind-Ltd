@@ -76,6 +76,23 @@
   .lp-source a { color:rgba(255,255,255,.6); }
   #live-proof.lp-hidden { display:none; }
 
+  /* ── TRACK RECORD ── */
+  #record {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    border-bottom:1px solid var(--border);
+    padding:0 5vw;
+  }
+  .rec-item { padding:52px 28px 48px; border-right:1px solid var(--border); }
+  .rec-item:first-child { padding-left:0; }
+  .rec-item:last-child { border-right:none; }
+  .rec-num { font-size:clamp(40px,5vw,60px); font-weight:800; color:var(--black); line-height:1; letter-spacing:-.02em; }
+  .rec-label { font-size:13px; color:var(--grey); margin-top:12px; line-height:1.6; max-width:260px; }
+  @media (max-width:760px){
+    #record { grid-template-columns:1fr; }
+    .rec-item { border-right:none; border-bottom:1px solid var(--border); padding:32px 0; }
+    .rec-item:last-child { border-bottom:none; }
+  }
+
   /* ── SECTIONS ── */
   section.pad { padding:100px 5vw; }
   .section-label { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--grey); font-weight:600; margin-bottom:16px; }
@@ -131,6 +148,29 @@
   .deck-sub { font-size:14px; color:var(--grey); margin-top:6px; line-height:1.7; }
   .deck-open { display:inline-block; margin-top:14px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; font-weight:600; color:var(--dark); border-bottom:2px solid var(--black); padding-bottom:3px; }
 
+  /* ── ACCESS GATE ── */
+  #gate {
+    position:fixed; inset:0; z-index:100; background:var(--black);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:0; padding:24px;
+  }
+  #gate.gate-off { display:none; }
+  .gate-brand { font-size:11px; letter-spacing:.35em; text-transform:uppercase; color:rgba(255,255,255,.45); font-weight:600; margin-bottom:28px; }
+  .gate-title { color:#fff; font-size:clamp(20px,3vw,28px); font-weight:300; margin-bottom:36px; text-align:center; line-height:1.4; }
+  .gate-row { display:flex; gap:0; }
+  #gate input {
+    background:none; border:1px solid rgba(255,255,255,.35); border-right:none; color:#fff;
+    font-family:'Inter',sans-serif; font-size:16px; letter-spacing:.25em;
+    padding:14px 20px; width:min(280px,60vw); outline:none; text-align:center;
+  }
+  #gate input:focus { border-color:#fff; }
+  #gate button {
+    background:#fff; color:var(--black); border:none; cursor:pointer;
+    font-family:'Inter',sans-serif; font-size:12px; font-weight:700; letter-spacing:.25em; text-transform:uppercase;
+    padding:14px 28px;
+  }
+  .gate-err { color:rgba(255,255,255,.55); font-size:12px; letter-spacing:.06em; margin-top:20px; min-height:1.2em; }
+
   /* ── CONTACT ── */
   #contact { background:var(--black); color:#fff; }
   #contact .section-label { color:rgba(255,255,255,.4); }
@@ -143,6 +183,17 @@
 </style>
 </head>
 <body>
+
+<!-- ACCESS GATE -->
+<div id="gate" class="gate-off">
+  <p class="gate-brand">Inframind · Speaker Profile</p>
+  <p class="gate-title">Access by invitation.<br>Πρόσβαση με κωδικό.</p>
+  <div class="gate-row">
+    <input type="password" id="gate-input" autocomplete="off" spellcheck="false" />
+    <button onclick="gateTry()">Enter</button>
+  </div>
+  <p class="gate-err" id="gate-err"></p>
+</div>
 
 <div class="topbar">
   <a class="home" href="/" data-i18n="top.home">Inframind</a>
@@ -169,6 +220,22 @@
   <p class="lp-label"><span class="lp-dot"></span><span data-i18n="lp.label">Live right now — not a claim, a measurement</span></p>
   <p class="lp-sentence" id="lp-sentence"></p>
   <p class="lp-source" id="lp-source"></p>
+</section>
+
+<!-- TRACK RECORD -->
+<section id="record">
+  <div class="rec-item reveal">
+    <p class="rec-num">20+</p>
+    <p class="rec-label" data-i18n="rec.1">years of delivered systems</p>
+  </div>
+  <div class="rec-item reveal reveal-d1">
+    <p class="rec-num">100%</p>
+    <p class="rec-label" data-i18n="rec.2">operating as designed — optimally, for their purpose</p>
+  </div>
+  <div class="rec-item reveal reveal-d2">
+    <p class="rec-num">0</p>
+    <p class="rec-label" data-i18n="rec.3">systems left on paper</p>
+  </div>
 </section>
 
 <!-- MESSAGE -->
@@ -252,6 +319,9 @@ const I18N = {
     'hero.name': 'Ioannis Chr. Panagiotidis',
     'hero.role': 'ICT & ITS Consultant · Founder & Director, Inframind Ltd — intelligent transport, smart mobility and public digital infrastructure, designed and delivered into daily use.',
     'lp.label': 'Live right now — not a claim, a measurement',
+    'rec.1': 'years of delivered systems',
+    'rec.2': 'operating as designed — optimally, for their purpose',
+    'rec.3': 'systems left on paper',
     'msg.label': 'Why invite this speaker',
     'msg.title': 'From specification<br><span class="light">to daily habit</span>',
     'msg.quote': '"I don\'t present concepts. I present systems that thousands of people used this morning without thinking about them — and the decisions that made that possible."',
@@ -287,6 +357,9 @@ const I18N = {
     'hero.name': 'Ιωάννης Χρ. Παναγιωτίδης',
     'hero.role': 'Σύμβουλος ICT & ITS · Ιδρυτής & Διευθυντής, Inframind Ltd — ευφυή συστήματα μεταφορών, smart mobility και ψηφιακές δημόσιες υποδομές, σχεδιασμένες και παραδομένες σε καθημερινή χρήση.',
     'lp.label': 'Ζωντανά αυτή τη στιγμή — όχι ισχυρισμός, μέτρηση',
+    'rec.1': 'χρόνια παραδομένων συστημάτων',
+    'rec.2': 'λειτουργούν όπως σχεδιάστηκαν — βέλτιστα, για τον σκοπό τους',
+    'rec.3': 'συστήματα που έμειναν στα χαρτιά',
     'msg.label': 'Γιατί αυτόν τον ομιλητή',
     'msg.title': 'Από την προδιαγραφή<br><span class="light">στην καθημερινή συνήθεια</span>',
     'msg.quote': '«Δεν παρουσιάζω ιδέες. Παρουσιάζω συστήματα που χιλιάδες άνθρωποι χρησιμοποίησαν σήμερα το πρωί χωρίς να τα σκεφτούν — και τις αποφάσεις που το έκαναν εφικτό.»',
@@ -487,6 +560,42 @@ fetch('decks/decks.json')
     renderDecks();
   })
   .catch(() => { document.getElementById('decks').style.display = 'none'; });
+
+/* ── access gate ── */
+let gateHash = null;
+async function sha256hex(s) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+async function gateTry() {
+  const v = document.getElementById('gate-input').value.trim();
+  if (!v || !gateHash) return;
+  if (await sha256hex(v) === gateHash) {
+    try { sessionStorage.setItem('inframind.speaker.ok', '1'); } catch(e) {}
+    document.getElementById('gate').classList.add('gate-off');
+  } else {
+    document.getElementById('gate-err').textContent =
+      currentLang === 'el' ? 'Λανθασμένος κωδικός.' : 'Incorrect code.';
+    document.getElementById('gate-input').value = '';
+  }
+}
+document.getElementById('gate-input').addEventListener('keydown', e => { if (e.key === 'Enter') gateTry(); });
+
+(function initGate() {
+  let ok = false;
+  try { ok = sessionStorage.getItem('inframind.speaker.ok') === '1'; } catch(e) {}
+  if (ok) return; // already unlocked this session — gate stays off
+  fetch('access.json')
+    .then(r => r.json())
+    .then(j => {
+      if (j && j.hash) {
+        gateHash = j.hash;
+        document.getElementById('gate').classList.remove('gate-off');
+        document.getElementById('gate-input').focus();
+      }
+    })
+    .catch(() => {}); // fail-open: αν λείπει το access.json, η σελίδα δεν κλειδώνει
+})();
 
 /* ── reveals ── */
 const obs = new IntersectionObserver((es) => {
