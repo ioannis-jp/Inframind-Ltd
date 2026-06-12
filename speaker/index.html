@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow" />
+<title>Ioannis Chr. Panagiotidis — Speaker Profile · Inframind</title>
+<meta name="description" content="Speaker profile — Ioannis Chr. Panagiotidis, ICT & ITS Consultant, Founder of Inframind Ltd." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#0a0a0a; --dark:#1a1a1a; --grey:#6b6b6b;
+    --light-grey:#f5f5f5; --mid-grey:#e8e8e8; --white:#ffffff; --border:#e0e0e0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Inter',sans-serif; color:var(--dark); background:var(--white); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+  /* ── REVEAL SYSTEM ── */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-d1 { transition-delay:.1s; } .reveal-d2 { transition-delay:.2s; } .reveal-d3 { transition-delay:.3s; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 5vw;
+    background:linear-gradient(to bottom, rgba(10,10,10,.55), transparent);
+  }
+  .topbar a.home { color:rgba(255,255,255,.85); text-decoration:none; font-size:11px; letter-spacing:.25em; text-transform:uppercase; font-weight:600; }
+  .topbar a.home:hover { color:#fff; }
+  .lang { font-size:11px; letter-spacing:.15em; font-weight:600; }
+  .lang button { background:none; border:none; color:rgba(255,255,255,.55); cursor:pointer; font:inherit; padding:4px 6px; }
+  .lang button.active { color:#fff; }
+  .lang span { color:rgba(255,255,255,.35); }
+
+  /* ── HERO ── */
+  .hero { position:relative; height:88vh; min-height:560px; overflow:hidden; background:var(--black); }
+  .hero img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center 22%;
+    transform:scale(1.06);
+    animation:heroDrift 14s ease-out forwards;
+  }
+  @keyframes heroDrift { to { transform:scale(1.0); } }
+  .hero::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(10,10,10,.92) 0%, rgba(10,10,10,.35) 38%, rgba(10,10,10,.12) 70%);
+  }
+  .hero-inner { position:absolute; left:5vw; right:5vw; bottom:7vh; z-index:2; }
+  .hero-tag {
+    display:inline-block; font-size:11px; letter-spacing:.35em; text-transform:uppercase;
+    color:rgba(255,255,255,.6); font-weight:600; margin-bottom:14px;
+    opacity:0; animation:fadeUp .9s ease .3s forwards;
+  }
+  .hero h1 {
+    color:#fff; font-size:clamp(34px,5.4vw,64px); font-weight:800; line-height:1.05; letter-spacing:-.01em;
+    opacity:0; animation:fadeUp .9s ease .5s forwards;
+  }
+  .hero-role {
+    color:rgba(255,255,255,.78); font-size:clamp(15px,1.6vw,19px); font-weight:300; margin-top:14px; max-width:640px;
+    opacity:0; animation:fadeUp .9s ease .75s forwards;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── LIVE PROOF ── */
+  #live-proof { background:var(--black); color:#fff; padding:64px 5vw 72px; }
+  .lp-label { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.4); font-weight:600; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+  .lp-dot { width:7px; height:7px; border-radius:50%; background:#fff; animation:pulse 2.2s ease infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.25; } }
+  .lp-sentence { font-size:clamp(19px,2.6vw,28px); font-weight:300; line-height:1.55; max-width:920px; }
+  .lp-sentence strong { font-weight:700; }
+  .lp-source { margin-top:22px; font-size:12px; color:rgba(255,255,255,.45); letter-spacing:.04em; }
+  .lp-source a { color:rgba(255,255,255,.6); }
+  #live-proof.lp-hidden { display:none; }
+
+  /* ── SECTIONS ── */
+  section.pad { padding:100px 5vw; }
+  .section-label { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--grey); font-weight:600; margin-bottom:16px; }
+  .section-title { font-size:clamp(26px,3.6vw,40px); font-weight:700; line-height:1.15; color:var(--black); margin-bottom:32px; }
+  .section-title .light { font-weight:300; }
+
+  /* ── SPEAKER MESSAGE (line-draw) ── */
+  #message { background:var(--light-grey); }
+  .msg-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:72px; }
+  @media (max-width:900px){ .msg-grid { grid-template-columns:1fr; gap:48px; } }
+  .speaker-message { position:relative; padding-left:28px; margin:8px 0 32px; }
+  .sm-line { position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--black); transform:scaleY(0); transform-origin:top; transition:transform 1.4s cubic-bezier(.22,1,.36,1); }
+  .sm-text { font-size:20px; font-weight:300; font-style:italic; color:var(--dark); line-height:1.75; opacity:0; transform:translateY(14px); transition:opacity 1s ease .7s, transform 1s ease .7s; }
+  .speaker-message.visible .sm-line { transform:scaleY(1); }
+  .speaker-message.visible .sm-text { opacity:1; transform:translateY(0); }
+  .msg-grid p.body { font-size:15px; color:var(--grey); line-height:1.9; margin-bottom:18px; }
+  .msg-grid p.body strong { color:var(--dark); font-weight:600; }
+
+  .topics { list-style:none; margin-top:8px; }
+  .topics li { padding:14px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--dark); display:flex; gap:16px; align-items:baseline; }
+  .topics li:first-child { border-top:1px solid var(--border); }
+  .topics .n { font-size:11px; color:var(--grey); font-weight:600; letter-spacing:.1em; }
+
+  /* ── Q&A ── */
+  #qa { background:var(--white); }
+  .qa-wrap { max-width:860px; }
+  .qa-chips { display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 36px; }
+  .qa-chip {
+    background:none; border:1px solid var(--dark); color:var(--dark);
+    font-family:inherit; font-size:13px; font-weight:500; letter-spacing:.02em;
+    padding:11px 20px; cursor:pointer; transition:background .25s ease, color .25s ease;
+  }
+  .qa-chip:hover { background:var(--black); color:#fff; }
+  .qa-chip.active { background:var(--black); color:#fff; }
+  .qa-answer { border-left:3px solid var(--black); padding-left:24px; min-height:120px; }
+  .qa-q { font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--grey); font-weight:600; margin-bottom:12px; }
+  .qa-a { font-size:17px; font-weight:300; line-height:1.8; color:var(--dark); white-space:pre-wrap; }
+  .qa-cursor { display:inline-block; width:9px; height:1.15em; background:var(--black); vertical-align:text-bottom; margin-left:2px; animation:blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity:0; } }
+
+  /* ── CONTACT ── */
+  #contact { background:var(--black); color:#fff; }
+  #contact .section-label { color:rgba(255,255,255,.4); }
+  #contact .section-title { color:#fff; }
+  .contact-line { font-size:17px; font-weight:300; color:rgba(255,255,255,.85); }
+  .contact-line a { color:#fff; font-weight:600; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.35); }
+  .contact-line a:hover { border-color:#fff; }
+  .foot { margin-top:56px; font-size:12px; color:rgba(255,255,255,.35); }
+  .foot a { color:rgba(255,255,255,.5); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="/" data-i18n="top.home">Inframind</a>
+  <div class="lang">
+    <button id="lang-en" onclick="setLang('en')">EN</button><span>|</span><button id="lang-el" onclick="setLang('el')">EL</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <img src="/founder.jpg" alt="Ioannis Chr. Panagiotidis speaking at Smart City Expo World Congress" />
+  <div class="hero-inner">
+    <span class="hero-tag" data-i18n="hero.tag">Speaker Profile</span>
+    <h1>Ioannis Chr. Panagiotidis</h1>
+    <p class="hero-role" data-i18n="hero.role">
+      ICT &amp; ITS Consultant · Founder &amp; Director, Inframind Ltd — intelligent transport,
+      smart mobility and public digital infrastructure, designed and delivered into daily use.
+    </p>
+  </div>
+</header>
+
+<!-- LIVE PROOF -->
+<section id="live-proof" class="lp-hidden">
+  <p class="lp-label"><span class="lp-dot"></span><span data-i18n="lp.label">Live right now — not a claim, a measurement</span></p>
+  <p class="lp-sentence" id="lp-sentence"></p>
+  <p class="lp-source" id="lp-source"></p>
+</section>
+
+<!-- MESSAGE -->
+<section id="message" class="pad">
+  <p class="section-label reveal" data-i18n="msg.label">Why invite this speaker</p>
+  <h2 class="section-title reveal" data-i18n-html="msg.title">From specification<br><span class="light">to daily habit</span></h2>
+  <div class="msg-grid">
+    <div>
+      <div class="speaker-message reveal-sm">
+        <span class="sm-line"></span>
+        <p class="sm-text" data-i18n="msg.quote">
+          "I don't present concepts. I present systems that thousands of people used this
+          morning without thinking about them — and the decisions that made that possible."
+        </p>
+      </div>
+      <p class="body reveal" data-i18n-html="msg.p1">
+        Every talk is grounded in <strong>delivered, operating infrastructure</strong>: a national
+        ITS platform running since 2018, a nationwide passenger information network, open-loop
+        EMV ticketing, and a cross-system wallet bridge between municipal parking and national
+        transit — each one taken from first study to live operation.
+      </p>
+      <p class="body reveal reveal-d1" data-i18n-html="msg.p2">
+        The perspective is rare in conference programmes: not the vendor's, not the academic's,
+        but the <strong>facilitator's</strong> — the person accountable for the system actually
+        working, every day, in public.
+      </p>
+    </div>
+    <div>
+      <p class="section-label reveal" data-i18n="msg.topics">Speaking topics</p>
+      <ul class="topics">
+        <li class="reveal"><span class="n">01</span><span data-i18n="topic.1">Intelligent transport systems at national scale — from study to go-live</span></li>
+        <li class="reveal reveal-d1"><span class="n">02</span><span data-i18n="topic.2">Open data ecosystems in public transport — publishing, quality, real use</span></li>
+        <li class="reveal reveal-d2"><span class="n">03</span><span data-i18n="topic.3">EMV &amp; account-based ticketing designed for every citizen, not only the digital ones</span></li>
+        <li class="reveal reveal-d3"><span class="n">04</span><span data-i18n="topic.4">Cross-system interoperability — the wallet bridge between parking and transit</span></li>
+        <li class="reveal reveal-d3"><span class="n">05</span><span data-i18n="topic.5">Technology that becomes habit — the quiet engineering of citizen-facing systems</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Q&A -->
+<section id="qa" class="pad">
+  <p class="section-label reveal" data-i18n="qa.label">Quick answers</p>
+  <h2 class="section-title reveal" data-i18n-html="qa.title">Ask the work,<br><span class="light">not the résumé</span></h2>
+  <div class="qa-wrap">
+    <div class="qa-chips" id="qa-chips"></div>
+    <div class="qa-answer">
+      <p class="qa-q" id="qa-q"></p>
+      <p class="qa-a"><span id="qa-a"></span><span class="qa-cursor" id="qa-cursor"></span></p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="pad">
+  <p class="section-label reveal" data-i18n="ct.label">Invitations &amp; programme enquiries</p>
+  <h2 class="section-title reveal" data-i18n-html="ct.title">Bring the practice<br><span class="light">to your stage</span></h2>
+  <p class="contact-line reveal reveal-d1">
+    <a href="mailto:ioannis@inframind.eu">ioannis@inframind.eu</a> &nbsp;·&nbsp;
+    <a href="tel:+35795576747">+357 95 576 747</a>
+  </p>
+  <p class="foot" data-i18n-html="ct.foot">
+    This page is shared by direct link only. Public profile: <a href="https://inframind.eu">inframind.eu</a>
+    &nbsp;·&nbsp; © 2026 Inframind Ltd
+  </p>
+</section>
+
+<script>
+/* ───────────────────────── i18n ───────────────────────── */
+const I18N = {
+  en: {
+    'top.home': 'Inframind',
+    'hero.tag': 'Speaker Profile',
+    'hero.role': 'ICT & ITS Consultant · Founder & Director, Inframind Ltd — intelligent transport, smart mobility and public digital infrastructure, designed and delivered into daily use.',
+    'lp.label': 'Live right now — not a claim, a measurement',
+    'msg.label': 'Why invite this speaker',
+    'msg.title': 'From specification<br><span class="light">to daily habit</span>',
+    'msg.quote': '"I don\'t present concepts. I present systems that thousands of people used this morning without thinking about them — and the decisions that made that possible."',
+    'msg.p1': 'Every talk is grounded in <strong>delivered, operating infrastructure</strong>: a national ITS platform running since 2018, a nationwide passenger information network, open-loop EMV ticketing, and a cross-system wallet bridge between municipal parking and national transit — each one taken from first study to live operation.',
+    'msg.p2': 'The perspective is rare in conference programmes: not the vendor\'s, not the academic\'s, but the <strong>facilitator\'s</strong> — the person accountable for the system actually working, every day, in public.',
+    'msg.topics': 'Speaking topics',
+    'topic.1': 'Intelligent transport systems at national scale — from study to go-live',
+    'topic.2': 'Open data ecosystems in public transport — publishing, quality, real use',
+    'topic.3': 'EMV & account-based ticketing designed for every citizen, not only the digital ones',
+    'topic.4': 'Cross-system interoperability — the wallet bridge between parking and transit',
+    'topic.5': 'Technology that becomes habit — the quiet engineering of citizen-facing systems',
+    'qa.label': 'Quick answers',
+    'qa.title': 'Ask the work,<br><span class="light">not the résumé</span>',
+    'ct.label': 'Invitations & programme enquiries',
+    'ct.title': 'Bring the practice<br><span class="light">to your stage</span>',
+    'ct.foot': 'This page is shared by direct link only. Public profile: <a href="https://inframind.eu">inframind.eu</a> &nbsp;·&nbsp; © 2026 Inframind Ltd',
+    'lp.sentence': (d) => `Right now, systems designed by Ioannis are live across Cyprus: <strong>${d.vehicles}</strong> buses in motion, <strong>${d.trips.toLocaleString('en')}</strong> trips and <strong>~${Math.round(d.km).toLocaleString('en')} km</strong> executed in the last six hours, serving <strong>${d.stops.toLocaleString('en')}</strong> stops.`,
+    'lp.source': (t) => `Measured from MOTION ITS open data · <a href="https://motionbuscard.org.cy/opendata" rel="noopener">motionbuscard.org.cy</a> · updated ${t}`,
+  },
+  el: {
+    'top.home': 'Inframind',
+    'hero.tag': 'Προφίλ Ομιλητή',
+    'hero.role': 'Σύμβουλος ICT & ITS · Ιδρυτής & Διευθυντής, Inframind Ltd — ευφυή συστήματα μεταφορών, smart mobility και ψηφιακές δημόσιες υποδομές, σχεδιασμένες και παραδομένες σε καθημερινή χρήση.',
+    'lp.label': 'Ζωντανά αυτή τη στιγμή — όχι ισχυρισμός, μέτρηση',
+    'msg.label': 'Γιατί αυτόν τον ομιλητή',
+    'msg.title': 'Από την προδιαγραφή<br><span class="light">στην καθημερινή συνήθεια</span>',
+    'msg.quote': '«Δεν παρουσιάζω ιδέες. Παρουσιάζω συστήματα που χιλιάδες άνθρωποι χρησιμοποίησαν σήμερα το πρωί χωρίς να τα σκεφτούν — και τις αποφάσεις που το έκαναν εφικτό.»',
+    'msg.p1': 'Κάθε ομιλία πατά σε <strong>παραδομένη, λειτουργούσα υποδομή</strong>: εθνική πλατφόρμα ITS σε λειτουργία από το 2018, πανεθνικό δίκτυο πληροφόρησης επιβατών, open-loop EMV εισιτήριο, και wallet bridge μεταξύ δημοτικής στάθμευσης και εθνικών συγκοινωνιών — όλα από την πρώτη μελέτη έως το go-live.',
+    'msg.p2': 'Η οπτική είναι σπάνια στα προγράμματα συνεδρίων: όχι του προμηθευτή, όχι του ακαδημαϊκού, αλλά του <strong>facilitator</strong> — του ανθρώπου που λογοδοτεί για το αν το σύστημα όντως δουλεύει, κάθε μέρα, δημόσια.',
+    'msg.topics': 'Θέματα ομιλιών',
+    'topic.1': 'Ευφυή συστήματα μεταφορών σε εθνική κλίμακα — από τη μελέτη στο go-live',
+    'topic.2': 'Οικοσυστήματα ανοικτών δεδομένων στις δημόσιες συγκοινωνίες — δημοσίευση, ποιότητα, πραγματική χρήση',
+    'topic.3': 'EMV & account-based ticketing σχεδιασμένο για κάθε πολίτη, όχι μόνο τους ψηφιακούς',
+    'topic.4': 'Διαλειτουργικότητα συστημάτων — το wallet bridge μεταξύ στάθμευσης και συγκοινωνιών',
+    'topic.5': 'Τεχνολογία που γίνεται συνήθεια — η αθόρυβη μηχανική των συστημάτων προς τον πολίτη',
+    'qa.label': 'Γρήγορες απαντήσεις',
+    'qa.title': 'Ρώτησε το έργο,<br><span class="light">όχι το βιογραφικό</span>',
+    'ct.label': 'Προσκλήσεις & προγράμματα συνεδρίων',
+    'ct.title': 'Φέρτε την πρακτική<br><span class="light">στη σκηνή σας</span>',
+    'ct.foot': 'Η σελίδα αυτή κοινοποιείται μόνο με απευθείας link. Δημόσιο προφίλ: <a href="https://inframind.eu">inframind.eu</a> &nbsp;·&nbsp; © 2026 Inframind Ltd',
+    'lp.sentence': (d) => `Αυτή τη στιγμή, συστήματα που σχεδίασε ο Ιωάννης λειτουργούν σε όλη την Κύπρο: <strong>${d.vehicles}</strong> λεωφορεία σε κίνηση, <strong>${d.trips.toLocaleString('el')}</strong> δρομολόγια και <strong>~${Math.round(d.km).toLocaleString('el')} χλμ</strong> εκτελεσμένα το τελευταίο εξάωρο, εξυπηρετώντας <strong>${d.stops.toLocaleString('el')}</strong> στάσεις.`,
+    'lp.source': (t) => `Μετρημένο από τα ανοικτά δεδομένα MOTION ITS · <a href="https://motionbuscard.org.cy/opendata" rel="noopener">motionbuscard.org.cy</a> · ενημέρωση ${t}`,
+  }
+};
+
+/* Q&A content */
+const QA = {
+  en: [
+    { q: 'What has he actually built?',
+      a: 'Four national-scale systems, all in daily use: the Motion ITS platform (operating since 2018), a nationwide bus stop information network of 5,000+ stops with 464 upgraded digital displays, open-loop EMV / account-based ticketing, and an end-to-end digital parking & Park-and-Ride system. Every one started from a blank page — study, specification, implementation, go-live.' },
+    { q: 'What is the wallet bridge?',
+      a: 'Two separate mobility services — a municipal parking app and the national public-transit wallet — connected underneath, so the citizen uses whichever app they already have. No double registration, no double identity, no friction. He originated the idea and supervised the implementation across both projects.' },
+    { q: 'What does "Technology Facilitator" mean?',
+      a: 'Not a vendor, not a theorist. The facilitator is accountable for the distance between a specification and a habit: the system is finished only when thousands of people use it daily without thinking about it. That accountability — from first study to live operation — is the job.' },
+    { q: 'Why is this page showing live numbers?',
+      a: 'Because the strongest slide is reality. The figures above are measured from MOTION ITS open data a few minutes ago — buses in motion, trips and kilometres executed, stops served. Anyone in the audience can verify them on the spot.' },
+    { q: 'What formats does he speak in?',
+      a: 'Keynotes, panels, and technical deep-dives — in English or Greek. Regular participant at ITS World Congress and Smart City Expo World Congress. Content is always grounded in operating systems, never in slides alone.' },
+    { q: 'How do I invite him?',
+      a: 'Email ioannis@inframind.eu or call +357 95 576 747 with the event, dates, and audience. You will get a direct answer — and if it is a fit, a talk built around what your programme actually needs.' },
+  ],
+  el: [
+    { q: 'Τι έχει πραγματικά υλοποιήσει;',
+      a: 'Τέσσερα συστήματα εθνικής κλίμακας, όλα σε καθημερινή χρήση: την πλατφόρμα Motion ITS (σε λειτουργία από το 2018), πανεθνικό δίκτυο πληροφόρησης 5.000+ στάσεων με 464 αναβαθμισμένες ψηφιακές πινακίδες, open-loop EMV / account-based ticketing, και ολοκληρωμένο σύστημα ψηφιακής στάθμευσης & Park-and-Ride. Όλα ξεκίνησαν από λευκή σελίδα — μελέτη, προδιαγραφή, υλοποίηση, go-live.' },
+    { q: 'Τι είναι το wallet bridge;',
+      a: 'Δύο ξεχωριστές υπηρεσίες κινητικότητας — μια δημοτική εφαρμογή στάθμευσης και το εθνικό wallet συγκοινωνιών — συνδεδεμένες από κάτω, ώστε ο πολίτης να χρησιμοποιεί όποια εφαρμογή έχει ήδη. Καμία διπλή εγγραφή, καμία διπλή ταυτότητα, καμία τριβή. Δική του η ιδέα, δική του και η εποπτεία της υλοποίησης στα δύο έργα.' },
+    { q: 'Τι σημαίνει «Technology Facilitator»;',
+      a: 'Ούτε προμηθευτής, ούτε θεωρητικός. Ο facilitator λογοδοτεί για την απόσταση ανάμεσα στην προδιαγραφή και τη συνήθεια: το σύστημα τελειώνει μόνο όταν χιλιάδες άνθρωποι το χρησιμοποιούν καθημερινά χωρίς να το σκέφτονται. Αυτή η λογοδοσία — από την πρώτη μελέτη έως τη ζωντανή λειτουργία — είναι η δουλειά.' },
+    { q: 'Γιατί η σελίδα δείχνει ζωντανά νούμερα;',
+      a: 'Γιατί το ισχυρότερο slide είναι η πραγματικότητα. Τα νούμερα πιο πάνω μετρήθηκαν από τα ανοικτά δεδομένα του MOTION ITS πριν λίγα λεπτά — λεωφορεία σε κίνηση, δρομολόγια και χιλιόμετρα, στάσεις. Οποιοσδήποτε στο κοινό μπορεί να τα επαληθεύσει επιτόπου.' },
+    { q: 'Σε τι μορφές μιλά;',
+      a: 'Keynotes, panels και τεχνικά deep-dives — στα αγγλικά ή τα ελληνικά. Σταθερή παρουσία σε ITS World Congress και Smart City Expo World Congress. Το περιεχόμενο πατά πάντα σε λειτουργούντα συστήματα, ποτέ μόνο σε διαφάνειες.' },
+    { q: 'Πώς τον προσκαλώ;',
+      a: 'Email στο ioannis@inframind.eu ή τηλέφωνο στο +357 95 576 747 με την εκδήλωση, τις ημερομηνίες και το κοινό. Θα λάβετε άμεση απάντηση — και αν ταιριάζει, μια ομιλία χτισμένη γύρω από αυτό που πραγματικά χρειάζεται το πρόγραμμά σας.' },
+  ]
+};
+
+/* ── hard maxima — never exceed on display ── */
+const MAX_STOPS = 5314, MAX_VEHICLES = 731;
+
+let currentLang = 'en';
+let lpData = null, lpTime = '';
+
+function applyI18n() {
+  const dict = I18N[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = dict[el.dataset.i18n];
+    if (typeof v === 'string') el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = dict[el.dataset.i18nHtml];
+    if (typeof v === 'string') el.innerHTML = v;
+  });
+  document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+  document.getElementById('lang-el').classList.toggle('active', currentLang === 'el');
+  document.documentElement.lang = currentLang;
+  renderLiveProof();
+  buildQA();
+}
+
+function setLang(l) {
+  currentLang = l;
+  try { localStorage.setItem('inframind.lang', l); } catch(e) {}
+  applyI18n();
+}
+
+/* ── live proof ── */
+function renderLiveProof() {
+  if (!lpData) return;
+  document.getElementById('lp-sentence').innerHTML = I18N[currentLang]['lp.sentence'](lpData);
+  document.getElementById('lp-source').innerHTML = I18N[currentLang]['lp.source'](lpTime);
+  document.getElementById('live-proof').classList.remove('lp-hidden');
+}
+
+fetch('/data/motion-stats.json')
+  .then(r => r.json())
+  .then(j => {
+    const o = j.observed_last_6h || {};
+    lpData = {
+      vehicles: Math.min(o.vehicles_in_motion || 0, MAX_VEHICLES),
+      trips: o.trips || 0,
+      km: o.km || 0,
+      stops: Math.min(o.stops || 0, MAX_STOPS),
+    };
+    if (!lpData.vehicles || !lpData.trips) return; // stay hidden on empty data
+    try {
+      lpTime = new Date(j.generated_at_utc).toLocaleTimeString(currentLang === 'el' ? 'el-GR' : 'en-GB',
+        { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Nicosia' }) + ' (Cyprus)';
+    } catch(e) { lpTime = ''; }
+    renderLiveProof();
+  })
+  .catch(() => {}); // graceful: section stays hidden
+
+/* ── Q&A with typewriter ── */
+let typeTimer = null;
+function buildQA() {
+  const chips = document.getElementById('qa-chips');
+  chips.innerHTML = '';
+  QA[currentLang].forEach((item, i) => {
+    const b = document.createElement('button');
+    b.className = 'qa-chip';
+    b.textContent = item.q;
+    b.onclick = () => answer(i);
+    chips.appendChild(b);
+  });
+  answer(0, true);
+}
+
+function answer(i, instant) {
+  const item = QA[currentLang][i];
+  document.querySelectorAll('.qa-chip').forEach((c, j) => c.classList.toggle('active', j === i));
+  document.getElementById('qa-q').textContent = item.q;
+  const out = document.getElementById('qa-a');
+  clearInterval(typeTimer);
+  if (instant) { out.textContent = item.a; return; }
+  out.textContent = '';
+  let pos = 0;
+  typeTimer = setInterval(() => {
+    pos += 3; // 3 chars per tick — fast but visibly "written"
+    out.textContent = item.a.slice(0, pos);
+    if (pos >= item.a.length) clearInterval(typeTimer);
+  }, 18);
+}
+
+/* ── reveals ── */
+const obs = new IntersectionObserver((es) => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal, .reveal-sm, .speaker-message').forEach(el => obs.observe(el));
+
+/* ── init lang from main site preference ── */
+try {
+  const saved = localStorage.getItem('inframind.lang');
+  if (saved === 'el' || saved === 'en') currentLang = saved;
+} catch(e) {}
+applyI18n();
+</script>
+</body>
+</html>
