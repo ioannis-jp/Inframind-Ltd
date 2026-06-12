@@ -17,9 +17,9 @@
   body { font-family:'Inter',sans-serif; color:var(--dark); background:var(--white); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
 
   /* ── REVEAL SYSTEM ── */
-  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity 1.1s ease, transform 1.1s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
-  .reveal-d1 { transition-delay:.1s; } .reveal-d2 { transition-delay:.2s; } .reveal-d3 { transition-delay:.3s; }
+  .reveal-d1 { transition-delay:.2s; } .reveal-d2 { transition-delay:.4s; } .reveal-d3 { transition-delay:.6s; }
 
   /* ── TOP BAR ── */
   .topbar {
@@ -69,7 +69,8 @@
   .lp-label { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.4); font-weight:600; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
   .lp-dot { width:7px; height:7px; border-radius:50%; background:#fff; animation:pulse 2.2s ease infinite; }
   @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.25; } }
-  .lp-sentence { font-size:clamp(19px,2.6vw,28px); font-weight:300; line-height:1.55; max-width:920px; }
+  .lp-sentence { font-size:clamp(19px,2.6vw,28px); font-weight:300; line-height:1.55; max-width:920px; min-height:2.4em; transition:opacity 1.1s ease; }
+  .lp-sentence.lp-fading { opacity:0; }
   .lp-sentence strong { font-weight:700; }
   .lp-source { margin-top:22px; font-size:12px; color:rgba(255,255,255,.45); letter-spacing:.04em; }
   .lp-source a { color:rgba(255,255,255,.6); }
@@ -244,7 +245,12 @@ const I18N = {
     'ct.label': 'Invitations & programme enquiries',
     'ct.title': 'Bring the practice<br><span class="light">to your stage</span>',
     'ct.foot': 'This page is shared by direct link only. Public profile: <a href="https://inframind.eu">inframind.eu</a> &nbsp;·&nbsp; © 2026 Inframind Ltd',
-    'lp.sentence': (d) => `Right now, systems designed by Ioannis are live across Cyprus: <strong>${d.vehicles}</strong> buses in motion, <strong>${d.trips.toLocaleString('en')}</strong> trips and <strong>~${Math.round(d.km).toLocaleString('en')} km</strong> executed in the last six hours, serving <strong>${d.stops.toLocaleString('en')}</strong> stops.`,
+    'lp.msgs': (d) => [
+      `In the last six hours, <strong>${d.vehicles}</strong> buses have been in motion across Cyprus on infrastructure delivered by Inframind — measured from national open data, not estimated.`,
+      `<strong>${d.trips.toLocaleString('en')}</strong> trips and <strong>~${Math.round(d.km).toLocaleString('en')} km</strong> executed in the last six hours, on systems taken from first technical study to daily public operation.`,
+      `<strong>${d.stops.toLocaleString('en')}</strong> bus stops served in the last six hours by the nationwide passenger information network.`,
+      `Designed, delivered, in public service. Every figure on this page is verifiable at the source — by anyone, at any moment.`,
+    ],
     'lp.source': (t) => `Measured from MOTION ITS open data · <a href="https://motionbuscard.org.cy/opendata" rel="noopener">motionbuscard.org.cy</a> · updated ${t}`,
   },
   el: {
@@ -268,7 +274,12 @@ const I18N = {
     'ct.label': 'Προσκλήσεις & προγράμματα συνεδρίων',
     'ct.title': 'Φέρτε την πρακτική<br><span class="light">στη σκηνή σας</span>',
     'ct.foot': 'Η σελίδα αυτή κοινοποιείται μόνο με απευθείας link. Δημόσιο προφίλ: <a href="https://inframind.eu">inframind.eu</a> &nbsp;·&nbsp; © 2026 Inframind Ltd',
-    'lp.sentence': (d) => `Αυτή τη στιγμή, συστήματα που σχεδίασε ο Ιωάννης λειτουργούν σε όλη την Κύπρο: <strong>${d.vehicles}</strong> λεωφορεία σε κίνηση, <strong>${d.trips.toLocaleString('el')}</strong> δρομολόγια και <strong>~${Math.round(d.km).toLocaleString('el')} χλμ</strong> εκτελεσμένα το τελευταίο εξάωρο, εξυπηρετώντας <strong>${d.stops.toLocaleString('el')}</strong> στάσεις.`,
+    'lp.msgs': (d) => [
+      `Το τελευταίο εξάωρο, <strong>${d.vehicles}</strong> λεωφορεία κινήθηκαν σε όλη την Κύπρο σε υποδομή που παρέδωσε η Inframind — μετρημένα από τα εθνικά ανοικτά δεδομένα, όχι εκτιμώμενα.`,
+      `<strong>${d.trips.toLocaleString('el')}</strong> δρομολόγια και <strong>~${Math.round(d.km).toLocaleString('el')} χλμ</strong> εκτελέστηκαν το τελευταίο εξάωρο, σε συστήματα που οδηγήθηκαν από την πρώτη τεχνική μελέτη έως την καθημερινή δημόσια λειτουργία.`,
+      `<strong>${d.stops.toLocaleString('el')}</strong> στάσεις εξυπηρετήθηκαν το τελευταίο εξάωρο από το πανεθνικό δίκτυο πληροφόρησης επιβατών.`,
+      `Σχεδιασμένο, παραδομένο, σε δημόσια λειτουργία. Κάθε νούμερο αυτής της σελίδας επαληθεύεται στην πηγή — από οποιονδήποτε, οποιαδήποτε στιγμή.`,
+    ],
     'lp.source': (t) => `Μετρημένο από τα ανοικτά δεδομένα MOTION ITS · <a href="https://motionbuscard.org.cy/opendata" rel="noopener">motionbuscard.org.cy</a> · ενημέρωση ${t}`,
   }
 };
@@ -334,12 +345,26 @@ function setLang(l) {
   applyI18n();
 }
 
-/* ── live proof ── */
+/* ── live proof — rotating institutional messages ── */
+let lpIdx = 0, lpTimer = null;
 function renderLiveProof() {
   if (!lpData) return;
-  document.getElementById('lp-sentence').innerHTML = I18N[currentLang]['lp.sentence'](lpData);
+  clearInterval(lpTimer);
+  const el = document.getElementById('lp-sentence');
+  const msgs = I18N[currentLang]['lp.msgs'](lpData);
+  lpIdx = 0;
+  el.innerHTML = msgs[0];
+  el.classList.remove('lp-fading');
   document.getElementById('lp-source').innerHTML = I18N[currentLang]['lp.source'](lpTime);
   document.getElementById('live-proof').classList.remove('lp-hidden');
+  lpTimer = setInterval(() => {
+    el.classList.add('lp-fading');
+    setTimeout(() => {
+      lpIdx = (lpIdx + 1) % msgs.length;
+      el.innerHTML = msgs[lpIdx];
+      el.classList.remove('lp-fading');
+    }, 1150);
+  }, 9000); // αργή, θεσμική εναλλαγή
 }
 
 fetch('/data/motion-stats.json')
@@ -386,10 +411,10 @@ function answer(i, instant) {
   out.textContent = '';
   let pos = 0;
   typeTimer = setInterval(() => {
-    pos += 3; // 3 chars per tick — fast but visibly "written"
+    pos += 2; // slower, more deliberate writing
     out.textContent = item.a.slice(0, pos);
     if (pos >= item.a.length) clearInterval(typeTimer);
-  }, 18);
+  }, 28);
 }
 
 /* ── reveals ── */
