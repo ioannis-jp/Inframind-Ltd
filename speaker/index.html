@@ -116,6 +116,21 @@
   .qa-cursor { display:inline-block; width:9px; height:1.15em; background:var(--black); vertical-align:text-bottom; margin-left:2px; animation:blink 1s steps(1) infinite; }
   @keyframes blink { 50% { opacity:0; } }
 
+  /* ── PRESENTATIONS ── */
+  .deck-list { max-width:860px; }
+  .deck-item {
+    display:block; text-decoration:none; color:inherit;
+    border-top:1px solid var(--border); padding:30px 0;
+    transition:background .3s ease;
+  }
+  .deck-item:last-child { border-bottom:1px solid var(--border); }
+  .deck-item:hover { background:rgba(0,0,0,.025); }
+  .deck-meta { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--grey); font-weight:600; margin-bottom:10px; display:flex; gap:14px; flex-wrap:wrap; }
+  .deck-current { color:#fff; background:var(--black); padding:2px 10px; }
+  .deck-title { font-size:clamp(19px,2.3vw,24px); font-weight:700; color:var(--black); line-height:1.3; }
+  .deck-sub { font-size:14px; color:var(--grey); margin-top:6px; line-height:1.7; }
+  .deck-open { display:inline-block; margin-top:14px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; font-weight:600; color:var(--dark); border-bottom:2px solid var(--black); padding-bottom:3px; }
+
   /* ── CONTACT ── */
   #contact { background:var(--black); color:#fff; }
   #contact .section-label { color:rgba(255,255,255,.4); }
@@ -141,7 +156,7 @@
   <img src="/founder.jpg" alt="Ioannis Chr. Panagiotidis speaking at Smart City Expo World Congress" />
   <div class="hero-inner">
     <span class="hero-tag" data-i18n="hero.tag">Speaker Profile</span>
-    <h1>Ioannis Chr. Panagiotidis</h1>
+    <h1 data-i18n="hero.name">Ioannis Chr. Panagiotidis</h1>
     <p class="hero-role" data-i18n="hero.role">
       ICT &amp; ITS Consultant · Founder &amp; Director, Inframind Ltd — intelligent transport,
       smart mobility and public digital infrastructure, designed and delivered into daily use.
@@ -207,6 +222,13 @@
   </div>
 </section>
 
+<!-- PRESENTATIONS -->
+<section id="decks" class="pad" style="background:var(--light-grey);">
+  <p class="section-label reveal" data-i18n="dk.label">Presentations</p>
+  <h2 class="section-title reveal" data-i18n-html="dk.title">The material,<br><span class="light">as it was presented</span></h2>
+  <div class="deck-list" id="deck-list"></div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" class="pad">
   <p class="section-label reveal" data-i18n="ct.label">Invitations &amp; programme enquiries</p>
@@ -227,6 +249,7 @@ const I18N = {
   en: {
     'top.home': 'Inframind',
     'hero.tag': 'Speaker Profile',
+    'hero.name': 'Ioannis Chr. Panagiotidis',
     'hero.role': 'ICT & ITS Consultant · Founder & Director, Inframind Ltd — intelligent transport, smart mobility and public digital infrastructure, designed and delivered into daily use.',
     'lp.label': 'Live right now — not a claim, a measurement',
     'msg.label': 'Why invite this speaker',
@@ -242,6 +265,11 @@ const I18N = {
     'topic.5': 'Technology that becomes habit — the quiet engineering of citizen-facing systems',
     'qa.label': 'Quick answers',
     'qa.title': 'Ask the work,<br><span class="light">not the résumé</span>',
+    'dk.label': 'Presentations',
+    'dk.title': 'The material,<br><span class="light">as it was presented</span>',
+    'dk.current': 'Current',
+    'dk.open': 'Open the presentation (PDF)',
+    'dk.pages': 'slides',
     'ct.label': 'Invitations & programme enquiries',
     'ct.title': 'Bring the practice<br><span class="light">to your stage</span>',
     'ct.foot': 'This page is shared by direct link only. Public profile: <a href="https://inframind.eu">inframind.eu</a> &nbsp;·&nbsp; © 2026 Inframind Ltd',
@@ -256,6 +284,7 @@ const I18N = {
   el: {
     'top.home': 'Inframind',
     'hero.tag': 'Προφίλ Ομιλητή',
+    'hero.name': 'Ιωάννης Χρ. Παναγιωτίδης',
     'hero.role': 'Σύμβουλος ICT & ITS · Ιδρυτής & Διευθυντής, Inframind Ltd — ευφυή συστήματα μεταφορών, smart mobility και ψηφιακές δημόσιες υποδομές, σχεδιασμένες και παραδομένες σε καθημερινή χρήση.',
     'lp.label': 'Ζωντανά αυτή τη στιγμή — όχι ισχυρισμός, μέτρηση',
     'msg.label': 'Γιατί αυτόν τον ομιλητή',
@@ -271,6 +300,11 @@ const I18N = {
     'topic.5': 'Τεχνολογία που γίνεται συνήθεια — η αθόρυβη μηχανική των συστημάτων προς τον πολίτη',
     'qa.label': 'Γρήγορες απαντήσεις',
     'qa.title': 'Ρώτησε το έργο,<br><span class="light">όχι το βιογραφικό</span>',
+    'dk.label': 'Παρουσιάσεις',
+    'dk.title': 'Το υλικό,<br><span class="light">όπως παρουσιάστηκε</span>',
+    'dk.current': 'Τρέχουσα',
+    'dk.open': 'Άνοιγμα παρουσίασης (PDF)',
+    'dk.pages': 'διαφάνειες',
     'ct.label': 'Προσκλήσεις & προγράμματα συνεδρίων',
     'ct.title': 'Φέρτε την πρακτική<br><span class="light">στη σκηνή σας</span>',
     'ct.foot': 'Η σελίδα αυτή κοινοποιείται μόνο με απευθείας link. Δημόσιο προφίλ: <a href="https://inframind.eu">inframind.eu</a> &nbsp;·&nbsp; © 2026 Inframind Ltd',
@@ -337,6 +371,7 @@ function applyI18n() {
   document.documentElement.lang = currentLang;
   renderLiveProof();
   buildQA();
+  renderDecks();
 }
 
 function setLang(l) {
@@ -416,6 +451,42 @@ function answer(i, instant) {
     if (pos >= item.a.length) clearInterval(typeTimer);
   }, 28);
 }
+
+/* ── presentations ── */
+let decksData = null;
+function renderDecks() {
+  const wrap = document.getElementById('deck-list');
+  if (!decksData) return; // not loaded yet — try again after fetch
+  if (!decksData.length) { document.getElementById('decks').style.display = 'none'; return; }
+  const L = currentLang, dict = I18N[L];
+  wrap.innerHTML = '';
+  decksData.forEach((d, i) => {
+    const a = document.createElement('a');
+    a.className = 'deck-item';
+    a.href = d.file;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    const meta = [];
+    if (i === 0) meta.push(`<span class="deck-current">${dict['dk.current']}</span>`);
+    if (d.event_el || d.event_en) meta.push(`<span>${L === 'el' ? d.event_el : d.event_en}</span>`);
+    if (d.pages) meta.push(`<span>${d.pages} ${dict['dk.pages']}</span>`);
+    if (d.lang) meta.push(`<span>${d.lang}</span>`);
+    a.innerHTML = `
+      <p class="deck-meta">${meta.join('')}</p>
+      <p class="deck-title">${L === 'el' ? d.title_el : d.title_en}</p>
+      <p class="deck-sub">${L === 'el' ? (d.subtitle_el || '') : (d.subtitle_en || '')}</p>
+      <span class="deck-open">${dict['dk.open']}</span>`;
+    wrap.appendChild(a);
+  });
+}
+
+fetch('decks/decks.json')
+  .then(r => r.json())
+  .then(j => {
+    decksData = (j.decks || []).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    renderDecks();
+  })
+  .catch(() => { document.getElementById('decks').style.display = 'none'; });
 
 /* ── reveals ── */
 const obs = new IntersectionObserver((es) => {
