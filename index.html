@@ -554,29 +554,50 @@
       margin-bottom: 10px;
     }
 
-    /* ── FOUNDER PHOTO ── */
-    .founder-photo-wrap {
-      width: 100%;
-      max-width: 340px;
-      aspect-ratio: 4 / 5;
-      margin-bottom: 32px;
-      overflow: hidden;
-      background: var(--mid-grey);
-      border: 1px solid var(--border);
+    /* ── FOUNDER MESSAGE — the line is drawn, then the words follow ── */
+    .founder-message {
       position: relative;
+      padding-left: 28px;
+      margin: 8px 0 36px;
     }
-    .founder-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      filter: grayscale(0.15) contrast(1.02);
-      transition: filter 0.7s ease;
+    .founder-message.reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
-    .founder-photo-wrap:hover .founder-photo {
-      filter: grayscale(0) contrast(1);
+    .fm-line {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--black);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
+    .about-col .founder-message p.fm-text {
+      font-size: 20px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.75;
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 1s ease 0.7s, transform 1s ease 0.7s;
+    }
+    .about-col .founder-message p.founder-signature {
+      font-size: 13px;
+      font-style: normal;
+      color: var(--grey);
+      letter-spacing: 0.04em;
+      margin-bottom: 0;
+      opacity: 0;
+      transition: opacity 0.9s ease 1.6s;
+    }
+    .founder-signature strong { font-weight: 600; color: var(--dark); }
+    .founder-message.visible .fm-line { transform: scaleY(1); }
+    .about-col .founder-message.visible p.fm-text { opacity: 1; transform: translateY(0); }
+    .about-col .founder-message.visible p.founder-signature { opacity: 1; }
 
     /* ── SERVICES ── */
     #services {
@@ -2851,25 +2872,25 @@
     </div>
 
     <div class="about-col">
-      <div class="founder-photo-wrap reveal" onerror="this.style.display='none'">
-        <img src="founder.jpg" alt="Ioannis Chr. Panagiotidis" class="founder-photo" onerror="this.parentElement.style.display='none'" />
+      <span class="founder-tag reveal" data-i18n="about.founder.tag">A note from the founder</span>
+      <div class="founder-message reveal">
+        <span class="fm-line"></span>
+        <p class="fm-text" data-i18n="about.founder.message">
+          "Every system we have designed is in daily operation today, serving thousands
+          of citizens. That is the only CV that matters. Technology, done right, removes
+          stress from everyday life — it never adds to it."
+        </p>
+        <p class="founder-signature" data-i18n-html="about.founder.signature"><strong>Ioannis Chr. Panagiotidis</strong> &mdash; Founder &amp; Director</p>
       </div>
-      <span class="founder-tag reveal" data-i18n="about.founder.tag">Founder & Director</span>
-      <p class="reveal" data-i18n-html="about.founder.name"><strong>Ioannis Chr. Panagiotidis</strong></p>
       <p class="reveal reveal-d1" data-i18n-html="about.founder.p1">
-        ICT & ITS Consultant and <strong>Technology Facilitator — proven in practice, not by claim</strong>.
-        Every system he has designed has been implemented in full and is in active daily use,
-        serving thousands of citizens and users. Deep expertise in intelligent transport systems,
-        smart mobility, and public sector digital infrastructure.
+        Inframind&rsquo;s expertise spans <strong>intelligent transport systems, smart mobility,
+        and public sector digital infrastructure</strong> — proven in practice, not by claim.
+        Every system delivered is implemented in full and remains in active daily use.
       </p>
       <p class="reveal reveal-d2" data-i18n="about.founder.p2">
-        A consistent participant in leading international forums including the ITS World Congress
-        and Smart City Expo World Congress — not for presence, but to remain at the frontier
-        of what actually works.
-      </p>
-      <p class="reveal reveal-d3" data-i18n="about.founder.p3">
-        Every project must combine functionality with aesthetics. The goal is always to reduce
-        the stress of everyday life — in mobility, access, service delivery, and public space.
+        The practice stays at the frontier of what actually works — a consistent presence
+        at the ITS World Congress and Smart City Expo World Congress, not for visibility,
+        but to bring back what is real.
       </p>
       <p class="reveal reveal-d3" data-i18n="about.founder.p4">
         Results speak louder than presence.
@@ -3487,11 +3508,11 @@
       'about.p3': 'We cover the <strong>full project lifecycle</strong> — from technical study and functional specifications, through procurement support and system design, to on-site supervision, coordination and go-live. We do not stop until the project is real and in active daily use.',
       'about.p4': 'What matters is not delivery on paper, but <strong>benefit in practice</strong> — measurable value returned to the people using the system and to the organisations operating it. We select technologies deliberately, only when they offer clear and lasting advantage.',
       'about.quote': '"Technology, when designed correctly, does not shout. It silently supports daily life, highlights space, reduces tension, and returns value to society."',
-      'about.founder.tag': 'Founder & Director',
-      'about.founder.name': '<strong>Ioannis Chr. Panagiotidis</strong>',
-      'about.founder.p1': 'ICT & ITS Consultant and <strong>Technology Facilitator — proven in practice, not by claim</strong>. Every system he has designed has been implemented in full and is in active daily use, serving thousands of citizens and users. Deep expertise in intelligent transport systems, smart mobility, and public sector digital infrastructure.',
-      'about.founder.p2': 'A consistent participant in leading international forums including the ITS World Congress and Smart City Expo World Congress — not for presence, but to remain at the frontier of what actually works.',
-      'about.founder.p3': 'Every project must combine functionality with aesthetics. The goal is always to reduce the stress of everyday life — in mobility, access, service delivery, and public space.',
+      'about.founder.tag': 'A note from the founder',
+      'about.founder.message': '"Every system we have designed is in daily operation today, serving thousands of citizens. That is the only CV that matters. Technology, done right, removes stress from everyday life — it never adds to it."',
+      'about.founder.signature': '<strong>Ioannis Chr. Panagiotidis</strong> — Founder & Director',
+      'about.founder.p1': 'Inframind’s expertise spans <strong>intelligent transport systems, smart mobility, and public sector digital infrastructure</strong> — proven in practice, not by claim. Every system delivered is implemented in full and remains in active daily use.',
+      'about.founder.p2': 'The practice stays at the frontier of what actually works — a consistent presence at the ITS World Congress and Smart City Expo World Congress, not for visibility, but to bring back what is real.',
       'about.founder.p4': 'Results speak louder than presence.',
       'services.label': 'Services',
       'services.title': 'From strategy<br><span class="light">to operational delivery</span>',
@@ -3659,11 +3680,11 @@
       'about.p3': 'Η Inframind καλύπτει <strong>όλον τον κύκλο ζωής του έργου</strong> — από την τεχνική μελέτη και τις λειτουργικές προδιαγραφές, μέσω της υποστήριξης διαγωνισμών και του σχεδιασμού συστημάτων, έως την επιτόπια επίβλεψη, τον συντονισμό και την έναρξη λειτουργίας. Η δουλειά δεν σταματά μέχρι το σύστημα να γίνει πραγματικότητα, να λειτουργήσει, και να χρησιμοποιείται από τους πολίτες ως κομμάτι της καθημερινότητάς τους.',
       'about.p4': 'Δεν μετράει η παράδοση στα χαρτιά, αλλά <strong>το όφελος στην πράξη</strong> — μετρήσιμη αξία για τους ανθρώπους που χρησιμοποιούν το σύστημα και τους οργανισμούς που το λειτουργούν. Κάθε επιλογή τεχνολογίας είναι συνειδητή, και γίνεται μόνο όταν προσφέρει σαφές και διαρκές πλεονέκτημα. Ό,τι δεν καταφέρνει στο τέλος να γίνει συνήθεια, δεν έχει ακόμα πετύχει.',
       'about.quote': '«Η τεχνολογία, όταν σχεδιάζεται σωστά, δεν κραυγάζει. Υποστηρίζει αθόρυβα την καθημερινότητα, αναδεικνύει τον χώρο, μειώνει την ένταση, και επιστρέφει αξία στην κοινωνία.»',
-      'about.founder.tag': 'Ιδρυτής & Διευθυντής',
-      'about.founder.name': '<strong>Ιωάννης Χρ. Παναγιωτίδης</strong>',
-      'about.founder.p1': 'Σύμβουλος ICT & ITS και <strong>Technology Facilitator — αποδεδειγμένος στην πράξη, όχι στα λόγια</strong>. Κάθε σύστημα που έχει σχεδιάσει έχει υλοποιηθεί πλήρως και βρίσκεται σε ενεργή καθημερινή χρήση, εξυπηρετώντας χιλιάδες πολίτες και χρήστες. Βαθιά εξειδίκευση σε ευφυή συστήματα μεταφορών, smart mobility και ψηφιακές υποδομές δημόσιου τομέα.',
-      'about.founder.p2': 'Σταθερός συμμετέχων σε κορυφαία διεθνή συνέδρια, μεταξύ των οποίων το ITS World Congress και το Smart City Expo World Congress — όχι για παρουσία, αλλά για να παραμένει στην αιχμή του τι όντως δουλεύει.',
-      'about.founder.p3': 'Κάθε έργο πρέπει να συνδυάζει λειτουργικότητα με αισθητική. Ο στόχος είναι πάντα η μείωση της έντασης της καθημερινότητας — στις μετακινήσεις, την πρόσβαση, την παροχή υπηρεσιών και τον δημόσιο χώρο.',
+      'about.founder.tag': 'Σημείωμα του ιδρυτή',
+      'about.founder.message': '«Κάθε σύστημα που έχουμε σχεδιάσει λειτουργεί σήμερα, καθημερινά, για χιλιάδες πολίτες. Αυτό είναι το μόνο βιογραφικό που μετράει. Η τεχνολογία, όταν γίνεται σωστά, αφαιρεί άγχος από την καθημερινότητα — δεν προσθέτει ποτέ.»',
+      'about.founder.signature': '<strong>Ιωάννης Χρ. Παναγιωτίδης</strong> — Ιδρυτής & Διευθυντής',
+      'about.founder.p1': 'Η εξειδίκευση της Inframind καλύπτει <strong>ευφυή συστήματα μεταφορών, smart mobility και ψηφιακές υποδομές δημόσιου τομέα</strong> — αποδεδειγμένα στην πράξη, όχι στα λόγια. Κάθε σύστημα που έχει παραδοθεί έχει υλοποιηθεί πλήρως και παραμένει σε ενεργή καθημερινή χρήση.',
+      'about.founder.p2': 'Η πρακτική παραμένει στην αιχμή του τι όντως δουλεύει — σταθερή παρουσία στο ITS World Congress και το Smart City Expo World Congress, όχι για προβολή, αλλά για να επιστρέφει ό,τι είναι πραγματικό.',
       'about.founder.p4': 'Τα αποτελέσματα μιλούν πιο δυνατά από την παρουσία.',
       'services.label': 'Υπηρεσίες',
       'services.title': 'Από τη στρατηγική<br><span class="light">στη λειτουργική παράδοση</span>',
