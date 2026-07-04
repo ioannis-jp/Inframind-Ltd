@@ -1,12 +1,12 @@
 {
   "schema": "v3.0-dual-window",
-  "generated_at_utc": "2026-07-04T01:00:52.564827+00:00",
-  "cyprus_local_time": "2026-07-04T04:00:52+00:00",
+  "generated_at_utc": "2026-07-04T01:05:51.405148+00:00",
+  "cyprus_local_time": "2026-07-04T04:05:51+00:00",
   "window_hours": 6,
   "rt_degraded": false,
   "planned_next_6h": {
-    "trips": 892,
-    "km": 19602.7,
+    "trips": 901,
+    "km": 19703.5,
     "stops": 3785,
     "operators": 5,
     "operators_list": [
@@ -17,16 +17,16 @@
       "ΟΣΥΠΑ"
     ],
     "routes": 309,
-    "vehicles_estimate": 327,
+    "vehicles_estimate": 319,
     "fleet_capacity": 731,
     "source": "GTFS static · MOTION ITS",
-    "window_start_cyprus_seconds": 14452,
-    "window_end_cyprus_seconds": 36052
+    "window_start_cyprus_seconds": 14751,
+    "window_end_cyprus_seconds": 36351
   },
   "observed_last_6h": {
-    "trips": 393,
-    "km": 8574.6,
-    "stops": 2112,
+    "trips": 377,
+    "km": 8207.1,
+    "stops": 2049,
     "operators": 6,
     "operators_list": [
       "INTERCITY",
@@ -36,15 +36,15 @@
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
-    "vehicles_in_motion": 163,
-    "stop_arrivals_last_hour": 37,
-    "stop_arrivals_vehicles_last_hour": 2,
+    "vehicles_in_motion": 158,
+    "stop_arrivals_last_hour": 39,
+    "stop_arrivals_vehicles_last_hour": 3,
     "source": "GTFS-RT · MOTION ITS",
     "probe_count": 74,
-    "first_probe_utc": "2026-07-03T19:00:53.669146+00:00",
-    "last_probe_utc": "2026-07-04T01:00:52.476720+00:00",
+    "first_probe_utc": "2026-07-03T19:05:51.662744+00:00",
+    "last_probe_utc": "2026-07-04T01:05:51.311456+00:00",
     "km_exact_trips": 0,
-    "km_estimated_trips": 392,
+    "km_estimated_trips": 376,
     "km_unmatched_trips": 1
   }
 }
