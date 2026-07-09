@@ -30,6 +30,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          # Always check out the CURRENT tip of main, not github.sha.
+          # For workflow_dispatch, github.sha is resolved when the run is
+          # QUEUED; with 5-min dispatches + the concurrency queue, runs often
+          # start on a stale sha, commit on an old base, and fail to push
+          # (observed 2026-07-09: runs 10955/10964/10968).
+          ref: main
           # Enough history for the self-scheduled deploy check below to see
           # the last "(6h deploy)" commit (~12 data commits/h × 6h + margin).
           fetch-depth: 150
@@ -106,13 +112,17 @@ jobs:
           git commit -m "$COMMIT_MSG"
 
           # Resilient push: retry with rebase if a concurrent run pushed first.
+          # Data commits ALWAYS conflict (every run rewrites the same JSON
+          # files), so plain `pull --rebase` dies on conflicts. `-X theirs`
+          # (in a rebase, "theirs" = OUR replayed commit) keeps our freshly
+          # generated data, which by definition is the newest.
           push_ok=0
           for i in 1 2 3; do
             if git push; then push_ok=1; break; fi
-            echo "push failed (attempt $i), syncing with remote..."
-            git stash -u 2>/dev/null || true
-            git pull --rebase --autostash || true
-            git stash pop 2>/dev/null || true
+            echo "push failed (attempt $i), rebasing onto latest main (keeping our data)..."
+            git rebase --abort 2>/dev/null || true
+            git fetch origin main
+            git rebase -X theirs origin/main || git rebase --abort 2>/dev/null || true
           done
           if [ "$push_ok" != "1" ]; then
             git push || (echo "final push failed" && exit 1)
