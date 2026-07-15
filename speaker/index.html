@@ -529,13 +529,19 @@ function answer(i, instant) {
 
 /* ── presentations ── */
 let decksData = null;
+/* Per-topic access: each deck has its own code (code_hash in decks.json).
+   A code reveals ONLY its own topic. The master code (access.json) reveals all.
+   Unlocked topics accumulate for the session. */
+let masterOk = false;
+let unlocked = new Set();
 function renderDecks() {
   const wrap = document.getElementById('deck-list');
   if (!decksData) return; // not loaded yet — try again after fetch
   if (!decksData.length) { document.getElementById('decks').style.display = 'none'; return; }
   const L = currentLang, dict = I18N[L];
+  const list = masterOk ? decksData : decksData.filter(d => unlocked.has(d.id));
   wrap.innerHTML = '';
-  decksData.forEach((d, i) => {
+  list.forEach((d, i) => {
     const meta = [];
     if (i === 0) meta.push(`<span class="deck-current">${dict['dk.current']}</span>`);
     if (d.event_el || d.event_en) meta.push(`<span>${L === 'el' ? d.event_el : d.event_en}</span>`);
@@ -573,6 +579,15 @@ function renderDecks() {
     a.innerHTML = head + `<span class="deck-open">${dict['dk.open']}</span>`;
     wrap.appendChild(a);
   });
+  // "add another code" — reopen the gate to unlock another topic this session
+  if (!masterOk) {
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.textContent = (currentLang === 'el' ? '+ Άλλος κωδικός' : '+ Another code');
+    more.style.cssText = 'margin-top:28px;background:none;border:0;color:var(--grey);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;cursor:pointer;padding:0;';
+    more.onclick = openGate;
+    wrap.appendChild(more);
+  }
 }
 
 fetch('decks/decks.json')
@@ -583,40 +598,68 @@ fetch('decks/decks.json')
   })
   .catch(() => { document.getElementById('decks').style.display = 'none'; });
 
-/* ── access gate ── */
-let gateHash = null;
+/* ── access gate (per-topic codes + optional master) ── */
+let masterHash = null;
 async function sha256hex(s) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
   return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
-async function gateTry() {
-  const v = document.getElementById('gate-input').value.trim();
-  if (!v || !gateHash) return;
-  if (await sha256hex(v) === gateHash) {
-    try { sessionStorage.setItem('inframind.speaker.ok', '1'); } catch(e) {}
-    document.getElementById('gate').classList.add('gate-off');
-  } else {
-    document.getElementById('gate-err').textContent =
-      currentLang === 'el' ? 'Λανθασμένος κωδικός.' : 'Incorrect code.';
-    document.getElementById('gate-input').value = '';
-  }
+function persistGate() {
+  try {
+    sessionStorage.setItem('inframind.speaker.master', masterOk ? '1' : '0');
+    sessionStorage.setItem('inframind.speaker.decks', JSON.stringify([...unlocked]));
+  } catch(e) {}
 }
-document.getElementById('gate-input').addEventListener('keydown', e => { if (e.key === 'Enter') gateTry(); });
+function closeGate() {
+  const g = document.getElementById('gate');
+  g.classList.add('gate-off');
+  document.getElementById('gate-err').textContent = '';
+  document.getElementById('gate-input').value = '';
+}
+function openGate() {
+  document.getElementById('gate').classList.remove('gate-off');
+  const gi = document.getElementById('gate-input');
+  document.getElementById('gate-err').textContent = '';
+  if (gi) { gi.value = ''; gi.focus(); }
+}
+async function gateTry() {
+  const inp = document.getElementById('gate-input');
+  const v = inp.value.trim();
+  if (!v) return;
+  const h = await sha256hex(v);
+  if (masterHash && h === masterHash) {
+    masterOk = true; persistGate(); closeGate(); renderDecks(); return;
+  }
+  const match = (decksData || []).find(d => d.code_hash === h);
+  if (match) {
+    unlocked.add(match.id); persistGate(); closeGate(); renderDecks(); return;
+  }
+  document.getElementById('gate-err').textContent =
+    currentLang === 'el' ? 'Λανθασμένος κωδικός.' : 'Incorrect code.';
+  inp.value = '';
+}
+document.getElementById('gate-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') gateTry();
+  if (e.key === 'Escape' && (masterOk || unlocked.size)) closeGate();
+});
 
 (function initGate() {
-  let ok = false;
-  try { ok = sessionStorage.getItem('inframind.speaker.ok') === '1'; } catch(e) {}
-  if (ok) return; // already unlocked this session — gate stays off
-  fetch('access.json')
-    .then(r => r.json())
-    .then(j => {
-      if (j && j.hash) {
-        gateHash = j.hash;
-        document.getElementById('gate').classList.remove('gate-off');
-        document.getElementById('gate-input').focus();
-      }
-    })
-    .catch(() => {}); // fail-open: αν λείπει το access.json, η σελίδα δεν κλειδώνει
+  try {
+    masterOk = sessionStorage.getItem('inframind.speaker.master') === '1';
+    (JSON.parse(sessionStorage.getItem('inframind.speaker.decks') || '[]') || [])
+      .forEach(id => unlocked.add(id));
+  } catch(e) {}
+  // Load the optional master hash (reveals all topics). Absence just means
+  // no master — per-topic codes still work.
+  fetch('access.json').then(r => r.json())
+    .then(j => { if (j && j.hash) masterHash = j.hash; })
+    .catch(() => {});
+  if (masterOk || unlocked.size) {
+    document.getElementById('gate').classList.add('gate-off');
+  } else {
+    document.getElementById('gate').classList.remove('gate-off');
+    const gi = document.getElementById('gate-input'); if (gi) gi.focus();
+  }
 })();
 
 /* ── reveals ── */
