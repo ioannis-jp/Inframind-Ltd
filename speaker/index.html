@@ -536,21 +536,41 @@ function renderDecks() {
   const L = currentLang, dict = I18N[L];
   wrap.innerHTML = '';
   decksData.forEach((d, i) => {
-    const a = document.createElement('a');
-    a.className = 'deck-item';
-    a.href = d.file;
-    a.target = '_blank';
-    a.rel = 'noopener';
     const meta = [];
     if (i === 0) meta.push(`<span class="deck-current">${dict['dk.current']}</span>`);
     if (d.event_el || d.event_en) meta.push(`<span>${L === 'el' ? d.event_el : d.event_en}</span>`);
     if (d.pages) meta.push(`<span>${d.pages} ${dict['dk.pages']}</span>`);
     if (d.lang) meta.push(`<span>${d.lang}</span>`);
-    a.innerHTML = `
+    if (d.locked) meta.push(`<span>${L === 'el' ? '🔒 Κλειδωμένο' : '🔒 Locked'}</span>`);
+    const head = `
       <p class="deck-meta">${meta.join('')}</p>
       <p class="deck-title">${L === 'el' ? d.title_el : d.title_en}</p>
-      <p class="deck-sub">${L === 'el' ? (d.subtitle_el || '') : (d.subtitle_en || '')}</p>
-      <span class="deck-open">${dict['dk.open']}</span>`;
+      <p class="deck-sub">${L === 'el' ? (d.subtitle_el || '') : (d.subtitle_en || '')}</p>`;
+
+    // Dual-language deck: render two explicit open-links (EL / EN).
+    if (d.file_el && d.file_en) {
+      const item = document.createElement('div');
+      item.className = 'deck-item';
+      const lockNote = d.locked
+        ? `<p class="deck-sub" style="margin-top:10px;font-size:12.5px;">${L === 'el'
+            ? 'Προστατευμένο PDF — απαιτείται κωδικός για το άνοιγμα.'
+            : 'Protected PDF — a password is required to open.'}</p>`
+        : '';
+      item.innerHTML = head + lockNote +
+        `<div style="margin-top:16px;display:flex;gap:28px;flex-wrap:wrap;">
+           <a class="deck-open" style="margin-top:0;" href="${d.file_el}" target="_blank" rel="noopener">Ελληνικά (PDF)</a>
+           <a class="deck-open" style="margin-top:0;" href="${d.file_en}" target="_blank" rel="noopener">English (PDF)</a>
+         </div>`;
+      wrap.appendChild(item);
+      return;
+    }
+
+    const a = document.createElement('a');
+    a.className = 'deck-item';
+    a.href = d.file;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = head + `<span class="deck-open">${dict['dk.open']}</span>`;
     wrap.appendChild(a);
   });
 }
