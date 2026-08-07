@@ -64,7 +64,10 @@ jobs:
           git config user.name  "inframind-bot"
           git config user.email "bot@inframind.eu"
           # Stage ALL data/ changes incl. new files (trip_distances, today_schedule, etc.)
-          git add -A data/ 2>/dev/null || true
+          # gtfs/ is staged too: the refreshed static bundles MUST be committed,
+          # otherwise every 5-min run re-downloads all 7 zips from the MOTION
+          # open-data portal and hammers it ~2000 times a day.
+          git add -A data/ gtfs/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0

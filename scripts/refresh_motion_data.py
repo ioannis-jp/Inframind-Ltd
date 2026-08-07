@@ -28,6 +28,7 @@ import json
 import math
 import os
 import sys
+import time
 import zipfile
 import csv
 import statistics
@@ -47,6 +48,7 @@ TRIP_DIST_PATH = DATA_DIR / "_trip_distances.json"
 TODAY_SCHED_PATH = DATA_DIR / "_today_schedule.json"
 ROLLING_PATH = DATA_DIR / "_rolling_snapshots.json"
 VEHICLE_QA_PATH = DATA_DIR / "_vehicle_qa.json"
+RT_OUTAGE_PATH = DATA_DIR / "_rt_outage.json"
 MOTION_STATS_PATH = DATA_DIR / "motion-stats.json"
 PLANNED_PATH = DATA_DIR / "planned.json"
 
@@ -60,12 +62,26 @@ WINDOW_SECONDS = WINDOW_HOURS * 3600
 PLANNED_REGEN = os.environ.get("PLANNED_REGEN", "auto")
 TRIP_DIST_STALE_DAYS = 7
 GTFS_STATIC_STALE_DAYS = int(os.environ.get("GTFS_STATIC_STALE_DAYS", "1"))
+GTFS_DOWNLOAD_TIMEOUT_S = int(os.environ.get("GTFS_DOWNLOAD_TIMEOUT_S", "45"))
 # A live RT fetch failure (e.g. MOTION returns HTTP 500) is treated as a
 # *transient* blip — non-fatal — only while the rolling buffer still holds a
 # probe newer than this many minutes. Past that, the data is going stale and
 # the run is failed on purpose so the failure surfaces (email + skipped commit)
 # and the operator keeps control. Raise to tolerate longer MOTION outages.
 RT_STALE_MINUTES = int(os.environ.get("RT_STALE_MINUTES", "30"))
+# Live-fetch resilience (added 2026-08-06 after a MOTION outage from ~16:36 UTC
+# made every 5-min run exit 1 → ~12 failure emails/hour and a frozen website).
+#   • RT_FETCH_ATTEMPTS   in-run retries before the fetch counts as failed.
+#   • RT_HARD_FAIL_MINUTES buffer age past which the run really is failed.
+#     Between RT_STALE_MINUTES and this, we degrade (commit + rt_degraded flag)
+#     instead of failing, so the site keeps saying honestly how old its data is.
+#   • RT_ALERT_EVERY_MINUTES  when we DO fail, fail at most this often, so a
+#     long MOTION outage produces one alert per hour, not one every 5 minutes.
+RT_FETCH_ATTEMPTS = int(os.environ.get("RT_FETCH_ATTEMPTS", "3"))
+RT_FETCH_BACKOFF_S = float(os.environ.get("RT_FETCH_BACKOFF_S", "5"))
+RT_FETCH_TIMEOUT_S = int(os.environ.get("RT_FETCH_TIMEOUT_S", "30"))
+RT_HARD_FAIL_MINUTES = int(os.environ.get("RT_HARD_FAIL_MINUTES", "120"))
+RT_ALERT_EVERY_MINUTES = int(os.environ.get("RT_ALERT_EVERY_MINUTES", "60"))
 GTFS_ZIP_URL_TMPL = (
     "https://motionbuscard.org.cy/opendata/downloadfile?"
     "file=GTFS%5C{ag}_google_transit.zip&rel=True"
@@ -114,10 +130,50 @@ def parse_gtfs_time_to_seconds(t):
 
 # ─── Fresh GTFS static download ────────────────────────────────────────────
 def gtfs_zip_age_days(zip_path):
+    """Age of a GTFS static bundle, measured from the zip's INTERNAL build
+    timestamp — never from the filesystem mtime.
+
+    Why: actions/checkout writes every file with mtime = checkout time, so the
+    old mtime-based check always computed age ≈ 0 and the daily refresh below
+    never fired on CI. Result (found 2026-08-06): the bundles were frozen at
+    2026-06-02, ΕΜΕΛ's calendar_dates ran out on 2026-06-11 and INTERCITY's on
+    2026-07-31, so both silently disappeared from planned_next_6h (4 operators
+    planned vs 7 observed). The zip's internal member timestamps survive
+    checkout, so they are the honest measure of how old the data is.
+    """
     if not zip_path.exists():
         return None
-    age_s = (datetime.now().timestamp() - zip_path.stat().st_mtime)
-    return age_s / 86400.0
+    try:
+        with zipfile.ZipFile(zip_path) as z:
+            newest = max(i.date_time for i in z.infolist())
+        built = datetime(*newest)
+    except Exception:
+        # Unreadable/corrupt zip → treat as stale so it gets re-downloaded.
+        return None
+    return (datetime.now() - built).total_seconds() / 86400.0
+
+
+def gtfs_calendar_expired(zip_path):
+    """True when the bundle's calendar_dates no longer covers today.
+
+    A second, independent trigger: even inside the age window, an expired
+    calendar means zero planned trips for that agency, which must not persist.
+    """
+    try:
+        with zipfile.ZipFile(zip_path) as z:
+            if "calendar_dates.txt" not in z.namelist():
+                return False
+            with z.open("calendar_dates.txt") as f:
+                dates = [
+                    row.get("date", "")
+                    for row in csv.DictReader(
+                        (line.decode("utf-8-sig") for line in f)
+                    )
+                ]
+        dates = [d for d in dates if d]
+        return bool(dates) and max(dates) < gtfs_date_str(now_cyprus().date())
+    except Exception:
+        return False
 
 
 def refresh_gtfs_static_if_stale():
@@ -130,12 +186,18 @@ def refresh_gtfs_static_if_stale():
     for ag in AGENCY_IDS:
         zip_path = GTFS_STATIC_DIR / f"{ag}_google_transit.zip"
         age = gtfs_zip_age_days(zip_path)
-        if age is not None and age < GTFS_STATIC_STALE_DAYS:
+        expired = zip_path.exists() and gtfs_calendar_expired(zip_path)
+        if age is not None and age < GTFS_STATIC_STALE_DAYS and not expired:
             continue
+        if expired:
+            print(
+                f"[gtfs-static] agency {ag}: calendar_dates expired — forcing refresh",
+                file=sys.stderr,
+            )
         url = GTFS_ZIP_URL_TMPL.format(ag=ag)
         tmp = zip_path.with_suffix(".zip.new")
         try:
-            r = requests.get(url, timeout=60, stream=True)
+            r = requests.get(url, timeout=GTFS_DOWNLOAD_TIMEOUT_S, stream=True)
             r.raise_for_status()
             with tmp.open("wb") as fh:
                 for chunk in r.iter_content(chunk_size=65536):
@@ -148,7 +210,13 @@ def refresh_gtfs_static_if_stale():
                     raise ValueError("trips.txt missing from downloaded zip")
             tmp.replace(zip_path)
             refreshed.append(ag)
-            print(f"[gtfs-static] refreshed agency {ag} ({zip_path.stat().st_size:,} bytes)")
+            new_age = gtfs_zip_age_days(zip_path)
+            print(
+                f"[gtfs-static] refreshed agency {ag} "
+                f"({zip_path.stat().st_size:,} bytes, built "
+                f"{new_age:.1f} days ago)" if new_age is not None else
+                f"[gtfs-static] refreshed agency {ag} ({zip_path.stat().st_size:,} bytes)"
+            )
         except Exception as e:
             print(f"[gtfs-static] skip agency {ag}: {e}", file=sys.stderr)
             try:
@@ -472,12 +540,31 @@ def load_today_schedule():
 
 # ─── GTFS-RT feed ──────────────────────────────────────────────────────────
 def fetch_feed():
+    """Fetch the live GTFS-RT feed, retrying a few times before giving up.
+
+    MOTION drops single requests (HTTP 500 / connection reset) fairly often;
+    without retries one blip used to sink the whole run.
+    """
     print(f"[fetch] {FEED_URL}")
-    r = requests.get(FEED_URL, timeout=30)
-    r.raise_for_status()
-    feed = gtfs_realtime_pb2.FeedMessage()
-    feed.ParseFromString(r.content)
-    return feed
+    last_err = None
+    for attempt in range(1, RT_FETCH_ATTEMPTS + 1):
+        try:
+            r = requests.get(FEED_URL, timeout=RT_FETCH_TIMEOUT_S)
+            r.raise_for_status()
+            feed = gtfs_realtime_pb2.FeedMessage()
+            feed.ParseFromString(r.content)
+            if attempt > 1:
+                print(f"[fetch] recovered on attempt {attempt}")
+            return feed
+        except Exception as e:  # noqa: BLE001 — any failure is retryable here
+            last_err = e
+            print(
+                f"[fetch] attempt {attempt}/{RT_FETCH_ATTEMPTS} failed: {e}",
+                file=sys.stderr,
+            )
+            if attempt < RT_FETCH_ATTEMPTS:
+                time.sleep(RT_FETCH_BACKOFF_S * attempt)
+    raise last_err
 
 
 def snapshot_from_feed(feed):
@@ -849,6 +936,68 @@ def write_motion_stats(planned, observed, rt_degraded=False):
     )
 
 
+# ─── RT outage state (alert throttling) ────────────────────────────────────
+def record_outage(err, buffer_age_min):
+    """Track an ongoing MOTION outage in data/_rt_outage.json.
+
+    Returns the state dict plus `alert_now`: True when enough time has passed
+    since the last alert that this run should fail loudly again.
+    """
+    now = now_utc()
+    state = {}
+    if RT_OUTAGE_PATH.exists():
+        try:
+            state = json.loads(RT_OUTAGE_PATH.read_text())
+        except Exception:
+            state = {}
+
+    since = state.get("since_utc") or now.isoformat()
+    failed_runs = int(state.get("failed_runs", 0)) + 1
+
+    last_alert = state.get("last_alert_utc")
+    alert_now = True
+    if last_alert:
+        try:
+            mins = (now - datetime.fromisoformat(last_alert)).total_seconds() / 60.0
+            alert_now = mins >= RT_ALERT_EVERY_MINUTES
+        except Exception:
+            alert_now = True
+
+    state = {
+        "active": True,
+        "since_utc": since,
+        "last_seen_utc": now.isoformat(),
+        "failed_runs": failed_runs,
+        "last_error": str(err)[:500],
+        "buffer_age_min": round(buffer_age_min, 1) if buffer_age_min else None,
+        "last_alert_utc": now.isoformat() if alert_now else last_alert,
+    }
+    RT_OUTAGE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    state["alert_now"] = alert_now
+    return state
+
+
+def clear_outage():
+    """Called after a successful live fetch — closes any open outage record."""
+    if not RT_OUTAGE_PATH.exists():
+        return
+    try:
+        state = json.loads(RT_OUTAGE_PATH.read_text())
+    except Exception:
+        state = {}
+    if not state.get("active"):
+        return
+    state.update({
+        "active": False,
+        "recovered_at_utc": now_utc().isoformat(),
+    })
+    RT_OUTAGE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    print(
+        f"[rt-outage] MOTION recovered — outage started {state.get('since_utc')}, "
+        f"{state.get('failed_runs')} failed probes."
+    )
+
+
 # ─── Main ──────────────────────────────────────────────────────────────────
 def main():
     errors = []
@@ -887,6 +1036,7 @@ def main():
         feed = fetch_feed()
         snap = snapshot_from_feed(feed)
         buf = update_rolling(snap)
+        clear_outage()
     except Exception as e:
         # Live RT fetch failed (e.g. MOTION HTTP 500). This is non-fatal ONLY
         # if the rolling buffer still holds a recent probe — otherwise the data
@@ -905,27 +1055,52 @@ def main():
             except Exception:
                 buffer_age_min = None
 
+        age_txt = (
+            f"{buffer_age_min:.1f} min old" if buffer_age_min is not None
+            else "no buffer on disk"
+        )
+
         if buffer_age_min is not None and buffer_age_min <= RT_STALE_MINUTES:
             # Transient blip — we still have fresh data. Warn, don't fail.
             rt_degraded = True
             print(
                 f"[WARN] RT fetch failed ({e}) — serving buffered data, "
-                f"last probe {buffer_age_min:.1f} min old "
+                f"last probe {age_txt} "
                 f"(<= {RT_STALE_MINUTES} min threshold). Commit will proceed.",
                 file=sys.stderr,
             )
         else:
-            # No buffer, or buffer too old: real staleness — fail the run.
-            age_txt = (
-                f"{buffer_age_min:.1f} min old" if buffer_age_min is not None
-                else "no buffer on disk"
+            # MOTION is properly down. Two things must stay true:
+            #   1. the website must not silently show hours-old data as live
+            #      → rt_degraded=True, and the observed panel keeps its real
+            #        last_probe_utc, so the age is visible to visitors;
+            #   2. the operator must be told — but ONCE an hour, not every
+            #      5 minutes, otherwise the alert is just noise and real
+            #      pipeline bugs drown in it.
+            rt_degraded = True
+            outage = record_outage(str(e), buffer_age_min)
+            hard = (
+                buffer_age_min is None
+                or buffer_age_min > RT_HARD_FAIL_MINUTES
             )
-            print(
-                f"[ERROR] RT fetch failed ({e}) and buffer is stale "
-                f"({age_txt} > {RT_STALE_MINUTES} min threshold). Failing run.",
-                file=sys.stderr,
-            )
-            errors.append(("rt_fetch", str(e)))
+            if hard and outage["alert_now"]:
+                print(
+                    f"[ERROR] RT fetch failed ({e}); buffer {age_txt} "
+                    f"(> {RT_HARD_FAIL_MINUTES} min). MOTION unreachable since "
+                    f"{outage['since_utc']} ({outage['failed_runs']} runs). "
+                    f"Failing this run to raise an alert; next alert in "
+                    f"{RT_ALERT_EVERY_MINUTES} min if the outage continues.",
+                    file=sys.stderr,
+                )
+                errors.append(("rt_fetch", str(e)))
+            else:
+                print(
+                    f"[WARN] RT fetch failed ({e}); buffer {age_txt}. "
+                    f"MOTION unreachable since {outage['since_utc']} "
+                    f"({outage['failed_runs']} runs) — publishing degraded "
+                    f"data, alert throttled.",
+                    file=sys.stderr,
+                )
 
     # 4. Compute both windows and write dual-output
     try:
