@@ -1,31 +1,13 @@
 {
   "schema": "v3.0-dual-window",
-  "generated_at_utc": "2026-08-16T20:55:49.822469+00:00",
-  "cyprus_local_time": "2026-08-16T23:55:49+00:00",
+  "generated_at_utc": "2026-08-16T21:00:50.719225+00:00",
+  "cyprus_local_time": "2026-08-17T00:00:50+00:00",
   "window_hours": 6,
   "rt_degraded": false,
   "planned_next_6h": {
-    "trips": 49,
-    "km": 1036.6,
-    "stops": 447,
-    "operators": 4,
-    "operators_list": [
-      "LPT",
-      "ΕΜΕΛ",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "routes": 19,
-    "vehicles_estimate": 39,
-    "fleet_capacity": 731,
-    "source": "GTFS static · MOTION ITS",
-    "window_start_cyprus_seconds": 86149,
-    "window_end_cyprus_seconds": 107749
-  },
-  "observed_last_6h": {
-    "trips": 993,
-    "km": 23252.4,
-    "stops": 3413,
+    "trips": 306,
+    "km": 7274.7,
+    "stops": 3512,
     "operators": 6,
     "operators_list": [
       "INTERCITY",
@@ -35,14 +17,34 @@
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
-    "vehicles_in_motion": 249,
-    "stop_arrivals_last_hour": 290,
+    "routes": 222,
+    "vehicles_estimate": 298,
+    "fleet_capacity": 731,
+    "source": "GTFS static · MOTION ITS",
+    "window_start_cyprus_seconds": 50,
+    "window_end_cyprus_seconds": 21650
+  },
+  "observed_last_6h": {
+    "trips": 949,
+    "km": 22355.0,
+    "stops": 3291,
+    "operators": 6,
+    "operators_list": [
+      "INTERCITY",
+      "LPT",
+      "NPT",
+      "ΕΜΕΛ",
+      "ΟΣΕΑ",
+      "ΟΣΥΠΑ"
+    ],
+    "vehicles_in_motion": 240,
+    "stop_arrivals_last_hour": 271,
     "stop_arrivals_vehicles_last_hour": 34,
     "source": "GTFS-RT · MOTION ITS",
-    "probe_count": 74,
-    "first_probe_utc": "2026-08-16T14:55:51.242646+00:00",
-    "last_probe_utc": "2026-08-16T20:55:49.695904+00:00",
-    "km_exact_trips": 993,
+    "probe_count": 73,
+    "first_probe_utc": "2026-08-16T15:05:48.557786+00:00",
+    "last_probe_utc": "2026-08-16T21:00:50.597186+00:00",
+    "km_exact_trips": 949,
     "km_estimated_trips": 0,
     "km_unmatched_trips": 0
   }
