@@ -1,20 +1,30 @@
 {
-  "schema": "v1.0-verification-planned",
-  "verified_at_utc": "2026-06-01T07:58:56.403984+00:00",
-  "date": "2026-06-01",
-  "trips_count": 5715,
-  "operators_count": 7,
-  "km_raw_haversine": 117119.6,
-  "km_corrected_road_estimate": 125318.0,
-  "km_published": 125318.0,
-  "haversine_to_road_factor": 1.07,
-  "baseline_km_median_last7": 78273.3,
-  "baseline_sample_size": 1,
-  "issues": [
-    "DELTA_VS_BASELINE>20%:today=117120_baseline=78273"
-  ],
-  "corrections_applied": [
-    "haversine_to_road×1.07"
-  ],
-  "verdict": "WARN"
+ "schema": "v2.0-verification-planned",
+ "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
+ "verified_at_utc": "2026-08-24T16:41:04.251907+00:00",
+ "date": "2026-08-24",
+ "trips_count": 5779,
+ "operators_count": 7,
+ "operators_list": [
+  "INTERCITY",
+  "LPT",
+  "NPT",
+  "PAME",
+  "ΕΜΕΛ",
+  "ΟΣΕΑ",
+  "ΟΣΥΠΑ"
+ ],
+ "km_raw_haversine": 119001.8,
+ "km_corrected_road_estimate": 127331.9,
+ "km_published": 127331.9,
+ "haversine_to_road_factor": 1.07,
+ "baseline_km_median_last7": null,
+ "baseline_sample_size": 0,
+ "issues": [
+  "NO_BASELINE_YET:history_reset_2026-08-24"
+ ],
+ "corrections_applied": [
+  "haversine_to_road×1.07"
+ ],
+ "verdict": "BASELINE_BUILDING"
 }

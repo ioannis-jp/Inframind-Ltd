@@ -1,0 +1,108 @@
+{
+  "$schema_version": "1.0",
+  "$producer": "INFRAMIND LTD · verify_cyprus_wide.py",
+  "$contact": "ipanagiotidis@me.com",
+  "generated_at": "2026-05-29T14:06:24",
+  "report_date": "2026-05-29",
+  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
+  "feed_health": {
+    "reachable": true,
+    "bytes": 484702,
+    "entities": 959,
+    "download_ms": 470,
+    "parse_ms": 3,
+    "snapshot_at": "14:06:24"
+  },
+  "coverage": {
+    "stops_in_static_catalog": 5314,
+    "stops_with_live_updates": 3882,
+    "stops_idle_or_off_service": 1432,
+    "stops_orphan_in_feed_not_in_catalog": 0,
+    "coverage_pct": 73.1,
+    "trip_updates": 609,
+    "vehicle_positions": 350,
+    "unique_routes_active": 327,
+    "unique_vehicles_active": 373
+  },
+  "per_agency": {
+    "10": {
+      "agency_name": "LPT",
+      "region": "Λάρνακα",
+      "stops_total": 1041,
+      "stops_live": 740,
+      "stops_idle": 301,
+      "coverage_pct": 71.1,
+      "routes_active": 54
+    },
+    "9": {
+      "agency_name": "NPT",
+      "region": "Λευκωσία",
+      "stops_total": 1784,
+      "stops_live": 1545,
+      "stops_idle": 239,
+      "coverage_pct": 86.6,
+      "routes_active": 111
+    },
+    "6": {
+      "agency_name": "ΕΜΕΛ",
+      "region": "Λεμεσός",
+      "stops_total": 1403,
+      "stops_live": 944,
+      "stops_idle": 459,
+      "coverage_pct": 67.3,
+      "routes_active": 73
+    },
+    "4": {
+      "agency_name": "ΟΣΕΑ",
+      "region": "Αμμόχωστος",
+      "stops_total": 439,
+      "stops_live": 355,
+      "stops_idle": 84,
+      "coverage_pct": 80.9,
+      "routes_active": 20
+    },
+    "5": {
+      "agency_name": "INTERCITY",
+      "region": "Διαπεριφερειακά",
+      "stops_total": 119,
+      "stops_live": 114,
+      "stops_idle": 5,
+      "coverage_pct": 95.8,
+      "routes_active": 22
+    },
+    "11": {
+      "agency_name": "PAME EXPRESS",
+      "region": "Express",
+      "stops_total": 23,
+      "stops_live": 23,
+      "stops_idle": 0,
+      "coverage_pct": 100.0,
+      "routes_active": 2
+    },
+    "2": {
+      "agency_name": "ΟΣΥΠΑ",
+      "region": "Πάφος",
+      "stops_total": 875,
+      "stops_live": 486,
+      "stops_idle": 389,
+      "coverage_pct": 55.5,
+      "routes_active": 45
+    }
+  },
+  "anomalies": {
+    "orphan_stops_in_feed": {
+      "count": 0,
+      "description": "Stops appearing in GTFS-RT feed but missing from static GTFS catalog. Possible new stops not yet propagated to static bundles.",
+      "sample_stop_ids": []
+    }
+  },
+  "notes": {
+    "methodology": "Single feed probe + in-memory aggregation. No per-stop verification calls.",
+    "frequency": "1x/day (recommended off-peak: avoids load on MOTION endpoint)",
+    "use_cases": [
+      "Website public stats",
+      "MOTION feed health monitoring",
+      "Operator coverage SLA tracking"
+    ]
+  }
+}

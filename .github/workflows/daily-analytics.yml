@@ -1,0 +1,66 @@
+name: Daily analytics
+
+on:
+  schedule:
+    # Hourly at :27 — offset from the refresh-motion cadence. The script
+    # accumulates today's trips from the 6h rolling buffer, so hourly runs
+    # leave no gaps. The first run after Cyprus midnight finalizes yesterday
+    # into daily_history.json automatically.
+    - cron: "27 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-analytics
+  cancel-in-progress: false
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Current tip of main (same rationale as refresh-motion.yml —
+          # github.sha can be stale by the time the run starts).
+          ref: main
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run daily analytics
+        # stdlib only — no pip install needed
+        run: python scripts/daily_analytics.py
+
+      - name: Commit and push if changed
+        run: |
+          set -e
+          git config user.name  "inframind-bot"
+          git config user.email "bot@inframind.eu"
+          git add -A data/daily_executed.json data/daily_history.json data/verification_planned.json data/motion-feed-health.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No analytics changes — nothing to commit."
+            exit 0
+          fi
+          ts=$(date -u +"%Y-%m-%d %H:%M UTC")
+          git commit -m "chore(analytics): daily planned-vs-executed - $ts [skip ci]"
+
+          # Resilient push — same pattern as refresh-motion.yml. The 5-min
+          # data commits land constantly, so plain push often loses the race.
+          push_ok=0
+          for i in 1 2 3; do
+            if git push; then push_ok=1; break; fi
+            echo "push failed (attempt $i), rebasing onto latest main (keeping our data)..."
+            git rebase --abort 2>/dev/null || true
+            git fetch origin main
+            git rebase -X theirs origin/main || git rebase --abort 2>/dev/null || true
+          done
+          if [ "$push_ok" != "1" ]; then
+            git push || (echo "final push failed" && exit 1)
+          fi
