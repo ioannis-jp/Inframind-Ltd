@@ -3,21 +3,21 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-08-24T21:48:45.518599+00:00",
+ "generated_at": "2026-08-24T22:48:21.657422+00:00",
  "report_date": "2026-08-25",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 11,
-  "last_probe_utc": "2026-08-24T21:45:21.449966+00:00",
-  "unique_trips_today": 83,
+  "probe_count_today": 23,
+  "last_probe_utc": "2026-08-24T22:45:16.333255+00:00",
+  "unique_trips_today": 87,
   "unique_vehicles_today": 51,
   "unique_routes_today": 36
  },
  "coverage": {
   "stops_in_static_catalog": 5327,
-  "stops_with_live_updates": 573,
-  "stops_idle_or_off_service": 4754,
+  "stops_with_live_updates": 574,
+  "stops_idle_or_off_service": 4753,
   "stops_orphan_in_feed_not_in_catalog": 0,
   "coverage_pct": 10.8
  },
@@ -34,9 +34,9 @@
    "agency_name": "ΟΣΕΑ",
    "region": "Αμμόχωστος",
    "stops_total": 445,
-   "stops_live": 280,
-   "stops_idle": 165,
-   "coverage_pct": 62.9
+   "stops_live": 281,
+   "stops_idle": 164,
+   "coverage_pct": 63.1
   },
   "5": {
    "agency_name": "INTERCITY",
