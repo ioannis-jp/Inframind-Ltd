@@ -3,32 +3,32 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-08-25T09:55:25.663793+00:00",
+ "generated_at": "2026-08-25T10:54:58.839580+00:00",
  "report_date": "2026-08-25",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
   "probe_count_today": 74,
-  "last_probe_utc": "2026-08-25T09:55:17.781367+00:00",
-  "unique_trips_today": 2635,
-  "unique_vehicles_today": 461,
-  "unique_routes_today": 516
+  "last_probe_utc": "2026-08-25T10:50:16.066065+00:00",
+  "unique_trips_today": 2657,
+  "unique_vehicles_today": 469,
+  "unique_routes_today": 502
  },
  "coverage": {
   "stops_in_static_catalog": 5327,
-  "stops_with_live_updates": 5147,
-  "stops_idle_or_off_service": 180,
+  "stops_with_live_updates": 5137,
+  "stops_idle_or_off_service": 190,
   "stops_orphan_in_feed_not_in_catalog": 0,
-  "coverage_pct": 96.6
+  "coverage_pct": 96.4
  },
  "per_agency": {
   "2": {
    "agency_name": "ΟΣΥΠΑ",
    "region": "Πάφος",
    "stops_total": 889,
-   "stops_live": 855,
-   "stops_idle": 34,
-   "coverage_pct": 96.2
+   "stops_live": 844,
+   "stops_idle": 45,
+   "coverage_pct": 94.9
   },
   "4": {
    "agency_name": "ΟΣΕΑ",
@@ -50,17 +50,17 @@
    "agency_name": "ΕΜΕΛ",
    "region": "Λεμεσός",
    "stops_total": 1403,
-   "stops_live": 1317,
-   "stops_idle": 86,
-   "coverage_pct": 93.9
+   "stops_live": 1320,
+   "stops_idle": 83,
+   "coverage_pct": 94.1
   },
   "9": {
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 1768,
-   "stops_idle": 10,
-   "coverage_pct": 99.4
+   "stops_live": 1766,
+   "stops_idle": 12,
+   "coverage_pct": 99.3
   },
   "10": {
    "agency_name": "LPT",
