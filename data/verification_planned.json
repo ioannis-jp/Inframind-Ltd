@@ -1,9 +1,9 @@
 {
  "schema": "v2.0-verification-planned",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "verified_at_utc": "2026-08-29T02:17:55.608140+00:00",
+ "verified_at_utc": "2026-08-29T09:09:51.419161+00:00",
  "date": "2026-08-29",
- "trips_count": 4042,
+ "trips_count": 4036,
  "operators_count": 6,
  "operators_list": [
   "INTERCITY",
@@ -13,14 +13,14 @@
   "ΟΣΕΑ",
   "ΟΣΥΠΑ"
  ],
- "km_raw_haversine": 87187.3,
- "km_corrected_road_estimate": 93290.4,
- "km_published": 93290.4,
+ "km_raw_haversine": 86834.2,
+ "km_corrected_road_estimate": 92912.6,
+ "km_published": 92912.6,
  "haversine_to_road_factor": 1.07,
  "baseline_km_median_last7": 119016.2,
  "baseline_sample_size": 5,
  "issues": [
-  "DELTA_VS_BASELINE>20%:today=87187_baseline=119016"
+  "DELTA_VS_BASELINE>20%:today=86834_baseline=119016"
  ],
  "corrections_applied": [
   "haversine_to_road×1.07"
