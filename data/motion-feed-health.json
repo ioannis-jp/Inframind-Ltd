@@ -3,21 +3,21 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-08-29T09:09:51.465731+00:00",
+ "generated_at": "2026-08-29T14:33:53.928586+00:00",
  "report_date": "2026-08-29",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 72,
-  "last_probe_utc": "2026-08-29T09:05:20.119461+00:00",
-  "unique_trips_today": 1731,
-  "unique_vehicles_today": 307,
-  "unique_routes_today": 422
+  "probe_count_today": 73,
+  "last_probe_utc": "2026-08-29T14:30:24.863859+00:00",
+  "unique_trips_today": 1845,
+  "unique_vehicles_today": 386,
+  "unique_routes_today": 416
  },
  "coverage": {
   "stops_in_static_catalog": 5329,
-  "stops_with_live_updates": 4881,
-  "stops_idle_or_off_service": 448,
+  "stops_with_live_updates": 4884,
+  "stops_idle_or_off_service": 445,
   "stops_orphan_in_feed_not_in_catalog": 0,
   "coverage_pct": 91.6
  },
@@ -26,9 +26,9 @@
    "agency_name": "ΟΣΥΠΑ",
    "region": "Πάφος",
    "stops_total": 889,
-   "stops_live": 767,
-   "stops_idle": 122,
-   "coverage_pct": 86.3
+   "stops_live": 775,
+   "stops_idle": 114,
+   "coverage_pct": 87.2
   },
   "4": {
    "agency_name": "ΟΣΕΑ",
@@ -42,25 +42,25 @@
    "agency_name": "INTERCITY",
    "region": "Διαπεριφερειακά",
    "stops_total": 123,
-   "stops_live": 120,
-   "stops_idle": 3,
-   "coverage_pct": 97.6
+   "stops_live": 121,
+   "stops_idle": 2,
+   "coverage_pct": 98.4
   },
   "6": {
    "agency_name": "ΕΜΕΛ",
    "region": "Λεμεσός",
    "stops_total": 1403,
-   "stops_live": 1299,
-   "stops_idle": 104,
-   "coverage_pct": 92.6
+   "stops_live": 1292,
+   "stops_idle": 111,
+   "coverage_pct": 92.1
   },
   "9": {
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 1617,
-   "stops_idle": 161,
-   "coverage_pct": 90.9
+   "stops_live": 1619,
+   "stops_idle": 159,
+   "coverage_pct": 91.1
   },
   "10": {
    "agency_name": "LPT",
