@@ -1,28 +1,29 @@
 {
  "schema": "v2.0-verification-planned",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "verified_at_utc": "2026-09-04T20:50:31.022839+00:00",
- "date": "2026-09-04",
- "trips_count": 5803,
- "operators_count": 7,
+ "verified_at_utc": "2026-09-04T23:04:46.458069+00:00",
+ "date": "2026-09-05",
+ "trips_count": 4005,
+ "operators_count": 6,
  "operators_list": [
   "INTERCITY",
   "LPT",
   "NPT",
-  "PAME",
   "ΕΜΕΛ",
   "ΟΣΕΑ",
   "ΟΣΥΠΑ"
  ],
- "km_raw_haversine": 119570.0,
- "km_corrected_road_estimate": 127939.9,
- "km_published": 127939.9,
+ "km_raw_haversine": 86344.1,
+ "km_corrected_road_estimate": 92388.2,
+ "km_published": 92388.2,
  "haversine_to_road_factor": 1.07,
  "baseline_km_median_last7": 118247.1,
  "baseline_sample_size": 7,
- "issues": [],
+ "issues": [
+  "DELTA_VS_BASELINE>20%:today=86344_baseline=118247"
+ ],
  "corrections_applied": [
   "haversine_to_road×1.07"
  ],
- "verdict": "OK"
+ "verdict": "WARN"
 }
