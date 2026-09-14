@@ -2,7 +2,37 @@
 // Accepts small JSON events from pages on inframind.eu and records them
 // in the same audit store used by the access gate.
 
-import { getStore } from "@netlify/blobs";
+// ── Netlify Blobs over plain fetch (no npm import: the edge bundler
+// cannot resolve npm modules). Every call is best-effort; failures are
+// swallowed by the caller so access is never blocked by the log store.
+function blobCtx(): any {
+  const raw = Netlify.env.get("NETLIFY_BLOBS_CONTEXT");
+  if (!raw) return null;
+  try { return JSON.parse(atob(raw)); } catch { return null; }
+}
+function blobUrl(c: any, store: string, key: string) {
+  const base = c.uncachedEdgeURL || c.edgeURL;
+  if (!base || !c.siteID) return null;
+  return `${base}/${c.siteID}/site:${store}/${encodeURIComponent(key)}`;
+}
+async function blobGet(store: string, key: string): Promise<any> {
+  const c = blobCtx(); if (!c) return null;
+  const u = blobUrl(c, store, key); if (!u) return null;
+  const r = await fetch(u, { headers: { authorization: `Bearer ${c.token}` } });
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error("blob get " + r.status);
+  return await r.json();
+}
+async function blobSet(store: string, key: string, value: unknown): Promise<void> {
+  const c = blobCtx(); if (!c) return;
+  const u = blobUrl(c, store, key); if (!u) return;
+  const r = await fetch(u, {
+    method: "PUT",
+    headers: { authorization: `Bearer ${c.token}`, "content-type": "application/json" },
+    body: JSON.stringify(value),
+  });
+  if (!r.ok) throw new Error("blob set " + r.status);
+}
 
 const ALLOWED = new Set(["engagement", "document_click", "site_view", "site_time"]);
 
@@ -42,10 +72,9 @@ export default async (request: Request, context: any) => {
 
   console.log("GAPLOG " + JSON.stringify(rec));
   try {
-    const store = getStore("gap-access");
-    const log = (await store.get("log", { type: "json" })) || [];
+    const log = (await blobGet("gap-access", "log")) || [];
     log.push(rec);
-    await store.setJSON("log", log.slice(-800));
+    await blobSet("gap-access", "log", log.slice(-800));
   } catch (e) {
     console.log("GAPLOG_BLOB_FAIL " + String(e));
   }
