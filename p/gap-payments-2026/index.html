@@ -56,65 +56,6 @@
     font-weight: 600;
   }
 
-  .btn {
-    display: inline-block;
-    padding: 14px 30px;
-    border: 1.5px solid var(--black);
-    background: transparent;
-    font-family: inherit;
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.25s, color 0.25s;
-  }
-  .btn:hover { background: var(--black); color: var(--white); }
-
-  /* ══ GATE ══ */
-  #gate {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 0 8%;
-    overflow: hidden;
-  }
-  .gate-inner { position: relative; z-index: 2; width: 100%; max-width: 520px; }
-  .gate-inner img { height: 92px; width: auto; display: block; margin-bottom: 56px; }
-  .gate-inner .label { display: block; margin-bottom: 18px; }
-  .gate-inner h1 {
-    font-size: clamp(32px, 4.6vw, 54px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
-    color: var(--black);
-    margin-bottom: 20px;
-  }
-  .gate-inner h1 .light { font-weight: 300; }
-  .gate-inner .lede {
-    font-size: 16px; font-weight: 300; color: var(--grey);
-    line-height: 1.85; margin-bottom: 44px; max-width: 400px;
-  }
-  .gate-row { display: flex; gap: 12px; max-width: 440px; }
-  input[type="password"] {
-    flex: 1; font-family: inherit; font-size: 15px; font-weight: 400;
-    padding: 13px 16px; border: 1px solid var(--border);
-    background: var(--white); color: var(--dark);
-    outline: none; transition: border-color 0.25s ease;
-  }
-  input[type="password"]:focus { border-color: var(--black); }
-  #err {
-    font-size: 13px; color: #8a2b2b; margin-top: 16px;
-    letter-spacing: 0.02em; min-height: 20px; visibility: hidden;
-  }
-  #err.show { visibility: visible; }
-
-  /* ══ CONTENT ══ */
-  #content { display: none; }
-  #content.on { display: block; }
-
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: rgba(255,255,255,0.96);
@@ -201,9 +142,71 @@
     transition: color 0.2s;
   }
   .doc:hover .doc-cta { color: var(--white); }
+  .docs-note {
+    margin-top: 26px; font-size: 13px; font-weight: 300;
+    color: rgba(255,255,255,0.45); line-height: 1.8;
+  }
+
+  /* ══ CONFIDENTIALITY ══ */
+  .conf { position: relative; padding: 92px 8%; background: var(--light-grey); overflow: hidden; }
+  .conf-inner { position: relative; z-index: 2; }
+  .conf .label { display: block; margin-bottom: 16px; }
+  .conf h3 {
+    font-size: clamp(26px, 3.4vw, 42px);
+    font-weight: 800; letter-spacing: -0.025em; line-height: 1.1;
+    color: var(--black); margin-bottom: 12px;
+  }
+  .conf h3 .light { font-weight: 300; color: var(--grey); }
+  .conf .intro {
+    font-size: 16px; font-weight: 300; color: var(--grey);
+    line-height: 1.85; max-width: 620px; margin-bottom: 46px;
+  }
+  .conf-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    background: var(--white);
+  }
+  .conf-item {
+    padding: 34px 30px 32px;
+    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .conf-num {
+    font-size: 10px; letter-spacing: 0.2em; font-weight: 600;
+    color: var(--grey); display: block; margin-bottom: 16px;
+  }
+  .conf-title {
+    font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--black); margin-bottom: 10px; line-height: 1.4;
+  }
+  .conf-desc { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--grey); }
+  .conf-foot {
+    margin-top: 34px; font-size: 13.5px; font-weight: 300;
+    color: var(--grey); line-height: 1.85; max-width: 720px;
+  }
+  .conf-foot strong { color: var(--dark); font-weight: 600; }
+
+  /* ══ CONTEXT / SITE INVITE ══ */
+  .ctx { position: relative; padding: 86px 8%; overflow: hidden; }
+  .ctx-inner { position: relative; z-index: 2; max-width: 720px; }
+  .ctx .label { display: block; margin-bottom: 16px; }
+  .ctx h3 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800; letter-spacing: -0.025em; line-height: 1.15;
+    color: var(--black); margin-bottom: 20px;
+  }
+  .ctx h3 .light { font-weight: 300; color: var(--grey); }
+  .ctx p { font-size: 16px; font-weight: 300; color: var(--grey); line-height: 1.85; margin-bottom: 30px; }
+  .ctx-link {
+    display: inline-block; padding: 14px 30px;
+    border: 1.5px solid var(--black); text-decoration: none;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--black); font-weight: 500;
+    transition: background 0.25s, color 0.25s;
+  }
+  .ctx-link:hover { background: var(--black); color: var(--white); }
 
   /* ══ FOOTER ══ */
-  .foot { position: relative; padding: 76px 8% 90px; overflow: hidden; }
+  .foot { position: relative; padding: 76px 8% 90px; overflow: hidden; background: var(--light-grey); }
   .foot-inner { position: relative; z-index: 2; }
   .foot .label { display: block; margin-bottom: 22px; }
   .foot-name { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: var(--black); }
@@ -217,132 +220,153 @@
   }
   .foot-valid strong { color: var(--dark); font-weight: 600; }
 
+  @media (max-width: 980px) {
+    .conf-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 760px) {
     .docs-grid { grid-template-columns: 1fr; }
     .doc { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .doc:last-child { border-bottom: none; }
-    .gate-row { flex-direction: column; }
-    .btn { width: 100%; }
-    #gate { padding: 0 7%; }
+    .conf-grid { grid-template-columns: 1fr; }
     .hero { padding: 168px 7% 80px; }
-    .docs, .foot { padding-left: 7%; padding-right: 7%; }
+    .docs, .foot, .conf, .ctx { padding-left: 7%; padding-right: 7%; }
   }
 </style>
 </head>
 <body>
 
-<!-- ══════ GATE ══════ -->
-<div id="gate" class="grid-bg">
-  <div class="gate-inner">
-    <img src="/logo.png" alt="Inframind" />
-    <span class="label">Ιδιωτική σελίδα</span>
-    <h1>G.A.P. Vassilopoulos<br><span class="light">Vpayments · Sliq</span></h1>
-    <p class="lede">Το περιεχόμενο προορίζεται αποκλειστικά για τον παραλήπτη. Παρακαλώ εισαγάγετε τον κωδικό πρόσβασης.</p>
-    <div class="gate-row">
-      <input type="password" id="pw" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Κωδικός πρόσβασης" />
-      <button class="btn" id="go">Είσοδος</button>
-    </div>
-    <div id="err">Λανθασμένος κωδικός.</div>
+<nav>
+  <img src="/logo.png" alt="Inframind" />
+  <span class="label">G.A.P. Vassilopoulos · Sliq</span>
+</nav>
+
+<section class="hero grid-bg">
+  <div class="hero-inner">
+    <span class="label">Πρόταση συνεργασίας</span>
+    <h2>G.A.P. Vassilopoulos<br><span class="light">Vpayments · Sliq</span></h2>
+    <p>Η σελίδα περιλαμβάνει την παρουσίαση της αρχιτεκτονικής και την πρόταση συνεργασίας, όπως συζητήθηκαν.</p>
+    <p>Παραμένω στη διάθεσή σας για διευκρινίσεις και για τη διαμόρφωση των τελικών όρων.</p>
   </div>
-</div>
+</section>
 
-<!-- ══════ CONTENT ══════ -->
-<div id="content">
+<section class="docs">
+  <span class="label">Έγγραφα</span>
+  <h3>Δύο αρχεία <span class="light">προς ανάγνωση</span></h3>
 
-  <nav>
-    <img src="/logo.png" alt="Inframind" />
-    <span class="label">G.A.P. Vassilopoulos · Sliq</span>
-  </nav>
+  <div class="docs-grid">
+    <a class="doc" href="presentation.pdf" target="_blank" rel="noopener" data-doc="presentation">
+      <span class="doc-num">01</span>
+      <div class="doc-title">Παρουσίαση</div>
+      <p class="doc-desc">Η ευκαιρία, η θέση του Ομίλου, η αρχιτεκτονική του σχήματος και η πορεία της συνεργασίας με τους δήμους.</p>
+      <span class="doc-cta">Άνοιγμα PDF</span>
+    </a>
+    <a class="doc" href="proposal.pdf" target="_blank" rel="noopener" data-doc="proposal">
+      <span class="doc-num">02</span>
+      <div class="doc-title">Πρόταση συνεργασίας</div>
+      <p class="doc-desc">Αντικείμενο, ρόλος, τρόπος συνεργασίας, διάρκεια και όροι, με τους στόχους του πρώτου έτους.</p>
+      <span class="doc-cta">Άνοιγμα PDF</span>
+    </a>
+  </div>
 
-  <section class="hero grid-bg">
-    <div class="hero-inner">
-      <span class="label">Πρόταση συνεργασίας</span>
-      <h2>G.A.P. Vassilopoulos<br><span class="light">Vpayments · Sliq</span></h2>
-      <p>Η σελίδα περιλαμβάνει την παρουσίαση της αρχιτεκτονικής και την πρόταση συνεργασίας, όπως συζητήθηκαν.</p>
-      <p>Παραμένω στη διάθεσή σας για διευκρινίσεις και για τη διαμόρφωση των τελικών όρων.</p>
+  <p class="docs-note">Κάθε αρχείο ανοίγει σε νέα καρτέλα και μπορεί να αποθηκευτεί τοπικά ή να εκτυπωθεί.</p>
+</section>
+
+<section class="conf">
+  <div class="conf-inner">
+    <span class="label">Εμπιστευτικότητα &amp; ασφάλεια</span>
+    <h3>Το περιεχόμενο <span class="light">παραμένει μεταξύ μας</span></h3>
+    <p class="intro">Η πρόταση αφορά εμπορικά ευαίσθητη πληροφορία του Ομίλου. Η σελίδα σχεδιάστηκε ώστε η διακίνησή της να μην εξαρτάται από συνημμένα σε email ούτε από υπηρεσίες τρίτων.</p>
+
+    <div class="conf-grid">
+      <div class="conf-item">
+        <span class="conf-num">01</span>
+        <div class="conf-title">Έλεγχος πρόσβασης στον διακομιστή</div>
+        <p class="conf-desc">Χωρίς έγκυρο κωδικό δεν αποστέλλεται ούτε η σελίδα ούτε τα PDF. Ο έλεγχος δεν γίνεται στον browser· τα αρχεία δεν είναι προσβάσιμα μέσω απευθείας συνδέσμου.</p>
+      </div>
+      <div class="conf-item">
+        <span class="conf-num">02</span>
+        <div class="conf-title">Κρυπτογραφημένη μεταφορά</div>
+        <p class="conf-desc">Όλη η επικοινωνία διεξάγεται αποκλειστικά σε HTTPS/TLS, με HSTS. Δεν υπάρχει μη κρυπτογραφημένη διαδρομή προς το περιεχόμενο.</p>
+      </div>
+      <div class="conf-item">
+        <span class="conf-num">03</span>
+        <div class="conf-title">Ο κωδικός δεν αποθηκεύεται</div>
+        <p class="conf-desc">Τηρείται μόνο η κρυπτογραφική σύνοψη (SHA-256) σε περιβάλλον διαμόρφωσης του διακομιστή — ποτέ σε καθαρό κείμενο και ποτέ στον πηγαίο κώδικα.</p>
+      </div>
+      <div class="conf-item">
+        <span class="conf-num">04</span>
+        <div class="conf-title">Μη ευρετηριάσιμη, χωρίς συνδέσμους</div>
+        <p class="conf-desc">Η διεύθυνση δεν είναι προσβάσιμη από κανένα σημείο του inframind.eu, εξαιρείται ρητά από μηχανές αναζήτησης (noindex, robots) και δεν διαρρέει referrer προς τρίτους.</p>
+      </div>
+      <div class="conf-item">
+        <span class="conf-num">05</span>
+        <div class="conf-title">Χωρίς αναλυτικά τρίτων</div>
+        <p class="conf-desc">Καμία υπηρεσία αναλυτικών, διαφημιστικό script ή cookie παρακολούθησης τρίτου μέρους. Η μόνη εξωτερική κλήση της σελίδας αφορά τη γραμματοσειρά της.</p>
+      </div>
+      <div class="conf-item">
+        <span class="conf-num">06</span>
+        <div class="conf-title">Χρονικά οριοθετημένη πρόσβαση</div>
+        <p class="conf-desc">Η πρόσβαση παύει αυτόματα στη λήξη ισχύος της πρότασης. Οι είσοδοι καταγράφονται για λόγους ασφαλείας και επιβεβαίωσης παραλαβής.</p>
+      </div>
     </div>
-  </section>
 
-  <section class="docs">
-    <span class="label">Έγγραφα</span>
-    <h3>Δύο αρχεία <span class="light">προς ανάγνωση</span></h3>
+    <p class="conf-foot">Το σύνολο του περιεχομένου αντιμετωπίζεται ως <strong>εμπιστευτικό</strong> και παραμένει εντός του <strong>G.A.P. Vassilopoulos Group</strong> και της <strong>INFRAMIND Innovative Infrastructures Ltd</strong>. Δεν κοινοποιείται, δεν αναπαράγεται και δεν χρησιμοποιείται για άλλο σκοπό πέραν της αξιολόγησης της παρούσας πρότασης. Η INFRAMIND δεσμεύεται αντίστοιχα για κάθε πληροφορία του Ομίλου που περιέρχεται σε γνώση της και είναι στη διάθεσή σας για υπογραφή συμφωνίας εμπιστευτικότητας (NDA) πριν από οποιοδήποτε επόμενο βήμα, εφόσον το επιθυμείτε.</p>
+  </div>
+</section>
 
-    <div class="docs-grid">
-      <a class="doc" href="presentation.pdf" target="_blank" rel="noopener">
-        <span class="doc-num">01</span>
-        <div class="doc-title">Παρουσίαση</div>
-        <p class="doc-desc">Η ευκαιρία, η θέση του Ομίλου, η αρχιτεκτονική του σχήματος και η πορεία της συνεργασίας με τους δήμους.</p>
-        <span class="doc-cta">Άνοιγμα PDF</span>
-      </a>
-      <a class="doc" href="proposal.pdf" target="_blank" rel="noopener">
-        <span class="doc-num">02</span>
-        <div class="doc-title">Πρόταση συνεργασίας</div>
-        <p class="doc-desc">Αντικείμενο, ρόλος, τρόπος συνεργασίας, διάρκεια και όροι, με τους στόχους του πρώτου έτους.</p>
-        <span class="doc-cta">Άνοιγμα PDF</span>
-      </a>
-    </div>
-  </section>
+<section class="ctx grid-bg">
+  <div class="ctx-inner">
+    <span class="label">Το υπόβαθρο</span>
+    <h3>Η πρόταση στηρίζεται <span class="light">σε υποδομή που ήδη λειτουργεί</span></h3>
+    <p>Το inframind.eu δεν είναι εταιρικό φυλλάδιο: δείχνει σε πραγματικό χρόνο δεδομένα από εθνικής κλίμακας υποδομή ITS σε παραγωγική λειτουργία από το 2018 — επτά μεταφορείς, πάνω από 5.000 στάσεις, open-loop EMV εισιτήριο. Ό,τι περιγράφεται στην πρόταση προέρχεται από εκεί.</p>
+    <a class="ctx-link" href="https://inframind.eu/?utm_source=gap&utm_medium=proposal&utm_campaign=vpayments-2026" target="_blank" rel="noopener" data-doc="site">Δείτε τα ζωντανά δεδομένα</a>
+  </div>
+</section>
 
-  <footer class="foot grid-bg">
-    <div class="foot-inner">
-      <span class="label">Επικοινωνία</span>
-      <p class="foot-name">Ιωάννης Χρ. Παναγιωτίδης</p>
-      <p class="foot-role">Διευθυντής</p>
-      <p class="foot-line">INFRAMIND Innovative Infrastructures Ltd · HE403061</p>
-      <p class="foot-line"><a href="mailto:ioannis@inframind.eu">ioannis@inframind.eu</a></p>
-      <p class="foot-valid">Η πρόταση ισχύει έως <strong id="valid">—</strong>.</p>
-    </div>
-  </footer>
-
-</div>
+<footer class="foot">
+  <div class="foot-inner">
+    <span class="label">Επικοινωνία</span>
+    <p class="foot-name">Ιωάννης Χρ. Παναγιωτίδης</p>
+    <p class="foot-role">Διευθυντής</p>
+    <p class="foot-line">INFRAMIND Innovative Infrastructures Ltd · HE403061</p>
+    <p class="foot-line"><a href="mailto:ioannis@inframind.eu">ioannis@inframind.eu</a></p>
+    <p class="foot-valid">Η πρόταση ισχύει έως <strong>10 Οκτωβρίου 2026</strong>.</p>
+  </div>
+</footer>
 
 <script>
 (function () {
-  var HASH = "b08bdd8734216f0f23023586366a9a800f4c0865d5931bfd0faa4c3378ebe8eb";
-  var VALID_UNTIL = "10 Οκτωβρίου 2026";
-
-  var gate = document.getElementById('gate');
-  var content = document.getElementById('content');
-  var pw = document.getElementById('pw');
-  var err = document.getElementById('err');
-
-  function unlock() {
-    gate.style.display = 'none';
-    content.classList.add('on');
-    document.getElementById('valid').textContent = VALID_UNTIL;
-    document.title = 'G.A.P. Vassilopoulos · Sliq';
+  var start = Date.now(), sent = false;
+  function beacon(type, detail, seconds) {
+    try {
+      var body = JSON.stringify({
+        type: type, path: location.pathname,
+        detail: detail || '', seconds: seconds || 0,
+        scroll: Math.round((window.scrollY + window.innerHeight) /
+          Math.max(document.body.scrollHeight, 1) * 100)
+      });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/_im/t', new Blob([body], { type: 'application/json' }));
+      } else {
+        fetch('/_im/t', { method: 'POST', body: body, keepalive: true });
+      }
+    } catch (e) {}
   }
 
-  async function sha256(str) {
-    var buf = new TextEncoder().encode(str);
-    var hash = await crypto.subtle.digest('SHA-256', buf);
-    return Array.from(new Uint8Array(hash))
-      .map(function (b) { return b.toString(16).padStart(2, '0'); })
-      .join('');
-  }
-
-  async function check() {
-    var val = pw.value.trim();
-    if (!val) return;
-    var h = await sha256(val);
-    if (h === HASH) {
-      try { sessionStorage.setItem('gap_ok', '1'); } catch (e) {}
-      unlock();
-    } else {
-      err.classList.add('show');
-      pw.value = '';
-      pw.focus();
-    }
-  }
-
-  document.getElementById('go').addEventListener('click', check);
-  pw.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') check();
-    else err.classList.remove('show');
+  document.querySelectorAll('[data-doc]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      beacon('document_click', el.getAttribute('data-doc'));
+    });
   });
 
-  try { if (sessionStorage.getItem('gap_ok') === '1') unlock(); } catch (e) {}
-  pw.focus();
+  function close() {
+    if (sent) return; sent = true;
+    beacon('engagement', 'proposal', Math.round((Date.now() - start) / 1000));
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') close();
+  });
+  window.addEventListener('pagehide', close);
 })();
 </script>
 

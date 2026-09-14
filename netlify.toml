@@ -19,3 +19,23 @@
   # `git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ':!data/'` exits 0
   # when the only changes between deploys are inside data/. Netlify treats
   # exit 0 as "ignore this build" → no deploy, no credits charged.
+
+# ── Private client pages (server-side gate in netlify/edge-functions) ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/p/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    Referrer-Policy = "no-referrer"
+
+# never serve edge-function source as a static asset
+[[redirects]]
+  from = "/netlify/*"
+  to = "/"
+  status = 404
+  force = true
