@@ -59,6 +59,10 @@ export default async (req) => {
   }
 
   try {
+    if (req.method === "DELETE") {
+      const ok = await writeLog([]);
+      return Response.json({ ok, cleared: true });
+    }
     if (req.method === "POST") {
       const rec = await req.json();
       const log = (await readLog()) || [];

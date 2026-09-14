@@ -77,12 +77,9 @@ async function audit(request: Request, context: any, ev: Record<string, unknown>
 // ── email notification (reuses the site's existing Formspree endpoint).
 // Deliberately minimal payload: event, document and time only — no IP,
 // no user agent, no location leaves to the third party.
-const FORMSPREE_URL = "https://formspree.io/f/mlgvlvnr";
 const NETLIFY_FORM_URL = "https://inframind.eu/forms/notify.html";
 
 async function notify(subject: string, body: string) {
-  // Channel 1 — Netlify Forms: same provider as the hosting, recipient set
-  // in the Netlify UI, submissions visible there.
   try {
     const r = await fetch(NETLIFY_FORM_URL, {
       method: "POST",
@@ -94,21 +91,9 @@ async function notify(subject: string, body: string) {
         message: body,
       }).toString(),
     });
-    console.log("GAPLOG_NOTIFY_NETLIFY status=" + r.status);
+    console.log("GAPLOG_NOTIFY status=" + r.status);
   } catch (e) {
-    console.log("GAPLOG_NOTIFY_NETLIFY_FAIL " + String(e));
-  }
-
-  // Channel 2 — Formspree, the endpoint the site already uses.
-  try {
-    const r = await fetch(FORMSPREE_URL, {
-      method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
-      body: JSON.stringify({ _subject: subject, message: body }),
-    });
-    console.log("GAPLOG_NOTIFY_FORMSPREE status=" + r.status);
-  } catch (e) {
-    console.log("GAPLOG_NOTIFY_FORMSPREE_FAIL " + String(e));
+    console.log("GAPLOG_NOTIFY_FAIL " + String(e));
   }
 }
 
