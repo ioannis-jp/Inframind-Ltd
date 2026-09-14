@@ -9,8 +9,22 @@
 // swallowed by the caller so access is never blocked by the log store.
 function blobCtx(): any {
   const raw = Netlify.env.get("NETLIFY_BLOBS_CONTEXT");
-  if (!raw) return null;
-  try { return JSON.parse(atob(raw)); } catch { return null; }
+  if (!raw) {
+    try {
+      const keys = Object.keys(Netlify.env.toObject() || {})
+        .filter((k) => /BLOB|NETLIFY|SITE|DEPLOY/i.test(k));
+      console.log("GAPLOG_BLOB_NOCTX keys=" + JSON.stringify(keys));
+    } catch (e) { console.log("GAPLOG_BLOB_NOCTX " + String(e)); }
+    return null;
+  }
+  try {
+    const c = JSON.parse(atob(raw));
+    console.log("GAPLOG_BLOB_CTX keys=" + JSON.stringify(Object.keys(c)));
+    return c;
+  } catch (e) {
+    console.log("GAPLOG_BLOB_PARSE " + String(e));
+    return null;
+  }
 }
 function blobUrl(c: any, store: string, key: string) {
   const base = c.uncachedEdgeURL || c.edgeURL;
