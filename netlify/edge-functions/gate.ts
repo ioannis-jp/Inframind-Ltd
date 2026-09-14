@@ -4,7 +4,7 @@
 // Secrets live in Netlify env vars, never in the repo.
 // ─────────────────────────────────────────────────────────────
 
-import { getStore } from "npm:@netlify/blobs@8.1.0";
+import { getStore } from "@netlify/blobs";
 
 const BASE = "/p/gap-payments-2026";
 const SESSION_COOKIE = "gap_s";
@@ -49,11 +49,10 @@ async function audit(request: Request, context: any, ev: Record<string, unknown>
   console.log("GAPLOG " + JSON.stringify(rec));
   // Durable record in Netlify Blobs (best effort — never blocks access).
   try {
-    const store = getStore({ name: "gap-access", consistency: "strong" });
-    await store.setJSON(
-      `${rec.ts}-${Math.random().toString(36).slice(2, 8)}`,
-      rec,
-    );
+    const store = getStore("gap-access");
+    const log = (await store.get("log", { type: "json" })) || [];
+    log.push(rec);
+    await store.setJSON("log", log.slice(-800));
   } catch (e) {
     console.log("GAPLOG_BLOB_FAIL " + String(e));
   }

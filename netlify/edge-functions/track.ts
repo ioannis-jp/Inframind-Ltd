@@ -2,7 +2,7 @@
 // Accepts small JSON events from pages on inframind.eu and records them
 // in the same audit store used by the access gate.
 
-import { getStore } from "npm:@netlify/blobs@8.1.0";
+import { getStore } from "@netlify/blobs";
 
 const ALLOWED = new Set(["engagement", "document_click", "site_view", "site_time"]);
 
@@ -42,8 +42,10 @@ export default async (request: Request, context: any) => {
 
   console.log("GAPLOG " + JSON.stringify(rec));
   try {
-    const store = getStore({ name: "gap-access", consistency: "strong" });
-    await store.setJSON(`${rec.ts}-${Math.random().toString(36).slice(2, 8)}`, rec);
+    const store = getStore("gap-access");
+    const log = (await store.get("log", { type: "json" })) || [];
+    log.push(rec);
+    await store.setJSON("log", log.slice(-800));
   } catch (e) {
     console.log("GAPLOG_BLOB_FAIL " + String(e));
   }

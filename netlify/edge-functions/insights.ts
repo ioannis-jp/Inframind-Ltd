@@ -1,7 +1,7 @@
 // Private read-only dashboard over the audit store.
 // URL: /_im/insights?k=<admin key>   (404 without the key)
 
-import { getStore } from "npm:@netlify/blobs@8.1.0";
+import { getStore } from "@netlify/blobs";
 
 const enc = new TextEncoder();
 const hex = (b: ArrayBuffer) =>
@@ -45,12 +45,9 @@ export default async (request: Request) => {
   let items: any[] = [];
   let storeErr = "";
   try {
-    const store = getStore({ name: "gap-access", consistency: "strong" });
-    const { blobs } = await store.list();
-    items = await Promise.all(
-      blobs.map((b: any) => store.get(b.key, { type: "json" }).catch(() => null)),
-    );
-    items = items.filter(Boolean).sort((a, b) => (a.ts < b.ts ? 1 : -1));
+    const store = getStore("gap-access");
+    items = (await store.get("log", { type: "json" })) || [];
+    items = items.filter(Boolean).sort((a: any, b: any) => (a.ts < b.ts ? 1 : -1));
   } catch (e) {
     storeErr = String(e);
   }
