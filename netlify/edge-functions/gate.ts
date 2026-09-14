@@ -101,6 +101,32 @@ async function audit(request: Request, context: any, ev: Record<string, unknown>
   }
 }
 
+// ── email notification (reuses the site's existing Formspree endpoint).
+// Deliberately minimal payload: event, document and time only — no IP,
+// no user agent, no location leaves to the third party.
+const NOTIFY_URL = "https://formspree.io/f/mlgvlvnr";
+async function notify(subject: string, body: string) {
+  try {
+    const r = await fetch(NOTIFY_URL, {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify({ _subject: subject, message: body }),
+    });
+    console.log("GAPLOG_NOTIFY status=" + r.status);
+  } catch (e) {
+    console.log("GAPLOG_NOTIFY_FAIL " + String(e));
+  }
+}
+
+function nowCy() {
+  try {
+    return new Date().toLocaleString("el-GR", {
+      timeZone: "Asia/Nicosia", day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
+    });
+  } catch { return new Date().toISOString(); }
+}
+
 // ── login screen ───────────────────────────────────────────────
 function loginPage(next: string, failed: boolean, expired = false) {
   return `<!DOCTYPE html><html lang="el"><head>
@@ -193,6 +219,16 @@ export default async (request: Request, context: any) => {
         `${VISITOR_COOKIE}=${vid}; Path=/; Max-Age=7776000; Secure; SameSite=Lax`,
       );
       await audit(request, context, { type: "unlock", vid });
+      if (!cookie(request, "gap_n")) {
+        await notify(
+          "INFRAMIND · GAP: άνοιξαν τη σελίδα της πρότασης",
+          `Η ιδιωτική σελίδα της πρότασης προς G.A.P. Vassilopoulos άνοιξε με τον κωδικό.\n\nΏρα (Κύπρος): ${nowCy()}\n\nΛεπτομέρειες στον πίνακα καταγραφής στο inframind.eu.`,
+        );
+        h.append(
+          "set-cookie",
+          `gap_n=1; Path=${BASE}; Max-Age=${TTL_DAYS * 86400}; HttpOnly; Secure; SameSite=Lax`,
+        );
+      }
       return new Response(null, { status: 303, headers: h });
     }
 
@@ -227,6 +263,26 @@ export default async (request: Request, context: any) => {
   out.headers.set("cache-control", "no-store, private");
   out.headers.set("x-robots-tag", "noindex, nofollow, noarchive");
   out.headers.set("referrer-policy", "no-referrer");
+
+  if (isPdf) {
+    const doc = (url.pathname.split("/").pop() || "").replace(/\.pdf$/i, "");
+    const flag = "gap_d_" + doc.replace(/[^a-z0-9]/gi, "");
+    if (doc && !cookie(request, flag)) {
+      const title = doc === "proposal"
+        ? "την πρόταση συνεργασίας"
+        : doc === "presentation"
+        ? "την παρουσίαση"
+        : doc;
+      await notify(
+        `INFRAMIND · GAP: άνοιξαν ${title}`,
+        `Άνοιγμα εγγράφου: ${doc}.pdf\n\nΏρα (Κύπρος): ${nowCy()}\n\nΛεπτομέρειες στον πίνακα καταγραφής στο inframind.eu.`,
+      );
+      out.headers.append(
+        "set-cookie",
+        `${flag}=1; Path=${BASE}; Max-Age=${TTL_DAYS * 86400}; HttpOnly; Secure; SameSite=Lax`,
+      );
+    }
+  }
   return out;
 };
 
