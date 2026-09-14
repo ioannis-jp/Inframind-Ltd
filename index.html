@@ -5432,5 +5432,36 @@
   }
 </script>
 
+<script>
+/* First-party visit note for invited private-page recipients only.
+   Fires solely when the im_v cookie exists (set by the private proposal gate).
+   No cookie is created here; ordinary visitors are never recorded. */
+(function () {
+  var m = (document.cookie || '').match(/(?:^|;\s*)im_v=/);
+  if (!m) return;
+  var start = Date.now(), sent = false;
+  function send(type, seconds) {
+    try {
+      var body = JSON.stringify({
+        type: type, path: location.pathname + location.hash,
+        detail: (new URLSearchParams(location.search)).get('utm_source') || '',
+        seconds: seconds || 0,
+        scroll: Math.round((window.scrollY + window.innerHeight) /
+          Math.max(document.body.scrollHeight, 1) * 100)
+      });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/_im/t', new Blob([body], { type: 'application/json' }));
+      } else { fetch('/_im/t', { method: 'POST', body: body, keepalive: true }); }
+    } catch (e) {}
+  }
+  send('site_view', 0);
+  function close() { if (sent) return; sent = true;
+    send('site_time', Math.round((Date.now() - start) / 1000)); }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') close(); });
+  window.addEventListener('pagehide', close);
+})();
+</script>
+
 </body>
 </html>
