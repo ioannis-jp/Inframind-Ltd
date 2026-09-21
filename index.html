@@ -2564,6 +2564,47 @@
       border-left: none;
       padding: 40px 0;
     }
+    .forums-case {
+      margin: 64px 0 0;
+      padding: 44px 48px;
+      background: rgba(255,255,255,0.035);
+      border-left: 2px solid rgba(255,255,255,0.28);
+    }
+    .forums-case .fc-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .forums-case h3 {
+      font-size: clamp(19px, 2.1vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--white);
+      margin-bottom: 22px;
+    }
+    .forums-case p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: #9a9a9a;
+      max-width: 860px;
+      margin-bottom: 16px;
+    }
+    .forums-case p:last-of-type { margin-bottom: 0; }
+    .forums-case strong { color: #d8d8d8; font-weight: 600; }
+    .forums-case .fc-sign {
+      margin-top: 26px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.45);
+    }
+    @media (max-width: 768px) {
+      .forums-case { padding: 32px 0 32px 22px; }
+    }
     .forums-close-sub {
       margin: 20px 0 0;
       max-width: 780px;
@@ -3594,6 +3635,15 @@
     </article>
   </div>
 
+  <section class="forums-case reveal" aria-labelledby="fc-title">
+    <p class="fc-label" data-i18n="forums.case.label">A case close to home</p>
+    <h3 id="fc-title" data-i18n="forums.case.t">Modern infrastructure, an older passenger journey</h3>
+    <p data-i18n-html="forums.case.p1">I grew up in Thessaloniki and my family still lives there, so I use this system in the same way thousands of other passengers do. The difference is that my professional background lets me see behind that experience &mdash; what was implemented, what remained incomplete, and how those technical and governance decisions reach the passenger.</p>
+    <p data-i18n-html="forums.case.p2">Thessaloniki is a useful example precisely because the investment is real: a modern, fully automated metro, opened in 2024 after almost two decades of construction. What has not matured at the same speed is the passenger-facing digital layer. The fare system is still built around a proprietary card. <strong>A bank card buys the ticket at the machine; it is not yet the ticket at the gate.</strong> Open-loop validation remains a stated goal rather than an everyday fact, and the bus fare environment, although recently renewed, was designed around an earlier generation of ticketing logic rather than an account-based, open-loop model.</p>
+    <p data-i18n-html="forums.case.p3">The result is fragmentation exactly at the point where the infrastructure should feel most integrated to the citizen. <strong>A city can have modern infrastructure and still offer an old-fashioned passenger journey</strong> &mdash; and that gap is not technological. It is a set of decisions about standards, data and contracts, which makes it one of the easiest gaps to close.</p>
+    <p class="fc-sign" data-i18n-html="forums.case.sign">&mdash; Ioannis Chr. Panagiotidis, Founder &amp; Director</p>
+  </section>
+
   <p class="forums-close reveal" data-i18n-html="forums.close">The passenger should only need to understand where they want to go. Everything else should be our responsibility.</p>
   <p class="forums-close-sub reveal" data-i18n-html="forums.closeSub">The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it &mdash; launching is easy; staying in daily operation is the real test.</p>
 </section>
@@ -3675,6 +3725,12 @@
       'forums.p4.b': 'The question is not whether a system supports contactless payment, but whether an occasional passenger can enter the network without prior registration, use an instrument they already carry, and automatically receive the correct and fair fare. A pilot exists to answer a decision — scale, redesign or stop. If we have not defined what evidence triggers that decision, we are not piloting: we are postponing responsibility.',
       'forums.p5.t': 'What makes it permanent',
       'forums.p5.b': 'Three conditions, written in from day one: <strong>open standards</strong> — GTFS/GTFS-RT, NeTEx and SIRI in every procurement, so operators interoperate and no vendor owns the platform; <strong>clear data governance</strong> — the authority keeps the data and the fare logic; and <strong>a contract that splits the roles</strong> — payment partners carry acceptance, security and settlement, while the authority keeps policy control over fares, caps and concessions. That split is what makes a system sustainable rather than merely launchable — and none of it requires the scale or the budget of a capital city.',
+      'forums.case.label': 'A case close to home',
+      'forums.case.t': 'Modern infrastructure, an older passenger journey',
+      'forums.case.p1': 'I grew up in Thessaloniki and my family still lives there, so I use this system in the same way thousands of other passengers do. The difference is that my professional background lets me see behind that experience — what was implemented, what remained incomplete, and how those technical and governance decisions reach the passenger.',
+      'forums.case.p2': 'Thessaloniki is a useful example precisely because the investment is real: a modern, fully automated metro, opened in 2024 after almost two decades of construction. What has not matured at the same speed is the passenger-facing digital layer. The fare system is still built around a proprietary card. <strong>A bank card buys the ticket at the machine; it is not yet the ticket at the gate.</strong> Open-loop validation remains a stated goal rather than an everyday fact, and the bus fare environment, although recently renewed, was designed around an earlier generation of ticketing logic rather than an account-based, open-loop model.',
+      'forums.case.p3': 'The result is fragmentation exactly at the point where the infrastructure should feel most integrated to the citizen. <strong>A city can have modern infrastructure and still offer an old-fashioned passenger journey</strong> — and that gap is not technological. It is a set of decisions about standards, data and contracts, which makes it one of the easiest gaps to close.',
+      'forums.case.sign': '— Ioannis Chr. Panagiotidis, Founder &amp; Director',
       'forums.close': 'The passenger should only need to understand where they want to go. Everything else should be our responsibility.',
       'forums.closeSub': 'The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it — launching is easy; staying in daily operation is the real test.',
       'hero.tagline': 'When Technology meets Purpose',
@@ -3867,6 +3923,12 @@
       'forums.p4.b': 'Το ερώτημα δεν είναι αν ένα σύστημα υποστηρίζει ανέπαφες πληρωμές, αλλά αν ένας περιστασιακός επιβάτης μπορεί να μπει στο δίκτυο χωρίς προηγούμενη εγγραφή, με ό,τι ήδη κουβαλά, και να χρεωθεί αυτόματα τον σωστό και δίκαιο ναύλο. Ένα pilot υπάρχει για να απαντήσει σε μια απόφαση — κλιμάκωση, επανασχεδιασμός ή τερματισμός. Αν δεν έχουμε ορίσει ποια τεκμήρια ενεργοποιούν αυτή την απόφαση, δεν κάνουμε pilot: αναβάλλουμε την ευθύνη.',
       'forums.p5.t': 'Τι το κάνει μόνιμο',
       'forums.p5.b': 'Τρεις όροι, γραμμένοι από την πρώτη μέρα: <strong>ανοικτά πρότυπα</strong> — GTFS/GTFS-RT, NeTEx και SIRI σε κάθε διαγωνισμό, ώστε οι φορείς να διαλειτουργούν και κανένας προμηθευτής να μην κατέχει την πλατφόρμα· <strong>καθαρή διακυβέρνηση δεδομένων</strong> — η αρχή κρατά τα δεδομένα και τη λογική του ναύλου· και <strong>σύμβαση που μοιράζει τους ρόλους</strong> — οι εταίροι πληρωμών αναλαμβάνουν αποδοχή, ασφάλεια και εκκαθάριση, ενώ η αρχή κρατά τον έλεγχο πολιτικής σε ναύλους, πλαφόν και εκπτωτικές κατηγορίες. Αυτός ο διαχωρισμός είναι που κάνει ένα σύστημα βιώσιμο και όχι απλώς εγκαινιάσιμο — και δεν απαιτεί την κλίμακα ή τον προϋπολογισμό μιας μητρόπολης.',
+      'forums.case.label': 'Μια περίπτωση από κοντά',
+      'forums.case.t': 'Σύγχρονη υποδομή, παλαιότερη διαδρομή για τον επιβάτη',
+      'forums.case.p1': 'Μεγάλωσα στη Θεσσαλονίκη και η οικογένειά μου ζει εκεί, οπότε χρησιμοποιώ αυτό το σύστημα όπως χιλιάδες άλλοι επιβάτες. Η διαφορά είναι ότι το επαγγελματικό μου υπόβαθρο μού επιτρέπει να βλέπω πίσω από αυτή την εμπειρία — τι υλοποιήθηκε, τι έμεινε ημιτελές, και πώς εκείνες οι τεχνικές αποφάσεις και οι αποφάσεις διακυβέρνησης φτάνουν στον επιβάτη.',
+      'forums.case.p2': 'Η Θεσσαλονίκη είναι χρήσιμο παράδειγμα ακριβώς επειδή η επένδυση είναι υπαρκτή: ένα σύγχρονο, πλήρως αυτόματο μετρό, που άνοιξε το 2024 έπειτα από σχεδόν δύο δεκαετίες κατασκευής. Εκείνο που δεν ωρίμασε με την ίδια ταχύτητα είναι το ψηφιακό επίπεδο που βλέπει ο επιβάτης. Το σύστημα κομίστρου εξακολουθεί να στηρίζεται σε ιδιόκτητη κάρτα. <strong>Η τραπεζική κάρτα αγοράζει το εισιτήριο στο μηχάνημα· δεν είναι ακόμη το εισιτήριο στην πύλη.</strong> Η επικύρωση με open-loop παραμένει δηλωμένος στόχος και όχι καθημερινή πραγματικότητα, ενώ το περιβάλλον κομίστρου στα λεωφορεία, αν και ανανεώθηκε πρόσφατα, σχεδιάστηκε γύρω από προηγούμενη γενιά λογικής εισιτηρίου και όχι γύρω από account-based, open-loop μοντέλο.',
+      'forums.case.p3': 'Το αποτέλεσμα είναι κατακερματισμός ακριβώς στο σημείο όπου η υποδομή θα έπρεπε να μοιάζει πιο ενιαία στον πολίτη. <strong>Μια πόλη μπορεί να έχει σύγχρονη υποδομή και να προσφέρει ακόμη παλιομοδίτικη διαδρομή στον επιβάτη</strong> — και αυτό το κενό δεν είναι τεχνολογικό. Είναι ένα σύνολο αποφάσεων για πρότυπα, δεδομένα και συμβάσεις, γι’ αυτό και είναι από τα ευκολότερα κενά να κλείσουν.',
+      'forums.case.sign': '— Ιωάννης Χρ. Παναγιωτίδης, Ιδρυτής &amp; Διευθυντής',
       'forums.close': 'Ο επιβάτης χρειάζεται να ξέρει μόνο πού θέλει να πάει. Όλα τα υπόλοιπα είναι δική μας ευθύνη.',
       'forums.closeSub': 'Το πραγματικό τεστ της καινοτομίας δεν είναι αν δουλεύει σε μια επίδειξη. Είναι αν συνεχίζει να δουλεύει, κάθε μέρα, για όσους τη χρειάζονται — τα εγκαίνια είναι το εύκολο· η καθημερινή λειτουργία είναι το τεστ.',
       'hero.tagline': 'Όταν η Τεχνολογία συναντά τον Σκοπό',
