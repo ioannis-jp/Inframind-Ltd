@@ -2541,7 +2541,36 @@
     .forums-figure { margin: 0 0 64px; }
     .forums-figure img {
       width: 100%;
+      height: auto;
       display: block;
+    }
+    @media (max-width: 700px) {
+      .forums-figure img { aspect-ratio: 3 / 2; object-fit: cover; }
+    }
+    .forums-throughline {
+      margin: 0 0 66px;
+      padding-left: 30px;
+      border-left: 2px solid rgba(255,255,255,0.22);
+      max-width: 900px;
+      font-size: clamp(17px, 1.9vw, 22px);
+      font-weight: 300;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      color: #cfcfcf;
+    }
+    .forums-throughline strong { color: var(--white); font-weight: 600; }
+    .forum-position.wide {
+      grid-column: 1 / -1;
+      border-left: none;
+      padding: 40px 0;
+    }
+    .forums-close-sub {
+      margin: 20px 0 0;
+      max-width: 780px;
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      line-height: 1.8;
+      color: #8f8f8f;
     }
     .forums-figure figcaption {
       margin-top: 14px;
@@ -2598,7 +2627,7 @@
     }
     @media (max-width: 768px) {
       .forums-positions { grid-template-columns: 1fr; }
-      .forum-position, .forum-position:nth-child(even) {
+      .forum-position, .forum-position:nth-child(even), .forum-position.wide {
         padding: 32px 0;
         border-left: none;
       }
@@ -3523,40 +3552,50 @@
 <section id="forums">
   <p class="section-label reveal" data-i18n="forums.label">Forums &amp; Positions</p>
   <h2 class="section-title reveal" data-i18n-html="forums.title">From pilots to systems<br><span class="light">citizens actually use</span></h2>
-  <p class="forums-intro reveal" data-i18n-html="forums.intro">Inframind takes part in European forums not for visibility, but to test its positions against practice &mdash; and to bring back what actually holds. At the <em>CIVITAS Forum 2026</em> in Thessaloniki, our founder joined the panel <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>.</p>
+  <p class="forums-intro reveal" data-i18n-html="forums.intro">Inframind takes part in European forums not for visibility, but to test its positions against practice &mdash; and to bring back what actually holds. At the <em>CIVITAS Forum 2026</em> in Thessaloniki, our founder joined the panel <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>, on digital tools, data sharing and interoperability, and on the move from pilots to deployment.</p>
 
   <figure class="forums-figure reveal">
     <picture>
+      <source media="(max-width: 700px)" srcset="civitas-2026-panel-mobile.webp" type="image/webp">
+      <source media="(max-width: 700px)" srcset="civitas-2026-panel-mobile.jpg">
       <source srcset="civitas-2026-panel.webp" type="image/webp">
-      <img src="civitas-2026-panel.jpg" width="2000" height="882" loading="lazy" decoding="async" alt="Panel discussion at the CIVITAS Forum 2026 in Thessaloniki" data-i18n-alt="forums.alt">
+      <img src="civitas-2026-panel.jpg" width="1600" height="705" loading="lazy" decoding="async" alt="Panel discussion at the CIVITAS Forum 2026 in Thessaloniki" data-i18n-alt="forums.alt">
     </picture>
     <figcaption data-i18n="forums.caption">CIVITAS Forum 2026, Thessaloniki &mdash; Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</figcaption>
   </figure>
+
+  <blockquote class="forums-throughline reveal" data-i18n-html="forums.throughline">Public transport has stopped being a separate ecosystem with its own card, its own app and its own rules. For the citizen it is simply part of daily life &mdash; and the instrument they already carry is their bank card or wallet. The job of ITS and digital infrastructure is not to build one more app: it is to make <strong>the correct, fair fare happen automatically</strong>, on the payment rails people already trust.</blockquote>
 
   <div class="forums-positions">
     <article class="forum-position reveal">
       <span class="fp-num">01</span>
       <h3 data-i18n="forums.p1.t">Interoperability is a governance question</h3>
-      <p data-i18n-html="forums.p1.b">It is not simply an API discussion. It concerns <strong>responsibility, service continuity and data ownership</strong> &mdash; and how independent systems behave together when something fails.</p>
+      <p data-i18n-html="forums.p1.b">Technical interfaces are usually the easiest part. The difficult part is deciding <strong>who owns the passenger journey</strong>, who is responsible for service continuity, who validates the data, who carries the operational risk &mdash; and how the different systems behave together when something goes wrong.</p>
     </article>
     <article class="forum-position reveal">
       <span class="fp-num">02</span>
       <h3 data-i18n="forums.p2.t">Accepting a card is not the same as using it as the fare medium</h3>
-      <p data-i18n-html="forums.p2.b"><strong>Account-based ticketing and open-loop EMV</strong> remove a layer from the passenger journey instead of adding one.</p>
+      <p data-i18n-html="forums.p2.b">The first merely digitises the ticket purchase. The second changes the whole passenger experience. A truly integrated system does not require the passenger to understand the architecture of the network: they use an instrument they already carry, and the back office applies the correct fare and capping rules from actual usage &mdash; the model already running in London, Milan and Brussels.</p>
     </article>
     <article class="forum-position reveal">
       <span class="fp-num">03</span>
-      <h3 data-i18n="forums.p3.t">Procurement should buy outcomes, not feature lists</h3>
-      <p data-i18n-html="forums.p3.b">A pilot exists to answer a decision &mdash; <strong>scale, redesign or stop</strong>. Anything else simply postpones responsibility.</p>
+      <h3 data-i18n="forums.p3.t">AI should remove complexity, not add an interface</h3>
+      <p data-i18n-html="forums.p3.b">Its real value sits behind the service &mdash; understanding context, supporting disruption management, improving operations, and presenting only the choices the passenger actually needs. <strong>If AI requires the citizen to learn another app or another interface, we have probably used it in the wrong place.</strong></p>
     </article>
     <article class="forum-position reveal">
       <span class="fp-num">04</span>
-      <h3 data-i18n="forums.p4.t">Technology should reduce complexity for the passenger</h3>
-      <p data-i18n-html="forums.p4.b">Public transport should integrate with the <strong>payment and digital tools citizens already use</strong>, rather than asking them to learn another one.</p>
+      <h3 data-i18n="forums.p4.t">Procurement should buy measurable outcomes, not feature lists</h3>
+      <p data-i18n-html="forums.p4.b">The question is not whether a system supports contactless payment, but whether an occasional passenger can enter the network without prior registration, use an instrument they already carry, and automatically receive the correct and fair fare. A pilot exists to answer a decision &mdash; scale, redesign or stop. If we have not defined what evidence triggers that decision, we are not piloting: we are postponing responsibility.</p>
+    </article>
+    <article class="forum-position wide reveal">
+      <span class="fp-num">05</span>
+      <h3 data-i18n="forums.p5.t">What makes it permanent</h3>
+      <p data-i18n-html="forums.p5.b">Three conditions, written in from day one: <strong>open standards</strong> &mdash; GTFS/GTFS-RT, NeTEx and SIRI in every procurement, so operators interoperate and no vendor owns the platform; <strong>clear data governance</strong> &mdash; the authority keeps the data and the fare logic; and <strong>a contract that splits the roles</strong> &mdash; payment partners carry acceptance, security and settlement, while the authority keeps policy control over fares, caps and concessions. That split is what makes a system sustainable rather than merely launchable &mdash; and none of it requires the scale or the budget of a capital city.</p>
     </article>
   </div>
 
-  <p class="forums-close reveal" data-i18n-html="forums.close">The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it.</p>
+  <p class="forums-close reveal" data-i18n-html="forums.close">The passenger should only need to understand where they want to go. Everything else should be our responsibility.</p>
+  <p class="forums-close-sub reveal" data-i18n-html="forums.closeSub">The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it &mdash; launching is easy; staying in daily operation is the real test.</p>
 </section>
 
 <!-- CONTACT -->
@@ -3622,18 +3661,22 @@
       'nav.forums': 'Forums',
       'forums.label': 'Forums & Positions',
       'forums.title': 'From pilots to systems<br><span class="light">citizens actually use</span>',
-      'forums.intro': 'Inframind takes part in European forums not for visibility, but to test its positions against practice — and to bring back what actually holds. At the <em>CIVITAS Forum 2026</em> in Thessaloniki, our founder joined the panel <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>.',
+      'forums.intro': 'Inframind takes part in European forums not for visibility, but to test its positions against practice — and to bring back what actually holds. At the <em>CIVITAS Forum 2026</em> in Thessaloniki, our founder joined the panel <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>, on digital tools, data sharing and interoperability, and on the move from pilots to deployment.',
       'forums.alt': 'Panel discussion at the CIVITAS Forum 2026 in Thessaloniki',
       'forums.caption': 'CIVITAS Forum 2026, Thessaloniki — Transforming Public Transport Systems: Innovation, Markets & Partnerships',
+      'forums.throughline': 'Public transport has stopped being a separate ecosystem with its own card, its own app and its own rules. For the citizen it is simply part of daily life — and the instrument they already carry is their bank card or wallet. The job of ITS and digital infrastructure is not to build one more app: it is to make <strong>the correct, fair fare happen automatically</strong>, on the payment rails people already trust.',
       'forums.p1.t': 'Interoperability is a governance question',
-      'forums.p1.b': 'It is not simply an API discussion. It concerns <strong>responsibility, service continuity and data ownership</strong> — and how independent systems behave together when something fails.',
+      'forums.p1.b': 'Technical interfaces are usually the easiest part. The difficult part is deciding <strong>who owns the passenger journey</strong>, who is responsible for service continuity, who validates the data, who carries the operational risk — and how the different systems behave together when something goes wrong.',
       'forums.p2.t': 'Accepting a card is not the same as using it as the fare medium',
-      'forums.p2.b': '<strong>Account-based ticketing and open-loop EMV</strong> remove a layer from the passenger journey instead of adding one.',
-      'forums.p3.t': 'Procurement should buy outcomes, not feature lists',
-      'forums.p3.b': 'A pilot exists to answer a decision — <strong>scale, redesign or stop</strong>. Anything else simply postpones responsibility.',
-      'forums.p4.t': 'Technology should reduce complexity for the passenger',
-      'forums.p4.b': 'Public transport should integrate with the <strong>payment and digital tools citizens already use</strong>, rather than asking them to learn another one.',
-      'forums.close': 'The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it.',
+      'forums.p2.b': 'The first merely digitises the ticket purchase. The second changes the whole passenger experience. A truly integrated system does not require the passenger to understand the architecture of the network: they use an instrument they already carry, and the back office applies the correct fare and capping rules from actual usage — the model already running in London, Milan and Brussels.',
+      'forums.p3.t': 'AI should remove complexity, not add an interface',
+      'forums.p3.b': 'Its real value sits behind the service — understanding context, supporting disruption management, improving operations, and presenting only the choices the passenger actually needs. <strong>If AI requires the citizen to learn another app or another interface, we have probably used it in the wrong place.</strong>',
+      'forums.p4.t': 'Procurement should buy measurable outcomes, not feature lists',
+      'forums.p4.b': 'The question is not whether a system supports contactless payment, but whether an occasional passenger can enter the network without prior registration, use an instrument they already carry, and automatically receive the correct and fair fare. A pilot exists to answer a decision — scale, redesign or stop. If we have not defined what evidence triggers that decision, we are not piloting: we are postponing responsibility.',
+      'forums.p5.t': 'What makes it permanent',
+      'forums.p5.b': 'Three conditions, written in from day one: <strong>open standards</strong> — GTFS/GTFS-RT, NeTEx and SIRI in every procurement, so operators interoperate and no vendor owns the platform; <strong>clear data governance</strong> — the authority keeps the data and the fare logic; and <strong>a contract that splits the roles</strong> — payment partners carry acceptance, security and settlement, while the authority keeps policy control over fares, caps and concessions. That split is what makes a system sustainable rather than merely launchable — and none of it requires the scale or the budget of a capital city.',
+      'forums.close': 'The passenger should only need to understand where they want to go. Everything else should be our responsibility.',
+      'forums.closeSub': 'The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it — launching is easy; staying in daily operation is the real test.',
       'hero.tagline': 'When Technology meets Purpose',
       'hero.eyebrow': 'Inframind Ltd — Cyprus  ·  Technology Facilitators',
       'hero.sub': 'From the first technical study to the moment a system goes live — designing and delivering infrastructure that thousands of citizens and users rely on, every single day.',
@@ -3810,18 +3853,22 @@
       'nav.forums': 'Συμμετοχές',
       'forums.label': 'Συμμετοχές & Θέσεις',
       'forums.title': 'Από τα pilots<br><span class="light">σε συστήματα που δουλεύουν</span>',
-      'forums.intro': 'Η Inframind συμμετέχει σε ευρωπαϊκά fora όχι για προβολή, αλλά για να δοκιμάζει τις θέσεις της απέναντι στην πράξη — και να επιστρέφει με ό,τι αντέχει. Στο <em>CIVITAS Forum 2026</em> στη Θεσσαλονίκη, ο ιδρυτής της συμμετείχε στο πάνελ <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>.',
+      'forums.intro': 'Η Inframind συμμετέχει σε ευρωπαϊκά fora όχι για προβολή, αλλά για να δοκιμάζει τις θέσεις της απέναντι στην πράξη — και να επιστρέφει με ό,τι αντέχει. Στο <em>CIVITAS Forum 2026</em> στη Θεσσαλονίκη, ο ιδρυτής της συμμετείχε στο πάνελ <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>, για τα ψηφιακά εργαλεία, τη διάθεση δεδομένων και τη διαλειτουργικότητα, και για το πέρασμα από το pilot στην πραγματική λειτουργία.',
       'forums.alt': 'Πάνελ στο CIVITAS Forum 2026 στη Θεσσαλονίκη',
       'forums.caption': 'CIVITAS Forum 2026, Θεσσαλονίκη — Transforming Public Transport Systems: Innovation, Markets & Partnerships',
+      'forums.throughline': 'Οι δημόσιες μεταφορές έπαψαν να είναι ξεχωριστό οικοσύστημα με δική τους κάρτα, δική τους εφαρμογή και δικούς τους κανόνες. Για τον πολίτη είναι απλώς κομμάτι της καθημερινότητας — και το εργαλείο που ήδη κουβαλά είναι η τραπεζική του κάρτα ή το wallet του. Η δουλειά των ITS και των ψηφιακών υποδομών δεν είναι να φτιάξουν άλλη μία εφαρμογή: είναι να κάνουν <strong>τον σωστό και δίκαιο ναύλο να συμβαίνει αυτόματα</strong>, πάνω στις υποδομές πληρωμών που ο κόσμος ήδη εμπιστεύεται.',
       'forums.p1.t': 'Η διαλειτουργικότητα είναι ζήτημα διακυβέρνησης',
-      'forums.p1.b': 'Δεν είναι συζήτηση για APIs. Είναι <strong>ευθύνη, συνέχεια υπηρεσίας και ιδιοκτησία δεδομένων</strong> — και το πώς συμπεριφέρονται μαζί ανεξάρτητα συστήματα όταν κάτι πάει στραβά.',
+      'forums.p1.b': 'Οι τεχνικές διεπαφές είναι συνήθως το εύκολο μέρος. Το δύσκολο είναι ποιος <strong>έχει την ευθύνη της διαδρομής του επιβάτη</strong>, ποιος εγγυάται τη συνέχεια της υπηρεσίας, ποιος επικυρώνει τα δεδομένα, ποιος σηκώνει το λειτουργικό ρίσκο — και πώς συμπεριφέρονται μαζί τα επιμέρους συστήματα όταν κάτι πάει στραβά.',
       'forums.p2.t': 'Άλλο να δέχεσαι κάρτα, άλλο η κάρτα να είναι το εισιτήριο',
-      'forums.p2.b': 'Το <strong>account-based ticketing και το open-loop EMV</strong> αφαιρούν ένα επίπεδο από τη διαδρομή του επιβάτη αντί να προσθέτουν.',
-      'forums.p3.t': 'Οι διαγωνισμοί αγοράζουν αποτελέσματα, όχι λίστες χαρακτηριστικών',
-      'forums.p3.b': 'Ένα pilot υπάρχει για να απαντήσει σε μια απόφαση — <strong>κλιμάκωση, επανασχεδιασμός ή τερματισμός</strong>. Οτιδήποτε άλλο απλώς αναβάλλει την ευθύνη.',
-      'forums.p4.t': 'Η τεχνολογία οφείλει να μειώνει την πολυπλοκότητα για τον επιβάτη',
-      'forums.p4.b': 'Οι δημόσιες μεταφορές πρέπει να ενσωματώνονται στα <strong>εργαλεία πληρωμών που ο πολίτης ήδη χρησιμοποιεί</strong> — όχι να του ζητούν να μάθει άλλο ένα.',
-      'forums.close': 'Το πραγματικό τεστ της καινοτομίας δεν είναι αν δουλεύει σε μια επίδειξη. Είναι αν συνεχίζει να δουλεύει, κάθε μέρα, για όσους τη χρειάζονται.',
+      'forums.p2.b': 'Το πρώτο απλώς ψηφιοποιεί την αγορά του εισιτηρίου. Το δεύτερο αλλάζει ολόκληρη την εμπειρία του επιβάτη. Ένα πραγματικά ενιαίο σύστημα δεν ζητά από τον επιβάτη να καταλάβει την αρχιτεκτονική του δικτύου: χρησιμοποιεί ό,τι ήδη κουβαλά, και το back office υπολογίζει τον σωστό ναύλο και τα πλαφόν από την πραγματική χρήση — το μοντέλο που ήδη λειτουργεί σε Λονδίνο, Μιλάνο και Βρυξέλλες.',
+      'forums.p3.t': 'Η τεχνητή νοημοσύνη οφείλει να αφαιρεί πολυπλοκότητα, όχι να προσθέτει διεπαφή',
+      'forums.p3.b': 'Η πραγματική της αξία βρίσκεται πίσω από την υπηρεσία — κατανόηση συμφραζομένων, διαχείριση έκτακτων συμβάντων, βελτίωση της λειτουργίας, και εμφάνιση μόνο των επιλογών που χρειάζεται όντως ο επιβάτης. <strong>Αν η τεχνητή νοημοσύνη απαιτεί από τον πολίτη να μάθει άλλη μία εφαρμογή ή άλλη μία διεπαφή, μάλλον την έχουμε βάλει σε λάθος σημείο.</strong>',
+      'forums.p4.t': 'Οι διαγωνισμοί αγοράζουν μετρήσιμα αποτελέσματα, όχι λίστες χαρακτηριστικών',
+      'forums.p4.b': 'Το ερώτημα δεν είναι αν ένα σύστημα υποστηρίζει ανέπαφες πληρωμές, αλλά αν ένας περιστασιακός επιβάτης μπορεί να μπει στο δίκτυο χωρίς προηγούμενη εγγραφή, με ό,τι ήδη κουβαλά, και να χρεωθεί αυτόματα τον σωστό και δίκαιο ναύλο. Ένα pilot υπάρχει για να απαντήσει σε μια απόφαση — κλιμάκωση, επανασχεδιασμός ή τερματισμός. Αν δεν έχουμε ορίσει ποια τεκμήρια ενεργοποιούν αυτή την απόφαση, δεν κάνουμε pilot: αναβάλλουμε την ευθύνη.',
+      'forums.p5.t': 'Τι το κάνει μόνιμο',
+      'forums.p5.b': 'Τρεις όροι, γραμμένοι από την πρώτη μέρα: <strong>ανοικτά πρότυπα</strong> — GTFS/GTFS-RT, NeTEx και SIRI σε κάθε διαγωνισμό, ώστε οι φορείς να διαλειτουργούν και κανένας προμηθευτής να μην κατέχει την πλατφόρμα· <strong>καθαρή διακυβέρνηση δεδομένων</strong> — η αρχή κρατά τα δεδομένα και τη λογική του ναύλου· και <strong>σύμβαση που μοιράζει τους ρόλους</strong> — οι εταίροι πληρωμών αναλαμβάνουν αποδοχή, ασφάλεια και εκκαθάριση, ενώ η αρχή κρατά τον έλεγχο πολιτικής σε ναύλους, πλαφόν και εκπτωτικές κατηγορίες. Αυτός ο διαχωρισμός είναι που κάνει ένα σύστημα βιώσιμο και όχι απλώς εγκαινιάσιμο — και δεν απαιτεί την κλίμακα ή τον προϋπολογισμό μιας μητρόπολης.',
+      'forums.close': 'Ο επιβάτης χρειάζεται να ξέρει μόνο πού θέλει να πάει. Όλα τα υπόλοιπα είναι δική μας ευθύνη.',
+      'forums.closeSub': 'Το πραγματικό τεστ της καινοτομίας δεν είναι αν δουλεύει σε μια επίδειξη. Είναι αν συνεχίζει να δουλεύει, κάθε μέρα, για όσους τη χρειάζονται — τα εγκαίνια είναι το εύκολο· η καθημερινή λειτουργία είναι το τεστ.',
       'hero.tagline': 'Όταν η Τεχνολογία συναντά τον Σκοπό',
       'hero.eyebrow': 'Inframind Ltd — Κύπρος  ·  Technology Facilitators',
       'hero.sub': 'Από την πρώτη τεχνική μελέτη μέχρι τη στιγμή που ένα σύστημα γίνεται κομμάτι της καθημερινής ζωής — υποδομές πάνω στις οποίες χιλιάδες πολίτες βασίζονται κάθε μέρα, σχεδόν χωρίς να το συνειδητοποιούν.',
