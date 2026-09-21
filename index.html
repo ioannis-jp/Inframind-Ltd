@@ -2523,6 +2523,87 @@
     }
 
     /* ── PHILOSOPHY ── */
+
+    /* FORUMS & POSITIONS */
+    #forums { background: var(--black); }
+    #forums .section-label { color: rgba(255,255,255,0.38); }
+    #forums .section-title { color: var(--white); }
+    #forums .section-title .light { color: rgba(255,255,255,0.55); }
+    .forums-intro {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: #8f8f8f;
+      max-width: 800px;
+      margin: 0 0 56px;
+    }
+    .forums-intro em { font-style: normal; color: #d8d8d8; }
+    .forums-figure { margin: 0 0 64px; }
+    .forums-figure img {
+      width: 100%;
+      display: block;
+    }
+    .forums-figure figcaption {
+      margin-top: 14px;
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      font-weight: 600;
+    }
+    .forums-positions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .forum-position {
+      padding: 40px 48px 40px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .forum-position:nth-child(even) {
+      padding: 40px 0 40px 48px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+    }
+    .fp-num {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.30);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .forum-position h3 {
+      font-size: clamp(17px, 1.8vw, 21px);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.32;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .forum-position p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #8f8f8f;
+    }
+    .forum-position strong { color: #d8d8d8; font-weight: 600; }
+    .forums-close {
+      margin: 60px 0 0;
+      font-size: clamp(19px, 2.3vw, 28px);
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      max-width: 880px;
+    }
+    @media (max-width: 768px) {
+      .forums-positions { grid-template-columns: 1fr; }
+      .forum-position, .forum-position:nth-child(even) {
+        padding: 32px 0;
+        border-left: none;
+      }
+    }
+
     #philosophy { background: var(--light-grey); padding: 0; }
     #philosophy .section-label { color: var(--grey); }
     #philosophy .section-title { color: var(--black); }
@@ -2745,7 +2826,8 @@
       .lc-label { font-size: 12px; white-space: normal; }
       .btn-ghost { margin-left: 0; margin-top: 12px; }
     }
-  </style>
+    .nav-links a.nav-portal{border:1px solid currentColor;border-radius:6px;padding:4px 10px}
+</style>
 </head>
 <body>
 
@@ -2763,7 +2845,9 @@
       <li><a href="#tech-in-practice" data-i18n="nav.practice">In Practice</a></li>
       <li><a href="#analytics" data-i18n="nav.analytics">Analytics</a></li>
       <li><a href="#philosophy" data-i18n="nav.philosophy">Philosophy</a></li>
+      <li><a href="#forums" data-i18n="nav.forums">Forums</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      <li><a href="https://inframind-portal.pages.dev/" class="nav-portal" rel="noopener" data-i18n="nav.portal">Client Login</a></li>
     </ul>
     <div class="lang-switch" id="langSwitch">
       <button type="button" data-lang="en" class="active">EN</button>
@@ -2785,7 +2869,9 @@
   <a href="#tech-in-practice" onclick="closeMobile()" data-i18n="nav.practice">In Practice</a>
   <a href="#analytics" onclick="closeMobile()" data-i18n="nav.analytics">Analytics</a>
   <a href="#philosophy" onclick="closeMobile()" data-i18n="nav.philosophy">Philosophy</a>
+  <a href="#forums" onclick="closeMobile()" data-i18n="nav.forums">Forums</a>
   <a href="#contact" onclick="closeMobile()" data-i18n="nav.contact">Contact</a>
+  <a href="https://inframind-portal.pages.dev/" rel="noopener" data-i18n="nav.portal">Client Login</a>
   <div class="mobile-lang" id="mobileLangSwitch">
     <button type="button" data-lang="en" class="active">EN</button>
     <span style="color:var(--border)">|</span>
@@ -3433,6 +3519,46 @@
   </div>
 </section>
 
+<!-- FORUMS & POSITIONS -->
+<section id="forums">
+  <p class="section-label reveal" data-i18n="forums.label">Forums &amp; Positions</p>
+  <h2 class="section-title reveal" data-i18n-html="forums.title">From pilots to systems<br><span class="light">citizens actually use</span></h2>
+  <p class="forums-intro reveal" data-i18n-html="forums.intro">Inframind takes part in European forums not for visibility, but to test its positions against practice &mdash; and to bring back what actually holds. At the <em>CIVITAS Forum 2026</em> in Thessaloniki, our founder joined the panel <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>.</p>
+
+  <figure class="forums-figure reveal">
+    <picture>
+      <source srcset="civitas-2026-panel.webp" type="image/webp">
+      <img src="civitas-2026-panel.jpg" width="2000" height="882" loading="lazy" decoding="async" alt="Panel discussion at the CIVITAS Forum 2026 in Thessaloniki" data-i18n-alt="forums.alt">
+    </picture>
+    <figcaption data-i18n="forums.caption">CIVITAS Forum 2026, Thessaloniki &mdash; Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</figcaption>
+  </figure>
+
+  <div class="forums-positions">
+    <article class="forum-position reveal">
+      <span class="fp-num">01</span>
+      <h3 data-i18n="forums.p1.t">Interoperability is a governance question</h3>
+      <p data-i18n-html="forums.p1.b">It is not simply an API discussion. It concerns <strong>responsibility, service continuity and data ownership</strong> &mdash; and how independent systems behave together when something fails.</p>
+    </article>
+    <article class="forum-position reveal">
+      <span class="fp-num">02</span>
+      <h3 data-i18n="forums.p2.t">Accepting a card is not the same as using it as the fare medium</h3>
+      <p data-i18n-html="forums.p2.b"><strong>Account-based ticketing and open-loop EMV</strong> remove a layer from the passenger journey instead of adding one.</p>
+    </article>
+    <article class="forum-position reveal">
+      <span class="fp-num">03</span>
+      <h3 data-i18n="forums.p3.t">Procurement should buy outcomes, not feature lists</h3>
+      <p data-i18n-html="forums.p3.b">A pilot exists to answer a decision &mdash; <strong>scale, redesign or stop</strong>. Anything else simply postpones responsibility.</p>
+    </article>
+    <article class="forum-position reveal">
+      <span class="fp-num">04</span>
+      <h3 data-i18n="forums.p4.t">Technology should reduce complexity for the passenger</h3>
+      <p data-i18n-html="forums.p4.b">Public transport should integrate with the <strong>payment and digital tools citizens already use</strong>, rather than asking them to learn another one.</p>
+    </article>
+  </div>
+
+  <p class="forums-close reveal" data-i18n-html="forums.close">The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it.</p>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <p class="section-label reveal" data-i18n="contact.label">Contact</p>
@@ -3492,6 +3618,22 @@
       'nav.analytics': 'Analytics',
       'nav.philosophy': 'Philosophy',
       'nav.contact': 'Contact',
+      'nav.portal': 'Client Login',
+      'nav.forums': 'Forums',
+      'forums.label': 'Forums & Positions',
+      'forums.title': 'From pilots to systems<br><span class="light">citizens actually use</span>',
+      'forums.intro': 'Inframind takes part in European forums not for visibility, but to test its positions against practice — and to bring back what actually holds. At the <em>CIVITAS Forum 2026</em> in Thessaloniki, our founder joined the panel <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>.',
+      'forums.alt': 'Panel discussion at the CIVITAS Forum 2026 in Thessaloniki',
+      'forums.caption': 'CIVITAS Forum 2026, Thessaloniki — Transforming Public Transport Systems: Innovation, Markets & Partnerships',
+      'forums.p1.t': 'Interoperability is a governance question',
+      'forums.p1.b': 'It is not simply an API discussion. It concerns <strong>responsibility, service continuity and data ownership</strong> — and how independent systems behave together when something fails.',
+      'forums.p2.t': 'Accepting a card is not the same as using it as the fare medium',
+      'forums.p2.b': '<strong>Account-based ticketing and open-loop EMV</strong> remove a layer from the passenger journey instead of adding one.',
+      'forums.p3.t': 'Procurement should buy outcomes, not feature lists',
+      'forums.p3.b': 'A pilot exists to answer a decision — <strong>scale, redesign or stop</strong>. Anything else simply postpones responsibility.',
+      'forums.p4.t': 'Technology should reduce complexity for the passenger',
+      'forums.p4.b': 'Public transport should integrate with the <strong>payment and digital tools citizens already use</strong>, rather than asking them to learn another one.',
+      'forums.close': 'The real test of innovation is not whether it works in a demonstration. It is whether it keeps working, every day, for the people who depend on it.',
       'hero.tagline': 'When Technology meets Purpose',
       'hero.eyebrow': 'Inframind Ltd — Cyprus  ·  Technology Facilitators',
       'hero.sub': 'From the first technical study to the moment a system goes live — designing and delivering infrastructure that thousands of citizens and users rely on, every single day.',
@@ -3664,6 +3806,22 @@
       'nav.analytics': 'Analytics',
       'nav.philosophy': 'Φιλοσοφία',
       'nav.contact': 'Επικοινωνία',
+      'nav.portal': 'Είσοδος Πελατών',
+      'nav.forums': 'Συμμετοχές',
+      'forums.label': 'Συμμετοχές & Θέσεις',
+      'forums.title': 'Από τα pilots<br><span class="light">σε συστήματα που δουλεύουν</span>',
+      'forums.intro': 'Η Inframind συμμετέχει σε ευρωπαϊκά fora όχι για προβολή, αλλά για να δοκιμάζει τις θέσεις της απέναντι στην πράξη — και να επιστρέφει με ό,τι αντέχει. Στο <em>CIVITAS Forum 2026</em> στη Θεσσαλονίκη, ο ιδρυτής της συμμετείχε στο πάνελ <em>Transforming Public Transport Systems: Innovation, Markets &amp; Partnerships</em>.',
+      'forums.alt': 'Πάνελ στο CIVITAS Forum 2026 στη Θεσσαλονίκη',
+      'forums.caption': 'CIVITAS Forum 2026, Θεσσαλονίκη — Transforming Public Transport Systems: Innovation, Markets & Partnerships',
+      'forums.p1.t': 'Η διαλειτουργικότητα είναι ζήτημα διακυβέρνησης',
+      'forums.p1.b': 'Δεν είναι συζήτηση για APIs. Είναι <strong>ευθύνη, συνέχεια υπηρεσίας και ιδιοκτησία δεδομένων</strong> — και το πώς συμπεριφέρονται μαζί ανεξάρτητα συστήματα όταν κάτι πάει στραβά.',
+      'forums.p2.t': 'Άλλο να δέχεσαι κάρτα, άλλο η κάρτα να είναι το εισιτήριο',
+      'forums.p2.b': 'Το <strong>account-based ticketing και το open-loop EMV</strong> αφαιρούν ένα επίπεδο από τη διαδρομή του επιβάτη αντί να προσθέτουν.',
+      'forums.p3.t': 'Οι διαγωνισμοί αγοράζουν αποτελέσματα, όχι λίστες χαρακτηριστικών',
+      'forums.p3.b': 'Ένα pilot υπάρχει για να απαντήσει σε μια απόφαση — <strong>κλιμάκωση, επανασχεδιασμός ή τερματισμός</strong>. Οτιδήποτε άλλο απλώς αναβάλλει την ευθύνη.',
+      'forums.p4.t': 'Η τεχνολογία οφείλει να μειώνει την πολυπλοκότητα για τον επιβάτη',
+      'forums.p4.b': 'Οι δημόσιες μεταφορές πρέπει να ενσωματώνονται στα <strong>εργαλεία πληρωμών που ο πολίτης ήδη χρησιμοποιεί</strong> — όχι να του ζητούν να μάθει άλλο ένα.',
+      'forums.close': 'Το πραγματικό τεστ της καινοτομίας δεν είναι αν δουλεύει σε μια επίδειξη. Είναι αν συνεχίζει να δουλεύει, κάθε μέρα, για όσους τη χρειάζονται.',
       'hero.tagline': 'Όταν η Τεχνολογία συναντά τον Σκοπό',
       'hero.eyebrow': 'Inframind Ltd — Κύπρος  ·  Technology Facilitators',
       'hero.sub': 'Από την πρώτη τεχνική μελέτη μέχρι τη στιγμή που ένα σύστημα γίνεται κομμάτι της καθημερινής ζωής — υποδομές πάνω στις οποίες χιλιάδες πολίτες βασίζονται κάθε μέρα, σχεδόν χωρίς να το συνειδητοποιούν.',
@@ -3874,6 +4032,11 @@
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key = el.getAttribute('data-i18n-html');
       if (dict[key] != null) el.innerHTML = dict[key];
+    });
+    // image alt text
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+      const key = el.getAttribute('data-i18n-alt');
+      if (dict[key] != null) el.setAttribute('alt', dict[key]);
     });
     // placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
