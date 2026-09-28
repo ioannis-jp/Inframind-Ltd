@@ -3,80 +3,80 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-09-28T00:53:52.691923+00:00",
+ "generated_at": "2026-09-28T07:03:16.226900+00:00",
  "report_date": "2026-09-28",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 48,
-  "last_probe_utc": "2026-09-28T00:50:29.959550+00:00",
-  "unique_trips_today": 92,
-  "unique_vehicles_today": 52,
-  "unique_routes_today": 37
+  "probe_count_today": 72,
+  "last_probe_utc": "2026-09-28T07:00:30.600781+00:00",
+  "unique_trips_today": 1961,
+  "unique_vehicles_today": 461,
+  "unique_routes_today": 509
  },
  "coverage": {
   "stops_in_static_catalog": 5326,
-  "stops_with_live_updates": 580,
-  "stops_idle_or_off_service": 4746,
+  "stops_with_live_updates": 5121,
+  "stops_idle_or_off_service": 205,
   "stops_orphan_in_feed_not_in_catalog": 0,
-  "coverage_pct": 10.9
+  "coverage_pct": 96.2
  },
  "per_agency": {
   "2": {
    "agency_name": "ΟΣΥΠΑ",
    "region": "Πάφος",
    "stops_total": 889,
-   "stops_live": 199,
-   "stops_idle": 690,
-   "coverage_pct": 22.4
+   "stops_live": 823,
+   "stops_idle": 66,
+   "coverage_pct": 92.6
   },
   "4": {
    "agency_name": "ΟΣΕΑ",
    "region": "Αμμόχωστος",
    "stops_total": 446,
-   "stops_live": 287,
-   "stops_idle": 159,
-   "coverage_pct": 64.3
+   "stops_live": 443,
+   "stops_idle": 3,
+   "coverage_pct": 99.3
   },
   "5": {
    "agency_name": "INTERCITY",
    "region": "Διαπεριφερειακά",
    "stops_total": 123,
-   "stops_live": 52,
-   "stops_idle": 71,
-   "coverage_pct": 42.3
+   "stops_live": 123,
+   "stops_idle": 0,
+   "coverage_pct": 100.0
   },
   "6": {
    "agency_name": "ΕΜΕΛ",
    "region": "Λεμεσός",
    "stops_total": 1400,
-   "stops_live": 72,
-   "stops_idle": 1328,
-   "coverage_pct": 5.1
+   "stops_live": 1339,
+   "stops_idle": 61,
+   "coverage_pct": 95.6
   },
   "9": {
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 2,
-   "stops_idle": 1776,
-   "coverage_pct": 0.1
+   "stops_live": 1769,
+   "stops_idle": 9,
+   "coverage_pct": 99.5
   },
   "10": {
    "agency_name": "LPT",
    "region": "Λάρνακα",
    "stops_total": 1040,
-   "stops_live": 66,
-   "stops_idle": 974,
-   "coverage_pct": 6.3
+   "stops_live": 974,
+   "stops_idle": 66,
+   "coverage_pct": 93.7
   },
   "11": {
    "agency_name": "PAME EXPRESS",
    "region": "Express",
    "stops_total": 23,
-   "stops_live": 0,
-   "stops_idle": 23,
-   "coverage_pct": 0.0
+   "stops_live": 23,
+   "stops_idle": 0,
+   "coverage_pct": 100.0
   }
  },
  "anomalies": {
