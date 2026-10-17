@@ -1,32 +1,12 @@
 {
   "schema": "v3.0-dual-window",
-  "generated_at_utc": "2026-10-17T08:50:16.423489+00:00",
-  "cyprus_local_time": "2026-10-17T11:50:16+00:00",
+  "generated_at_utc": "2026-10-17T08:55:14.759303+00:00",
+  "cyprus_local_time": "2026-10-17T11:55:14+00:00",
   "window_hours": 6,
   "rt_degraded": false,
   "planned_next_6h": {
-    "trips": 1507,
-    "km": 32990.1,
-    "stops": 4927,
-    "operators": 6,
-    "operators_list": [
-      "INTERCITY",
-      "LPT",
-      "NPT",
-      "ΕΜΕΛ",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "routes": 413,
-    "vehicles_estimate": 401,
-    "fleet_capacity": 731,
-    "source": "GTFS static · MOTION ITS",
-    "window_start_cyprus_seconds": 42616,
-    "window_end_cyprus_seconds": 64216
-  },
-  "observed_last_6h": {
-    "trips": 1680,
-    "km": 36600.1,
+    "trips": 1506,
+    "km": 32989.5,
     "stops": 4926,
     "operators": 6,
     "operators_list": [
@@ -37,14 +17,34 @@
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
+    "routes": 412,
+    "vehicles_estimate": 397,
+    "fleet_capacity": 731,
+    "source": "GTFS static · MOTION ITS",
+    "window_start_cyprus_seconds": 42914,
+    "window_end_cyprus_seconds": 64514
+  },
+  "observed_last_6h": {
+    "trips": 1687,
+    "km": 36711.5,
+    "stops": 4928,
+    "operators": 6,
+    "operators_list": [
+      "INTERCITY",
+      "LPT",
+      "NPT",
+      "ΕΜΕΛ",
+      "ΟΣΕΑ",
+      "ΟΣΥΠΑ"
+    ],
     "vehicles_in_motion": 302,
-    "stop_arrivals_last_hour": 1041,
-    "stop_arrivals_vehicles_last_hour": 119,
+    "stop_arrivals_last_hour": 1116,
+    "stop_arrivals_vehicles_last_hour": 124,
     "source": "GTFS-RT · MOTION ITS",
     "probe_count": 74,
-    "first_probe_utc": "2026-10-17T02:50:22.107790+00:00",
-    "last_probe_utc": "2026-10-17T08:50:16.260893+00:00",
-    "km_exact_trips": 1680,
+    "first_probe_utc": "2026-10-17T02:55:17.818260+00:00",
+    "last_probe_utc": "2026-10-17T08:55:14.596291+00:00",
+    "km_exact_trips": 1687,
     "km_estimated_trips": 0,
     "km_unmatched_trips": 0
   }
