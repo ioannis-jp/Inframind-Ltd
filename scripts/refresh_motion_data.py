@@ -49,6 +49,7 @@ TODAY_SCHED_PATH = DATA_DIR / "_today_schedule.json"
 ROLLING_PATH = DATA_DIR / "_rolling_snapshots.json"
 VEHICLE_QA_PATH = DATA_DIR / "_vehicle_qa.json"
 RT_OUTAGE_PATH = DATA_DIR / "_rt_outage.json"
+GTFS_WATCH_PATH = DATA_DIR / "_gtfs_static_watch.json"
 MOTION_STATS_PATH = DATA_DIR / "motion-stats.json"
 PLANNED_PATH = DATA_DIR / "planned.json"
 
@@ -63,6 +64,20 @@ PLANNED_REGEN = os.environ.get("PLANNED_REGEN", "auto")
 TRIP_DIST_STALE_DAYS = 7
 GTFS_STATIC_STALE_DAYS = int(os.environ.get("GTFS_STATIC_STALE_DAYS", "1"))
 GTFS_DOWNLOAD_TIMEOUT_S = int(os.environ.get("GTFS_DOWNLOAD_TIMEOUT_S", "45"))
+# Daily-build watch (added 2026-10-22). MOTION re-issues every static bundle
+# each morning with NEW trip_ids for that day's service, while the RT feed
+# starts using those ids from the first departure (~04:15 Cyprus). The old
+# 24-hour age rule only re-downloaded ~24h after the previous build, i.e.
+# around 09:15–09:30 Cyprus, so our copy lagged MOTION by hours. Now, as soon
+# as our copy is for an earlier day, we probe the portal at most every
+# GTFS_PROBE_EVERY_MIN minutes (cheap HEAD first; full download only when the
+# file looks changed or the server gives no validators) from
+# GTFS_PROBE_FROM_HOUR (Cyprus) onwards, and log every probe as evidence of
+# WHEN each day's build appeared (data/_gtfs_static_watch.json).
+GTFS_PROBE_EVERY_MIN = int(os.environ.get("GTFS_PROBE_EVERY_MIN", "10"))
+GTFS_PROBE_FROM_HOUR = int(os.environ.get("GTFS_PROBE_FROM_HOUR", "2"))
+GTFS_WATCH_KEEP_DAYS = int(os.environ.get("GTFS_WATCH_KEEP_DAYS", "21"))
+GTFS_WATCH_LOG_MAX = int(os.environ.get("GTFS_WATCH_LOG_MAX", "600"))
 # A live RT fetch failure (e.g. MOTION returns HTTP 500) is treated as a
 # *transient* blip — non-fatal — only while the rolling buffer still holds a
 # probe newer than this many minutes. Past that, the data is going stale and
@@ -176,53 +191,238 @@ def gtfs_calendar_expired(zip_path):
         return False
 
 
+def gtfs_feed_meta(zip_path):
+    """(feed_version, feed_date 'YYYYMMDD') of a bundle, or (None, None).
+
+    feed_date is the service day the build was issued for: feed_info.txt
+    feed_start_date (MOTION sets it to the build day), else the 8 digits after
+    the agency prefix in feed_version (e.g. 'NPT20261022055433').
+    """
+    try:
+        with zipfile.ZipFile(zip_path) as z:
+            if "feed_info.txt" not in z.namelist():
+                return None, None
+            with z.open("feed_info.txt") as f:
+                rows = list(csv.DictReader(line.decode("utf-8-sig") for line in f))
+        if not rows:
+            return None, None
+        ver = (rows[0].get("feed_version") or "").strip() or None
+        day = (rows[0].get("feed_start_date") or "").strip()
+        if not (len(day) == 8 and day.isdigit()) and ver:
+            digits = "".join(ch for ch in ver if ch.isdigit())
+            day = digits[:8] if len(digits) >= 8 else ""
+        return ver, (day if len(day) == 8 and day.isdigit() else None)
+    except Exception:
+        return None, None
+
+
+def _load_gtfs_watch():
+    try:
+        data = json.loads(GTFS_WATCH_PATH.read_text())
+        if isinstance(data, dict):
+            data.setdefault("agencies", {})
+            data.setdefault("days", {})
+            data.setdefault("log", [])
+            return data
+    except Exception:
+        pass
+    return {"schema": "v1.0-gtfs-static-watch", "agencies": {}, "days": {}, "log": []}
+
+
+def _save_gtfs_watch(watch):
+    days = sorted(watch.get("days", {}))
+    for d in days[:-GTFS_WATCH_KEEP_DAYS]:
+        watch["days"].pop(d, None)
+    watch["log"] = watch.get("log", [])[-GTFS_WATCH_LOG_MAX:]
+    watch["schema"] = "v1.0-gtfs-static-watch"
+    watch["note"] = (
+        "Every probe of the MOTION open-data portal for the daily GTFS static "
+        "bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found "
+        "that day's build; last_old_utc = last probe that still found the "
+        "previous build. The build appeared between the two (UTC)."
+    )
+    watch["updated_utc"] = now_utc().isoformat()
+    GTFS_WATCH_PATH.write_text(json.dumps(watch, ensure_ascii=False, indent=1))
+
+
+def _http_validators(resp):
+    h = resp.headers or {}
+    v = {
+        "last_modified": h.get("Last-Modified"),
+        "etag": h.get("ETag"),
+        "length": h.get("Content-Length"),
+    }
+    return {k: val for k, val in v.items() if val}
+
+
+def _gtfs_download(url, zip_path):
+    """Download to <zip>.new and validate; return the temp path (caller moves it)."""
+    tmp = zip_path.with_suffix(".zip.new")
+    try:
+        r = requests.get(url, timeout=GTFS_DOWNLOAD_TIMEOUT_S, stream=True)
+        r.raise_for_status()
+        with tmp.open("wb") as fh:
+            for chunk in r.iter_content(chunk_size=65536):
+                if chunk:
+                    fh.write(chunk)
+        # Validate it's actually a zip (sanity check before clobbering)
+        with zipfile.ZipFile(tmp) as z:
+            if "trips.txt" not in z.namelist():
+                raise ValueError("trips.txt missing from downloaded zip")
+        return tmp, _http_validators(r)
+    except Exception:
+        try:
+            tmp.unlink()
+        except FileNotFoundError:
+            pass
+        raise
+
+
 def refresh_gtfs_static_if_stale():
-    """Download fresh GTFS zips from MOTION open-data portal when local copies
-    are older than GTFS_STATIC_STALE_DAYS. Newest trip_ids in trips.txt must
-    match the RT feed; stale zips → trip_id mismatch → observed km undercounts.
-    Network errors are tolerated (we keep what we have).
+    """Keep the local GTFS static bundles in step with MOTION's daily builds.
+
+    A bundle needs refreshing when (a) it was issued for an earlier service day
+    than today (Cyprus) — MOTION re-issues every bundle daily with new trip_ids;
+    (b) it is older than GTFS_STATIC_STALE_DAYS; or (c) its calendar expired.
+    Probes are throttled per agency (GTFS_PROBE_EVERY_MIN) and, for case (a),
+    start at GTFS_PROBE_FROM_HOUR Cyprus time. Every probe is logged to
+    data/_gtfs_static_watch.json. Network errors are tolerated (we keep what we
+    have) and never fail the run.
     """
     refreshed = []
+    watch = _load_gtfs_watch()
+    now = now_utc()
+    cy = now_cyprus()
+    today = gtfs_date_str(cy.date())
+    day_key = cy.date().isoformat()
+    watch_changed = False
+
     for ag in AGENCY_IDS:
         zip_path = GTFS_STATIC_DIR / f"{ag}_google_transit.zip"
         age = gtfs_zip_age_days(zip_path)
         expired = zip_path.exists() and gtfs_calendar_expired(zip_path)
-        if age is not None and age < GTFS_STATIC_STALE_DAYS and not expired:
+        local_ver, local_day = gtfs_feed_meta(zip_path) if zip_path.exists() else (None, None)
+        st = watch["agencies"].setdefault(ag, {})
+        st["local_feed_version"], st["local_feed_date"] = local_ver, local_day
+
+        behind_today = local_day is not None and local_day < today
+        too_old = age is None or age >= GTFS_STATIC_STALE_DAYS
+        if not (behind_today or too_old or expired):
             continue
+        # Daily-build wait: don't start before the configured Cyprus hour
+        # unless the bundle is genuinely stale/expired.
+        if behind_today and not (too_old or expired) and cy.hour < GTFS_PROBE_FROM_HOUR:
+            continue
+        last = st.get("last_probe_utc")
+        # Without real HTTP validators every probe is a full download, so probe
+        # less often (≥20′) to stay gentle on the MOTION portal.
+        every = GTFS_PROBE_EVERY_MIN if st.get("strong_validators") else max(GTFS_PROBE_EVERY_MIN, 20)
+        if last:
+            try:
+                since = (now - datetime.fromisoformat(last)).total_seconds() / 60.0
+                if since < every and not expired:
+                    continue
+            except Exception:
+                pass
         if expired:
             print(
                 f"[gtfs-static] agency {ag}: calendar_dates expired — forcing refresh",
                 file=sys.stderr,
             )
+
         url = GTFS_ZIP_URL_TMPL.format(ag=ag)
-        tmp = zip_path.with_suffix(".zip.new")
+        event = {"ts_utc": now.isoformat(timespec="seconds"), "ag": ag,
+                 "local_feed_version": local_ver}
+        st["last_probe_utc"] = now.isoformat(timespec="seconds")
+        watch_changed = True
         try:
-            r = requests.get(url, timeout=GTFS_DOWNLOAD_TIMEOUT_S, stream=True)
-            r.raise_for_status()
-            with tmp.open("wb") as fh:
-                for chunk in r.iter_content(chunk_size=65536):
-                    if chunk:
-                        fh.write(chunk)
-            # Validate it's actually a zip (sanity check before clobbering)
-            with zipfile.ZipFile(tmp) as z:
-                names = z.namelist()
-                if "trips.txt" not in names:
-                    raise ValueError("trips.txt missing from downloaded zip")
-            tmp.replace(zip_path)
-            refreshed.append(ag)
-            new_age = gtfs_zip_age_days(zip_path)
-            print(
-                f"[gtfs-static] refreshed agency {ag} "
-                f"({zip_path.stat().st_size:,} bytes, built "
-                f"{new_age:.1f} days ago)" if new_age is not None else
-                f"[gtfs-static] refreshed agency {ag} ({zip_path.stat().st_size:,} bytes)"
-            )
-        except Exception as e:
-            print(f"[gtfs-static] skip agency {ag}: {e}", file=sys.stderr)
+            # 1) Cheap HEAD: skip the download when the server's validators
+            #    match those of the bundle we already hold.
+            head_v = {}
             try:
-                tmp.unlink()
-            except FileNotFoundError:
-                pass
+                h = requests.head(url, timeout=15, allow_redirects=True)
+                if h.status_code < 400:
+                    head_v = _http_validators(h)
+                event["head_status"] = h.status_code
+            except Exception as e:
+                event["head_error"] = str(e)[:120]
+            if head_v:
+                event["head"] = head_v
+            known = st.get("validators") or {}
+            # Trust a HEAD match only with a real validator (Last-Modified /
+            # ETag); a bare Content-Length could repeat by chance, so then we
+            # still download at least every 30 minutes.
+            strong = bool(head_v.get("last_modified") or head_v.get("etag"))
+            st["strong_validators"] = strong
+            recent_get = False
+            if st.get("last_get_utc"):
+                try:
+                    recent_get = (now - datetime.fromisoformat(st["last_get_utc"])).total_seconds() < 1800
+                except Exception:
+                    recent_get = False
+            if head_v and known and head_v == known and not expired and (strong or recent_get):
+                event["result"] = "unchanged (head)"
+            else:
+                # 2) Download and compare build identity.
+                tmp, get_v = _gtfs_download(url, zip_path)
+                st["last_get_utc"] = now.isoformat(timespec="seconds")
+                new_ver, new_day = gtfs_feed_meta(tmp)
+                event["remote_feed_version"] = new_ver
+                event["remote_feed_date"] = new_day
+                if get_v:
+                    event["get"] = get_v
+                if new_ver and new_ver == local_ver and not (too_old or expired):
+                    tmp.unlink()
+                    event["result"] = "same build"
+                else:
+                    tmp.replace(zip_path)
+                    refreshed.append(ag)
+                    event["result"] = "new build"
+                    st["local_feed_version"], st["local_feed_date"] = new_ver, new_day
+                    st["refreshed_utc"] = now.isoformat(timespec="seconds")
+                    new_age = gtfs_zip_age_days(zip_path)
+                    print(
+                        f"[gtfs-static] refreshed agency {ag} → {new_ver} "
+                        f"({zip_path.stat().st_size:,} bytes"
+                        + (f", built {new_age:.1f} days ago)" if new_age is not None else ")")
+                    )
+                st["validators"] = head_v or get_v or {}
+        except Exception as e:
+            event["result"] = "error"
+            event["error"] = str(e)[:160]
+            print(f"[gtfs-static] skip agency {ag}: {e}", file=sys.stderr)
+
+        # Evidence per service day: when did today's build first appear?
+        d = watch["days"].setdefault(day_key, {}).setdefault(ag, {"probes": 0})
+        d["probes"] = d.get("probes", 0) + 1
+        d.setdefault("first_probe_utc", event["ts_utc"])
+        rv, rd = event.get("remote_feed_version"), event.get("remote_feed_date")
+        if rd == today or (event.get("result") == "unchanged (head)" and local_day == today):
+            if "new_seen_utc" not in d:
+                d["new_seen_utc"] = event["ts_utc"]
+                d["feed_version"] = rv or local_ver
+        elif event.get("result") in ("same build", "unchanged (head)", "new build") and "new_seen_utc" not in d:
+            d["last_old_utc"] = event["ts_utc"]
+            d["old_feed_version"] = rv or local_ver
+        d["last_result"] = event.get("result")
+        watch["log"].append(event)
+
+    # Mark agencies already on today's build without needing a probe today
+    for ag in AGENCY_IDS:
+        st = watch["agencies"].get(ag, {})
+        if st.get("local_feed_date") == today:
+            d = watch["days"].setdefault(day_key, {}).setdefault(ag, {"probes": 0})
+            if "new_seen_utc" not in d and "feed_version" not in d:
+                d["feed_version"] = st.get("local_feed_version")
+                d["held_before_probe"] = True
+                watch_changed = True
+
+    if watch_changed:
+        try:
+            _save_gtfs_watch(watch)
+        except Exception as e:
+            print(f"[gtfs-static] watch log not saved: {e}", file=sys.stderr)
+
     if refreshed:
         # Force downstream caches to rebuild since trip_ids may have changed
         try:
