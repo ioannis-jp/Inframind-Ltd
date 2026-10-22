@@ -1,0 +1,75 @@
+{
+ "schema": "v1.0-gtfs-static-watch",
+ "agencies": {
+  "2": {
+   "local_feed_version": "ΟΣΥΠΑ20261022055433",
+   "local_feed_date": "20261022"
+  },
+  "4": {
+   "local_feed_version": "ΟΣΕΑ20261022055433",
+   "local_feed_date": "20261022"
+  },
+  "5": {
+   "local_feed_version": "INTERCITY20261022055433",
+   "local_feed_date": "20261022"
+  },
+  "6": {
+   "local_feed_version": "ΕΜΕΛ20261022055433",
+   "local_feed_date": "20261022"
+  },
+  "9": {
+   "local_feed_version": "NPT20261022055433",
+   "local_feed_date": "20261022"
+  },
+  "10": {
+   "local_feed_version": "LPT20261022055433",
+   "local_feed_date": "20261022"
+  },
+  "11": {
+   "local_feed_version": "PAME_EXPRESS20261022055433",
+   "local_feed_date": "20261022"
+  }
+ },
+ "days": {
+  "2026-10-22": {
+   "2": {
+    "probes": 0,
+    "feed_version": "ΟΣΥΠΑ20261022055433",
+    "held_before_probe": true
+   },
+   "4": {
+    "probes": 0,
+    "feed_version": "ΟΣΕΑ20261022055433",
+    "held_before_probe": true
+   },
+   "5": {
+    "probes": 0,
+    "feed_version": "INTERCITY20261022055433",
+    "held_before_probe": true
+   },
+   "6": {
+    "probes": 0,
+    "feed_version": "ΕΜΕΛ20261022055433",
+    "held_before_probe": true
+   },
+   "9": {
+    "probes": 0,
+    "feed_version": "NPT20261022055433",
+    "held_before_probe": true
+   },
+   "10": {
+    "probes": 0,
+    "feed_version": "LPT20261022055433",
+    "held_before_probe": true
+   },
+   "11": {
+    "probes": 0,
+    "feed_version": "PAME_EXPRESS20261022055433",
+    "held_before_probe": true
+   }
+  }
+ },
+ "log": [],
+ "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
+ "updated_utc": "2026-10-22T08:20:49.117044+00:00"
+}
