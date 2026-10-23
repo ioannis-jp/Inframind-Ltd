@@ -3,23 +3,23 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-10-22T22:28:23.859326+00:00",
+ "generated_at": "2026-10-23T01:38:02.053367+00:00",
  "report_date": "2026-10-23",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 18,
-  "last_probe_utc": "2026-10-22T22:25:54.245906+00:00",
-  "unique_trips_today": 70,
-  "unique_vehicles_today": 43,
-  "unique_routes_today": 27
+  "probe_count_today": 57,
+  "last_probe_utc": "2026-10-23T01:35:51.283578+00:00",
+  "unique_trips_today": 114,
+  "unique_vehicles_today": 58,
+  "unique_routes_today": 56
  },
  "coverage": {
   "stops_in_static_catalog": 5315,
-  "stops_with_live_updates": 537,
-  "stops_idle_or_off_service": 4778,
+  "stops_with_live_updates": 881,
+  "stops_idle_or_off_service": 4434,
   "stops_orphan_in_feed_not_in_catalog": 0,
-  "coverage_pct": 10.1
+  "coverage_pct": 16.6
  },
  "per_agency": {
   "2": {
@@ -42,33 +42,33 @@
    "agency_name": "INTERCITY",
    "region": "Διαπεριφερειακά",
    "stops_total": 123,
-   "stops_live": 47,
-   "stops_idle": 76,
-   "coverage_pct": 38.2
+   "stops_live": 48,
+   "stops_idle": 75,
+   "coverage_pct": 39.0
   },
   "6": {
    "agency_name": "ΕΜΕΛ",
    "region": "Λεμεσός",
    "stops_total": 1390,
-   "stops_live": 69,
-   "stops_idle": 1321,
-   "coverage_pct": 5.0
+   "stops_live": 71,
+   "stops_idle": 1319,
+   "coverage_pct": 5.1
   },
   "9": {
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 17,
-   "stops_idle": 1761,
-   "coverage_pct": 1.0
+   "stops_live": 361,
+   "stops_idle": 1417,
+   "coverage_pct": 20.3
   },
   "10": {
    "agency_name": "LPT",
    "region": "Λάρνακα",
    "stops_total": 1040,
-   "stops_live": 66,
-   "stops_idle": 974,
-   "coverage_pct": 6.3
+   "stops_live": 89,
+   "stops_idle": 951,
+   "coverage_pct": 8.6
   },
   "11": {
    "agency_name": "PAME EXPRESS",
