@@ -3,23 +3,23 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-10-23T22:21:34.589431+00:00",
+ "generated_at": "2026-10-24T00:48:47.459104+00:00",
  "report_date": "2026-10-24",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 17,
-  "last_probe_utc": "2026-10-23T22:21:01.266665+00:00",
-  "unique_trips_today": 104,
-  "unique_vehicles_today": 57,
-  "unique_routes_today": 46
+  "probe_count_today": 47,
+  "last_probe_utc": "2026-10-24T00:46:00.898055+00:00",
+  "unique_trips_today": 125,
+  "unique_vehicles_today": 64,
+  "unique_routes_today": 53
  },
  "coverage": {
   "stops_in_static_catalog": 5315,
-  "stops_with_live_updates": 1114,
-  "stops_idle_or_off_service": 4201,
+  "stops_with_live_updates": 1229,
+  "stops_idle_or_off_service": 4086,
   "stops_orphan_in_feed_not_in_catalog": 0,
-  "coverage_pct": 21.0
+  "coverage_pct": 23.1
  },
  "per_agency": {
   "2": {
@@ -50,25 +50,25 @@
    "agency_name": "ΕΜΕΛ",
    "region": "Λεμεσός",
    "stops_total": 1390,
-   "stops_live": 73,
-   "stops_idle": 1317,
-   "coverage_pct": 5.3
+   "stops_live": 76,
+   "stops_idle": 1314,
+   "coverage_pct": 5.5
   },
   "9": {
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 381,
-   "stops_idle": 1397,
-   "coverage_pct": 21.4
+   "stops_live": 468,
+   "stops_idle": 1310,
+   "coverage_pct": 26.3
   },
   "10": {
    "agency_name": "LPT",
    "region": "Λάρνακα",
    "stops_total": 1040,
-   "stops_live": 247,
-   "stops_idle": 793,
-   "coverage_pct": 23.8
+   "stops_live": 290,
+   "stops_idle": 750,
+   "coverage_pct": 27.9
   },
   "11": {
    "agency_name": "PAME EXPRESS",
