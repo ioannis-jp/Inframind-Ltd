@@ -1,32 +1,13 @@
 {
   "schema": "v3.0-dual-window",
-  "generated_at_utc": "2026-10-24T04:36:06.056168+00:00",
-  "cyprus_local_time": "2026-10-24T07:36:06+00:00",
+  "generated_at_utc": "2026-10-24T04:41:03.318570+00:00",
+  "cyprus_local_time": "2026-10-24T07:41:03+00:00",
   "window_hours": 6,
   "rt_degraded": false,
   "planned_next_6h": {
-    "trips": 1190,
-    "km": 27078.9,
-    "stops": 3765,
-    "operators": 5,
-    "operators_list": [
-      "INTERCITY",
-      "LPT",
-      "NPT",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "routes": 298,
-    "vehicles_estimate": 318,
-    "fleet_capacity": 731,
-    "source": "GTFS static · MOTION ITS",
-    "window_start_cyprus_seconds": 27365,
-    "window_end_cyprus_seconds": 48965
-  },
-  "observed_last_6h": {
-    "trips": 702,
-    "km": 14304.4,
-    "stops": 3995,
+    "trips": 1524,
+    "km": 32809.7,
+    "stops": 4995,
     "operators": 6,
     "operators_list": [
       "INTERCITY",
@@ -36,15 +17,35 @@
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
-    "vehicles_in_motion": 240,
-    "stop_arrivals_last_hour": 812,
-    "stop_arrivals_vehicles_last_hour": 90,
+    "routes": 400,
+    "vehicles_estimate": 409,
+    "fleet_capacity": 731,
+    "source": "GTFS static · MOTION ITS",
+    "window_start_cyprus_seconds": 27663,
+    "window_end_cyprus_seconds": 49263
+  },
+  "observed_last_6h": {
+    "trips": 723,
+    "km": 14847.0,
+    "stops": 4054,
+    "operators": 6,
+    "operators_list": [
+      "INTERCITY",
+      "LPT",
+      "NPT",
+      "ΕΜΕΛ",
+      "ΟΣΕΑ",
+      "ΟΣΥΠΑ"
+    ],
+    "vehicles_in_motion": 241,
+    "stop_arrivals_last_hour": 829,
+    "stop_arrivals_vehicles_last_hour": 93,
     "source": "GTFS-RT · MOTION ITS",
-    "probe_count": 73,
+    "probe_count": 74,
     "first_probe_utc": "2026-10-23T22:41:04.112091+00:00",
-    "last_probe_utc": "2026-10-24T04:36:05.974534+00:00",
-    "km_exact_trips": 128,
-    "km_estimated_trips": 567,
-    "km_unmatched_trips": 7
+    "last_probe_utc": "2026-10-24T04:41:03.218436+00:00",
+    "km_exact_trips": 276,
+    "km_estimated_trips": 447,
+    "km_unmatched_trips": 0
   }
 }
