@@ -37,13 +37,13 @@
   "6": {
    "local_feed_version": "ΕΜΕΛ20261023052105",
    "local_feed_date": "20261023",
-   "last_probe_utc": "2026-10-24T01:40:53+00:00",
+   "last_probe_utc": "2026-10-24T01:45:57+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-10-24T01:40:53+00:00",
+   "last_get_utc": "2026-10-24T01:45:57+00:00",
    "validators": {
     "length": "1472952"
    },
-   "refreshed_utc": "2026-10-24T01:40:53+00:00"
+   "refreshed_utc": "2026-10-24T01:45:57+00:00"
   },
   "9": {
    "local_feed_version": "NPT20261023052105",
@@ -184,9 +184,9 @@
   },
   "2026-10-24": {
    "6": {
-    "probes": 58,
+    "probes": 59,
     "first_probe_utc": "2026-10-23T21:00:57+00:00",
-    "last_old_utc": "2026-10-24T01:40:53+00:00",
+    "last_old_utc": "2026-10-24T01:45:57+00:00",
     "old_feed_version": "ΕΜΕΛ20261023052105",
     "last_result": "new build"
    },
@@ -2789,8 +2789,23 @@
     "length": "1472952"
    },
    "result": "new build"
+  },
+  {
+   "ts_utc": "2026-10-24T01:45:57+00:00",
+   "ag": "6",
+   "local_feed_version": "ΕΜΕΛ20261023052105",
+   "head_status": 200,
+   "head": {
+    "length": "1472952"
+   },
+   "remote_feed_version": "ΕΜΕΛ20261023052105",
+   "remote_feed_date": "20261023",
+   "get": {
+    "length": "1472952"
+   },
+   "result": "new build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-10-24T01:40:56.438643+00:00"
+ "updated_utc": "2026-10-24T01:46:00.944855+00:00"
 }
