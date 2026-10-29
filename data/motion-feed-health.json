@@ -3,23 +3,23 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-10-28T23:19:32.103516+00:00",
+ "generated_at": "2026-10-29T02:30:57.694389+00:00",
  "report_date": "2026-10-29",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 28,
-  "last_probe_utc": "2026-10-28T23:15:51.462899+00:00",
-  "unique_trips_today": 145,
-  "unique_vehicles_today": 70,
-  "unique_routes_today": 52
+  "probe_count_today": 68,
+  "last_probe_utc": "2026-10-29T02:30:48.920368+00:00",
+  "unique_trips_today": 162,
+  "unique_vehicles_today": 80,
+  "unique_routes_today": 63
  },
  "coverage": {
   "stops_in_static_catalog": 5326,
-  "stops_with_live_updates": 777,
-  "stops_idle_or_off_service": 4549,
+  "stops_with_live_updates": 958,
+  "stops_idle_or_off_service": 4368,
   "stops_orphan_in_feed_not_in_catalog": 0,
-  "coverage_pct": 14.6
+  "coverage_pct": 18.0
  },
  "per_agency": {
   "2": {
@@ -50,33 +50,33 @@
    "agency_name": "ΕΜΕΛ",
    "region": "Λεμεσός",
    "stops_total": 1401,
-   "stops_live": 85,
-   "stops_idle": 1316,
-   "coverage_pct": 6.1
+   "stops_live": 88,
+   "stops_idle": 1313,
+   "coverage_pct": 6.3
   },
   "9": {
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 33,
-   "stops_idle": 1745,
-   "coverage_pct": 1.9
+   "stops_live": 214,
+   "stops_idle": 1564,
+   "coverage_pct": 12.0
   },
   "10": {
    "agency_name": "LPT",
    "region": "Λάρνακα",
    "stops_total": 1040,
-   "stops_live": 122,
-   "stops_idle": 918,
-   "coverage_pct": 11.7
+   "stops_live": 128,
+   "stops_idle": 912,
+   "coverage_pct": 12.3
   },
   "11": {
    "agency_name": "PAME EXPRESS",
    "region": "Express",
    "stops_total": 23,
-   "stops_live": 4,
-   "stops_idle": 19,
-   "coverage_pct": 17.4
+   "stops_live": 5,
+   "stops_idle": 18,
+   "coverage_pct": 21.7
   }
  },
  "anomalies": {
