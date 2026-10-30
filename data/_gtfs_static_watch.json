@@ -48,9 +48,9 @@
   "9": {
    "local_feed_version": "NPT20261029062057",
    "local_feed_date": "20261029",
-   "last_probe_utc": "2026-10-30T03:50:33+00:00",
+   "last_probe_utc": "2026-10-30T04:10:36+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-10-30T03:25:36+00:00",
+   "last_get_utc": "2026-10-30T04:10:36+00:00",
    "validators": {
     "length": "4152611"
    },
@@ -610,11 +610,11 @@
     "feed_version": "ΕΜΕΛ20261030051331"
    },
    "9": {
-    "probes": 14,
+    "probes": 15,
     "first_probe_utc": "2026-10-29T23:00:36+00:00",
-    "last_old_utc": "2026-10-30T03:50:33+00:00",
+    "last_old_utc": "2026-10-30T04:10:36+00:00",
     "old_feed_version": "NPT20261029062057",
-    "last_result": "unchanged (head)"
+    "last_result": "same build"
    },
    "10": {
     "probes": 14,
@@ -637,21 +637,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-10-25T23:00:55+00:00",
-   "ag": "4",
-   "local_feed_version": "ΟΣΕΑ20261025053355",
-   "head_status": 200,
-   "head": {
-    "length": "1344816"
-   },
-   "remote_feed_version": "ΟΣΕΑ20261025053355",
-   "remote_feed_date": "20261025",
-   "get": {
-    "length": "1344816"
-   },
-   "result": "same build"
-  },
   {
    "ts_utc": "2026-10-25T23:00:55+00:00",
    "ag": "5",
@@ -8242,8 +8227,23 @@
     "length": "18192"
    },
    "result": "new build"
+  },
+  {
+   "ts_utc": "2026-10-30T04:10:36+00:00",
+   "ag": "9",
+   "local_feed_version": "NPT20261029062057",
+   "head_status": 200,
+   "head": {
+    "length": "4152611"
+   },
+   "remote_feed_version": "NPT20261029062057",
+   "remote_feed_date": "20261029",
+   "get": {
+    "length": "4152611"
+   },
+   "result": "same build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-10-30T03:50:47.550015+00:00"
+ "updated_utc": "2026-10-30T04:10:39.302765+00:00"
 }
