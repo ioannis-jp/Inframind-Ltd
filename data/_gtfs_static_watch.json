@@ -46,15 +46,15 @@
    "refreshed_utc": "2026-11-04T03:40:36+00:00"
   },
   "9": {
-   "local_feed_version": "NPT20261103051612",
-   "local_feed_date": "20261103",
-   "last_probe_utc": "2026-11-04T05:15:39+00:00",
+   "local_feed_version": "NPT20261104051629",
+   "local_feed_date": "20261104",
+   "last_probe_utc": "2026-11-04T05:40:39+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-11-04T02:50:37+00:00",
+   "last_get_utc": "2026-11-04T05:40:39+00:00",
    "validators": {
-    "length": "4152358"
+    "length": "4152390"
    },
-   "refreshed_utc": "2026-11-03T03:55:38+00:00"
+   "refreshed_utc": "2026-11-04T05:40:39+00:00"
   },
   "10": {
    "local_feed_version": "LPT20261104051629",
@@ -935,11 +935,13 @@
     "feed_version": "ΕΜΕΛ20261104051629"
    },
    "9": {
-    "probes": 17,
+    "probes": 18,
     "first_probe_utc": "2026-11-03T23:00:39+00:00",
     "last_old_utc": "2026-11-04T03:15:39+00:00",
     "old_feed_version": "NPT20261103051612",
-    "last_result": "error"
+    "last_result": "new build",
+    "new_seen_utc": "2026-11-04T05:40:39+00:00",
+    "feed_version": "NPT20261104051629"
    },
    "10": {
     "probes": 13,
@@ -962,16 +964,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-10-30T00:55:36+00:00",
-   "ag": "11",
-   "local_feed_version": "PAME_EXPRESS20261029062057",
-   "head_status": 200,
-   "head": {
-    "length": "18197"
-   },
-   "result": "unchanged (head)"
-  },
   {
    "ts_utc": "2026-10-30T01:20:35+00:00",
    "ag": "2",
@@ -8606,8 +8598,23 @@
    },
    "result": "error",
    "error": "File is not a zip file"
+  },
+  {
+   "ts_utc": "2026-11-04T05:40:39+00:00",
+   "ag": "9",
+   "local_feed_version": "NPT20261103051612",
+   "head_status": 200,
+   "head": {
+    "length": "4152390"
+   },
+   "remote_feed_version": "NPT20261104051629",
+   "remote_feed_date": "20261104",
+   "get": {
+    "length": "4152390"
+   },
+   "result": "new build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-04T05:15:40.942456+00:00"
+ "updated_utc": "2026-11-04T05:40:43.488079+00:00"
 }
