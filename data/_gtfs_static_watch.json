@@ -26,7 +26,7 @@
   "5": {
    "local_feed_version": "INTERCITY20261105051621",
    "local_feed_date": "20261105",
-   "last_probe_utc": "2026-11-06T03:51:07+00:00",
+   "last_probe_utc": "2026-11-06T04:16:10+00:00",
    "strong_validators": false,
    "last_get_utc": "2026-11-06T03:26:08+00:00",
    "validators": {
@@ -37,9 +37,9 @@
   "6": {
    "local_feed_version": "ΕΜΕΛ20261105051621",
    "local_feed_date": "20261105",
-   "last_probe_utc": "2026-11-06T03:51:07+00:00",
+   "last_probe_utc": "2026-11-06T04:16:10+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-11-06T03:26:08+00:00",
+   "last_get_utc": "2026-11-06T04:16:10+00:00",
    "validators": {
     "length": "1969463"
    },
@@ -48,9 +48,9 @@
   "9": {
    "local_feed_version": "NPT20261105051621",
    "local_feed_date": "20261105",
-   "last_probe_utc": "2026-11-06T03:51:07+00:00",
+   "last_probe_utc": "2026-11-06T04:16:10+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-11-06T03:26:08+00:00",
+   "last_get_utc": "2026-11-06T04:16:10+00:00",
    "validators": {
     "length": "4152143"
    },
@@ -1047,25 +1047,25 @@
     "feed_version": "ΟΣΕΑ20261106051503"
    },
    "5": {
-    "probes": 14,
+    "probes": 15,
     "first_probe_utc": "2026-11-05T23:01:08+00:00",
     "last_old_utc": "2026-11-06T03:26:08+00:00",
     "old_feed_version": "INTERCITY20261105051621",
     "last_result": "error"
    },
    "6": {
-    "probes": 14,
+    "probes": 15,
     "first_probe_utc": "2026-11-05T23:01:08+00:00",
-    "last_old_utc": "2026-11-06T03:51:07+00:00",
+    "last_old_utc": "2026-11-06T04:16:10+00:00",
     "old_feed_version": "ΕΜΕΛ20261105051621",
-    "last_result": "unchanged (head)"
+    "last_result": "same build"
    },
    "9": {
-    "probes": 14,
+    "probes": 15,
     "first_probe_utc": "2026-11-05T23:01:08+00:00",
-    "last_old_utc": "2026-11-06T03:51:07+00:00",
+    "last_old_utc": "2026-11-06T04:16:10+00:00",
     "old_feed_version": "NPT20261105051621",
-    "last_result": "unchanged (head)"
+    "last_result": "same build"
    },
    "10": {
     "probes": 14,
@@ -1088,51 +1088,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-10-31T23:00:44+00:00",
-   "ag": "4",
-   "local_feed_version": "ΟΣΕΑ20261031053139",
-   "head_status": 200,
-   "head": {
-    "length": "1429976"
-   },
-   "remote_feed_version": "ΟΣΕΑ20261031053139",
-   "remote_feed_date": "20261031",
-   "get": {
-    "length": "1429976"
-   },
-   "result": "same build"
-  },
-  {
-   "ts_utc": "2026-10-31T23:00:44+00:00",
-   "ag": "5",
-   "local_feed_version": "INTERCITY20261031053139",
-   "head_status": 200,
-   "head": {
-    "length": "1136717"
-   },
-   "remote_feed_version": "INTERCITY20261031053139",
-   "remote_feed_date": "20261031",
-   "get": {
-    "length": "1136717"
-   },
-   "result": "same build"
-  },
-  {
-   "ts_utc": "2026-10-31T23:00:44+00:00",
-   "ag": "6",
-   "local_feed_version": "ΕΜΕΛ20261031053139",
-   "head_status": 200,
-   "head": {
-    "length": "2928361"
-   },
-   "remote_feed_version": "ΕΜΕΛ20261031053139",
-   "remote_feed_date": "20261031",
-   "get": {
-    "length": "2928361"
-   },
-   "result": "same build"
-  },
   {
    "ts_utc": "2026-10-31T23:00:44+00:00",
    "ag": "9",
@@ -8738,8 +8693,49 @@
     "length": "18183"
    },
    "result": "new build"
+  },
+  {
+   "ts_utc": "2026-11-06T04:16:10+00:00",
+   "ag": "5",
+   "local_feed_version": "INTERCITY20261105051621",
+   "head_status": 200,
+   "head": {
+    "length": "1142711"
+   },
+   "result": "error",
+   "error": "File is not a zip file"
+  },
+  {
+   "ts_utc": "2026-11-06T04:16:10+00:00",
+   "ag": "6",
+   "local_feed_version": "ΕΜΕΛ20261105051621",
+   "head_status": 200,
+   "head": {
+    "length": "1969463"
+   },
+   "remote_feed_version": "ΕΜΕΛ20261105051621",
+   "remote_feed_date": "20261105",
+   "get": {
+    "length": "1969463"
+   },
+   "result": "same build"
+  },
+  {
+   "ts_utc": "2026-11-06T04:16:10+00:00",
+   "ag": "9",
+   "local_feed_version": "NPT20261105051621",
+   "head_status": 200,
+   "head": {
+    "length": "4152143"
+   },
+   "remote_feed_version": "NPT20261105051621",
+   "remote_feed_date": "20261105",
+   "get": {
+    "length": "4152143"
+   },
+   "result": "same build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-06T03:51:19.565551+00:00"
+ "updated_utc": "2026-11-06T04:16:16.570945+00:00"
 }
