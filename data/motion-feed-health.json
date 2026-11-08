@@ -3,23 +3,23 @@
  "$producer": "INFRAMIND LTD · daily_analytics.py",
  "$contact": "ipanagiotidis@me.com",
  "history_note": "History reset 2026-08-24. Pre-fix data (GTFS static frozen 2026-06-02..2026-08-07, planned figures understated) archived in data/archive/pre-fix/. Not comparable with v2.0 entries.",
- "generated_at": "2026-11-07T22:48:52.408391+00:00",
+ "generated_at": "2026-11-08T02:33:13.755469+00:00",
  "report_date": "2026-11-08",
  "feed_source": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
  "feed_health": {
   "reachable": true,
-  "probe_count_today": 22,
-  "last_probe_utc": "2026-11-07T22:45:30.607994+00:00",
-  "unique_trips_today": 174,
+  "probe_count_today": 68,
+  "last_probe_utc": "2026-11-08T02:30:52.137926+00:00",
+  "unique_trips_today": 186,
   "unique_vehicles_today": 84,
-  "unique_routes_today": 84
+  "unique_routes_today": 85
  },
  "coverage": {
   "stops_in_static_catalog": 5326,
-  "stops_with_live_updates": 1306,
-  "stops_idle_or_off_service": 4020,
+  "stops_with_live_updates": 1393,
+  "stops_idle_or_off_service": 3933,
   "stops_orphan_in_feed_not_in_catalog": 0,
-  "coverage_pct": 24.5
+  "coverage_pct": 26.2
  },
  "per_agency": {
   "2": {
@@ -58,17 +58,17 @@
    "agency_name": "NPT",
    "region": "Λευκωσία",
    "stops_total": 1778,
-   "stops_live": 466,
-   "stops_idle": 1312,
-   "coverage_pct": 26.2
+   "stops_live": 476,
+   "stops_idle": 1302,
+   "coverage_pct": 26.8
   },
   "10": {
    "agency_name": "LPT",
    "region": "Λάρνακα",
    "stops_total": 1040,
-   "stops_live": 223,
-   "stops_idle": 817,
-   "coverage_pct": 21.4
+   "stops_live": 310,
+   "stops_idle": 730,
+   "coverage_pct": 29.8
   },
   "11": {
    "agency_name": "PAME EXPRESS",
