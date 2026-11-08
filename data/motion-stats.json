@@ -1,31 +1,13 @@
 {
   "schema": "v3.0-dual-window",
-  "generated_at_utc": "2026-11-08T20:55:31.874696+00:00",
-  "cyprus_local_time": "2026-11-08T23:55:31+00:00",
+  "generated_at_utc": "2026-11-08T21:00:34.831251+00:00",
+  "cyprus_local_time": "2026-11-09T00:00:34+00:00",
   "window_hours": 6,
   "rt_degraded": false,
   "planned_next_6h": {
-    "trips": 37,
-    "km": 609.6,
-    "stops": 486,
-    "operators": 4,
-    "operators_list": [
-      "LPT",
-      "ΕΜΕΛ",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "routes": 20,
-    "vehicles_estimate": 37,
-    "fleet_capacity": 731,
-    "source": "GTFS static · MOTION ITS",
-    "window_start_cyprus_seconds": 86131,
-    "window_end_cyprus_seconds": 107731
-  },
-  "observed_last_6h": {
-    "trips": 1162,
-    "km": 26829.3,
-    "stops": 3841,
+    "trips": 310,
+    "km": 7314.1,
+    "stops": 3510,
     "operators": 6,
     "operators_list": [
       "INTERCITY",
@@ -35,14 +17,34 @@
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
-    "vehicles_in_motion": 266,
-    "stop_arrivals_last_hour": 602,
-    "stop_arrivals_vehicles_last_hour": 61,
+    "routes": 222,
+    "vehicles_estimate": 302,
+    "fleet_capacity": 731,
+    "source": "GTFS static · MOTION ITS",
+    "window_start_cyprus_seconds": 34,
+    "window_end_cyprus_seconds": 21634
+  },
+  "observed_last_6h": {
+    "trips": 1127,
+    "km": 26111.0,
+    "stops": 3808,
+    "operators": 6,
+    "operators_list": [
+      "INTERCITY",
+      "LPT",
+      "NPT",
+      "ΕΜΕΛ",
+      "ΟΣΕΑ",
+      "ΟΣΥΠΑ"
+    ],
+    "vehicles_in_motion": 264,
+    "stop_arrivals_last_hour": 510,
+    "stop_arrivals_vehicles_last_hour": 53,
     "source": "GTFS-RT · MOTION ITS",
     "probe_count": 73,
-    "first_probe_utc": "2026-11-08T15:00:32.156210+00:00",
-    "last_probe_utc": "2026-11-08T20:55:31.767286+00:00",
-    "km_exact_trips": 1162,
+    "first_probe_utc": "2026-11-08T15:05:32.710943+00:00",
+    "last_probe_utc": "2026-11-08T21:00:34.699950+00:00",
+    "km_exact_trips": 1127,
     "km_estimated_trips": 0,
     "km_unmatched_trips": 0
   }
