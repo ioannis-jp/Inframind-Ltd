@@ -48,7 +48,7 @@
   "9": {
    "local_feed_version": "NPT20261109053112",
    "local_feed_date": "20261109",
-   "last_probe_utc": "2026-11-10T04:15:46+00:00",
+   "last_probe_utc": "2026-11-10T04:35:47+00:00",
    "strong_validators": false,
    "last_get_utc": "2026-11-10T03:30:47+00:00",
    "validators": {
@@ -1325,7 +1325,7 @@
     "feed_version": "ΕΜΕΛ20261110052452"
    },
    "9": {
-    "probes": 15,
+    "probes": 16,
     "first_probe_utc": "2026-11-09T23:00:47+00:00",
     "last_old_utc": "2026-11-10T03:30:47+00:00",
     "old_feed_version": "NPT20261109053112",
@@ -1352,21 +1352,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-11-06T00:31:07+00:00",
-   "ag": "4",
-   "local_feed_version": "ΟΣΕΑ20261105051621",
-   "head_status": 200,
-   "head": {
-    "length": "1126813"
-   },
-   "remote_feed_version": "ΟΣΕΑ20261105051621",
-   "remote_feed_date": "20261105",
-   "get": {
-    "length": "1126813"
-   },
-   "result": "same build"
-  },
   {
    "ts_utc": "2026-11-06T00:31:07+00:00",
    "ag": "5",
@@ -8973,8 +8958,19 @@
     "length": "18181"
    },
    "result": "new build"
+  },
+  {
+   "ts_utc": "2026-11-10T04:35:47+00:00",
+   "ag": "9",
+   "local_feed_version": "NPT20261109053112",
+   "head_status": 200,
+   "head": {
+    "length": "4152134"
+   },
+   "result": "error",
+   "error": "File is not a zip file"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-10T04:15:48.900666+00:00"
+ "updated_utc": "2026-11-10T04:35:48.849197+00:00"
 }
