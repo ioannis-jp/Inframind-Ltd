@@ -1,31 +1,13 @@
 {
   "schema": "v3.0-dual-window",
-  "generated_at_utc": "2026-11-15T20:56:01.969473+00:00",
-  "cyprus_local_time": "2026-11-15T23:56:01+00:00",
+  "generated_at_utc": "2026-11-15T21:01:06.903707+00:00",
+  "cyprus_local_time": "2026-11-16T00:01:06+00:00",
   "window_hours": 6,
   "rt_degraded": false,
   "planned_next_6h": {
-    "trips": 37,
-    "km": 609.6,
-    "stops": 486,
-    "operators": 4,
-    "operators_list": [
-      "LPT",
-      "ΕΜΕΛ",
-      "ΟΣΕΑ",
-      "ΟΣΥΠΑ"
-    ],
-    "routes": 20,
-    "vehicles_estimate": 37,
-    "fleet_capacity": 731,
-    "source": "GTFS static · MOTION ITS",
-    "window_start_cyprus_seconds": 86161,
-    "window_end_cyprus_seconds": 107761
-  },
-  "observed_last_6h": {
-    "trips": 1175,
-    "km": 27277.2,
-    "stops": 3817,
+    "trips": 311,
+    "km": 7268.5,
+    "stops": 3514,
     "operators": 6,
     "operators_list": [
       "INTERCITY",
@@ -35,14 +17,34 @@
       "ΟΣΕΑ",
       "ΟΣΥΠΑ"
     ],
-    "vehicles_in_motion": 263,
-    "stop_arrivals_last_hour": 761,
+    "routes": 224,
+    "vehicles_estimate": 303,
+    "fleet_capacity": 731,
+    "source": "GTFS static · MOTION ITS",
+    "window_start_cyprus_seconds": 66,
+    "window_end_cyprus_seconds": 21666
+  },
+  "observed_last_6h": {
+    "trips": 1125,
+    "km": 26210.5,
+    "stops": 3778,
+    "operators": 6,
+    "operators_list": [
+      "INTERCITY",
+      "LPT",
+      "NPT",
+      "ΕΜΕΛ",
+      "ΟΣΕΑ",
+      "ΟΣΥΠΑ"
+    ],
+    "vehicles_in_motion": 258,
+    "stop_arrivals_last_hour": 701,
     "stop_arrivals_vehicles_last_hour": 64,
     "source": "GTFS-RT · MOTION ITS",
-    "probe_count": 74,
-    "first_probe_utc": "2026-11-15T14:56:06.339416+00:00",
-    "last_probe_utc": "2026-11-15T20:56:01.886023+00:00",
-    "km_exact_trips": 1175,
+    "probe_count": 73,
+    "first_probe_utc": "2026-11-15T15:06:12.192347+00:00",
+    "last_probe_utc": "2026-11-15T21:01:06.790398+00:00",
+    "km_exact_trips": 1125,
     "km_estimated_trips": 0,
     "km_unmatched_trips": 0
   }

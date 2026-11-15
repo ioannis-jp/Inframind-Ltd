@@ -80,71 +80,6 @@
   }
  },
  "days": {
-  "2026-10-26": {
-   "2": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "ΟΣΥΠΑ20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "ΟΣΥΠΑ20261026053516"
-   },
-   "4": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "ΟΣΕΑ20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "ΟΣΕΑ20261026053516"
-   },
-   "5": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "INTERCITY20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "INTERCITY20261026053516"
-   },
-   "6": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "ΕΜΕΛ20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "ΕΜΕΛ20261026053516"
-   },
-   "9": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "NPT20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "NPT20261026053516"
-   },
-   "10": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "LPT20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "LPT20261026053516"
-   },
-   "11": {
-    "probes": 19,
-    "first_probe_utc": "2026-10-25T23:00:55+00:00",
-    "last_old_utc": "2026-10-26T05:36:00+00:00",
-    "old_feed_version": "PAME_EXPRESS20261025053355",
-    "last_result": "new build",
-    "new_seen_utc": "2026-10-26T06:00:55+00:00",
-    "feed_version": "PAME_EXPRESS20261026053516"
-   }
-  },
   "2026-10-27": {
    "2": {
     "probes": 19,
@@ -1439,6 +1374,13 @@
     "last_old_utc": "2026-11-15T05:56:02+00:00",
     "old_feed_version": "PAME_EXPRESS20261115052646",
     "last_result": "new build"
+   }
+  },
+  "2026-11-16": {
+   "11": {
+    "probes": 0,
+    "feed_version": "PAME_EXPRESS20261115052646",
+    "held_before_probe": true
    }
   }
  },
@@ -9101,5 +9043,5 @@
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-15T05:56:03.936633+00:00"
+ "updated_utc": "2026-11-15T21:01:04.158524+00:00"
 }
