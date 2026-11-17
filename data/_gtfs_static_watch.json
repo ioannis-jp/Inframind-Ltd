@@ -48,9 +48,9 @@
   "9": {
    "local_feed_version": "NPT20261116052750",
    "local_feed_date": "20261116",
-   "last_probe_utc": "2026-11-17T04:45:39+00:00",
+   "last_probe_utc": "2026-11-17T05:10:39+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-11-17T04:20:46+00:00",
+   "last_get_utc": "2026-11-17T05:10:39+00:00",
    "validators": {
     "length": "4153302"
    },
@@ -1413,11 +1413,11 @@
     "feed_version": "ΕΜΕΛ20261117052349"
    },
    "9": {
-    "probes": 16,
+    "probes": 17,
     "first_probe_utc": "2026-11-16T23:00:39+00:00",
-    "last_old_utc": "2026-11-17T04:45:39+00:00",
+    "last_old_utc": "2026-11-17T05:10:39+00:00",
     "old_feed_version": "NPT20261116052750",
-    "last_result": "unchanged (head)"
+    "last_result": "same build"
    },
    "10": {
     "probes": 14,
@@ -1440,21 +1440,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-11-11T03:35:43+00:00",
-   "ag": "11",
-   "local_feed_version": "PAME_EXPRESS20261110105423",
-   "head_status": 200,
-   "head": {
-    "length": "18181"
-   },
-   "remote_feed_version": "PAME_EXPRESS20261110105423",
-   "remote_feed_date": "20261110",
-   "get": {
-    "length": "18181"
-   },
-   "result": "same build"
-  },
   {
    "ts_utc": "2026-11-11T03:55:43+00:00",
    "ag": "2",
@@ -9130,8 +9115,23 @@
     "length": "4153302"
    },
    "result": "unchanged (head)"
+  },
+  {
+   "ts_utc": "2026-11-17T05:10:39+00:00",
+   "ag": "9",
+   "local_feed_version": "NPT20261116052750",
+   "head_status": 200,
+   "head": {
+    "length": "4153302"
+   },
+   "remote_feed_version": "NPT20261116052750",
+   "remote_feed_date": "20261116",
+   "get": {
+    "length": "4153302"
+   },
+   "result": "same build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-17T04:45:40.167466+00:00"
+ "updated_utc": "2026-11-17T05:10:42.129720+00:00"
 }
