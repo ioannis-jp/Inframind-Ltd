@@ -4,7 +4,7 @@
   "2": {
    "local_feed_version": "ΟΣΥΠΑ20261117052349",
    "local_feed_date": "20261117",
-   "last_probe_utc": "2026-11-18T04:15:38+00:00",
+   "last_probe_utc": "2026-11-18T04:35:38+00:00",
    "strong_validators": false,
    "last_get_utc": "2026-11-18T04:15:38+00:00",
    "validators": {
@@ -37,7 +37,7 @@
   "6": {
    "local_feed_version": "ΕΜΕΛ20261117052349",
    "local_feed_date": "20261117",
-   "last_probe_utc": "2026-11-18T04:15:38+00:00",
+   "last_probe_utc": "2026-11-18T04:35:38+00:00",
    "strong_validators": false,
    "last_get_utc": "2026-11-18T04:15:38+00:00",
    "validators": {
@@ -48,7 +48,7 @@
   "9": {
    "local_feed_version": "NPT20261117052349",
    "local_feed_date": "20261117",
-   "last_probe_utc": "2026-11-18T04:15:38+00:00",
+   "last_probe_utc": "2026-11-18T04:35:38+00:00",
    "strong_validators": false,
    "last_get_utc": "2026-11-18T04:15:38+00:00",
    "validators": {
@@ -1377,11 +1377,11 @@
   },
   "2026-11-18": {
    "2": {
-    "probes": 15,
+    "probes": 16,
     "first_probe_utc": "2026-11-17T23:00:39+00:00",
-    "last_old_utc": "2026-11-18T04:15:38+00:00",
+    "last_old_utc": "2026-11-18T04:35:38+00:00",
     "old_feed_version": "ΟΣΥΠΑ20261117052349",
-    "last_result": "same build"
+    "last_result": "unchanged (head)"
    },
    "4": {
     "probes": 14,
@@ -1402,18 +1402,18 @@
     "feed_version": "INTERCITY20261118052518"
    },
    "6": {
-    "probes": 15,
+    "probes": 16,
     "first_probe_utc": "2026-11-17T23:00:39+00:00",
-    "last_old_utc": "2026-11-18T04:15:38+00:00",
+    "last_old_utc": "2026-11-18T04:35:38+00:00",
     "old_feed_version": "ΕΜΕΛ20261117052349",
-    "last_result": "same build"
+    "last_result": "unchanged (head)"
    },
    "9": {
-    "probes": 15,
+    "probes": 16,
     "first_probe_utc": "2026-11-17T23:00:39+00:00",
-    "last_old_utc": "2026-11-18T04:15:38+00:00",
+    "last_old_utc": "2026-11-18T04:35:38+00:00",
     "old_feed_version": "NPT20261117052349",
-    "last_result": "same build"
+    "last_result": "unchanged (head)"
    },
    "10": {
     "probes": 14,
@@ -1436,51 +1436,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-11-12T03:40:44+00:00",
-   "ag": "9",
-   "local_feed_version": "NPT20261111052037",
-   "head_status": 200,
-   "head": {
-    "length": "4152667"
-   },
-   "remote_feed_version": "NPT20261112051736",
-   "remote_feed_date": "20261112",
-   "get": {
-    "length": "4152667"
-   },
-   "result": "new build"
-  },
-  {
-   "ts_utc": "2026-11-12T03:40:44+00:00",
-   "ag": "10",
-   "local_feed_version": "LPT20261111052037",
-   "head_status": 200,
-   "head": {
-    "length": "1712414"
-   },
-   "remote_feed_version": "LPT20261112051736",
-   "remote_feed_date": "20261112",
-   "get": {
-    "length": "1712414"
-   },
-   "result": "new build"
-  },
-  {
-   "ts_utc": "2026-11-12T03:40:44+00:00",
-   "ag": "11",
-   "local_feed_version": "PAME_EXPRESS20261111052037",
-   "head_status": 200,
-   "head": {
-    "length": "18176"
-   },
-   "remote_feed_version": "PAME_EXPRESS20261112051736",
-   "remote_feed_date": "20261112",
-   "get": {
-    "length": "18176"
-   },
-   "result": "new build"
-  },
   {
    "ts_utc": "2026-11-12T23:00:16+00:00",
    "ag": "2",
@@ -9111,8 +9066,38 @@
     "length": "4153264"
    },
    "result": "same build"
+  },
+  {
+   "ts_utc": "2026-11-18T04:35:38+00:00",
+   "ag": "2",
+   "local_feed_version": "ΟΣΥΠΑ20261117052349",
+   "head_status": 200,
+   "head": {
+    "length": "1232105"
+   },
+   "result": "unchanged (head)"
+  },
+  {
+   "ts_utc": "2026-11-18T04:35:38+00:00",
+   "ag": "6",
+   "local_feed_version": "ΕΜΕΛ20261117052349",
+   "head_status": 200,
+   "head": {
+    "length": "3081202"
+   },
+   "result": "unchanged (head)"
+  },
+  {
+   "ts_utc": "2026-11-18T04:35:38+00:00",
+   "ag": "9",
+   "local_feed_version": "NPT20261117052349",
+   "head_status": 200,
+   "head": {
+    "length": "4153264"
+   },
+   "result": "unchanged (head)"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-18T04:15:47.025769+00:00"
+ "updated_utc": "2026-11-18T04:35:40.324310+00:00"
 }
