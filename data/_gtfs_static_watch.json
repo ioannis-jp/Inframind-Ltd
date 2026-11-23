@@ -4,9 +4,9 @@
   "2": {
    "local_feed_version": "ΟΣΥΠΑ20261122052744",
    "local_feed_date": "20261122",
-   "last_probe_utc": "2026-11-23T04:55:24+00:00",
+   "last_probe_utc": "2026-11-23T05:20:21+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-11-23T04:30:25+00:00",
+   "last_get_utc": "2026-11-23T05:20:21+00:00",
    "validators": {
     "length": "1232096"
    },
@@ -1378,11 +1378,11 @@
     "held_before_probe": true
    },
    "2": {
-    "probes": 16,
+    "probes": 17,
     "first_probe_utc": "2026-11-22T23:00:24+00:00",
-    "last_old_utc": "2026-11-23T04:55:24+00:00",
+    "last_old_utc": "2026-11-23T05:20:21+00:00",
     "old_feed_version": "ΟΣΥΠΑ20261122052744",
-    "last_result": "unchanged (head)"
+    "last_result": "same build"
    },
    "4": {
     "probes": 13,
@@ -1432,16 +1432,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-11-18T02:20:43+00:00",
-   "ag": "2",
-   "local_feed_version": "ΟΣΥΠΑ20261117052349",
-   "head_status": 200,
-   "head": {
-    "length": "1232105"
-   },
-   "result": "unchanged (head)"
-  },
   {
    "ts_utc": "2026-11-18T02:20:43+00:00",
    "ag": "4",
@@ -9032,8 +9022,23 @@
     "length": "1232096"
    },
    "result": "unchanged (head)"
+  },
+  {
+   "ts_utc": "2026-11-23T05:20:21+00:00",
+   "ag": "2",
+   "local_feed_version": "ΟΣΥΠΑ20261122052744",
+   "head_status": 200,
+   "head": {
+    "length": "1232096"
+   },
+   "remote_feed_version": "ΟΣΥΠΑ20261122052744",
+   "remote_feed_date": "20261122",
+   "get": {
+    "length": "1232096"
+   },
+   "result": "same build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-23T04:55:24.530774+00:00"
+ "updated_utc": "2026-11-23T05:20:23.347218+00:00"
 }
