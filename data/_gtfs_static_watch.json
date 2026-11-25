@@ -59,7 +59,7 @@
   "10": {
    "local_feed_version": "LPT20261124052400",
    "local_feed_date": "20261124",
-   "last_probe_utc": "2026-11-25T07:05:41+00:00",
+   "last_probe_utc": "2026-11-25T07:25:52+00:00",
    "strong_validators": false,
    "last_get_utc": "2026-11-25T07:05:41+00:00",
    "validators": {
@@ -1417,11 +1417,11 @@
     "feed_version": "NPT20261125051714"
    },
    "10": {
-    "probes": 23,
+    "probes": 24,
     "first_probe_utc": "2026-11-24T23:00:43+00:00",
-    "last_old_utc": "2026-11-25T07:05:41+00:00",
+    "last_old_utc": "2026-11-25T07:25:52+00:00",
     "old_feed_version": "LPT20261124052400",
-    "last_result": "new build"
+    "last_result": "unchanged (head)"
    },
    "11": {
     "probes": 14,
@@ -1435,16 +1435,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-11-20T02:10:33+00:00",
-   "ag": "11",
-   "local_feed_version": "PAME_EXPRESS20261119052203",
-   "head_status": 200,
-   "head": {
-    "length": "18164"
-   },
-   "result": "unchanged (head)"
-  },
   {
    "ts_utc": "2026-11-20T02:30:36+00:00",
    "ag": "2",
@@ -9066,8 +9056,18 @@
     "length": "1712183"
    },
    "result": "new build"
+  },
+  {
+   "ts_utc": "2026-11-25T07:25:52+00:00",
+   "ag": "10",
+   "local_feed_version": "LPT20261124052400",
+   "head_status": 200,
+   "head": {
+    "length": "1712183"
+   },
+   "result": "unchanged (head)"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-25T07:05:43.914330+00:00"
+ "updated_utc": "2026-11-25T07:25:53.015659+00:00"
 }
