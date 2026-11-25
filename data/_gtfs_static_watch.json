@@ -57,15 +57,15 @@
    "refreshed_utc": "2026-11-25T05:55:40+00:00"
   },
   "10": {
-   "local_feed_version": "LPT20261124052400",
-   "local_feed_date": "20261124",
-   "last_probe_utc": "2026-11-25T09:25:17+00:00",
+   "local_feed_version": "LPT20261125051714",
+   "local_feed_date": "20261125",
+   "last_probe_utc": "2026-11-25T09:50:16+00:00",
    "strong_validators": false,
-   "last_get_utc": "2026-11-25T09:25:17+00:00",
+   "last_get_utc": "2026-11-25T09:50:16+00:00",
    "validators": {
-    "length": "1712183"
+    "length": "1712345"
    },
-   "refreshed_utc": "2026-11-25T09:25:17+00:00"
+   "refreshed_utc": "2026-11-25T09:50:16+00:00"
   },
   "11": {
    "local_feed_version": "PAME_EXPRESS20261125051714",
@@ -1417,11 +1417,13 @@
     "feed_version": "NPT20261125051714"
    },
    "10": {
-    "probes": 29,
+    "probes": 30,
     "first_probe_utc": "2026-11-24T23:00:43+00:00",
     "last_old_utc": "2026-11-25T09:25:17+00:00",
     "old_feed_version": "LPT20261124052400",
-    "last_result": "new build"
+    "last_result": "new build",
+    "new_seen_utc": "2026-11-25T09:50:16+00:00",
+    "feed_version": "LPT20261125051714"
    },
    "11": {
     "probes": 14,
@@ -1435,21 +1437,6 @@
   }
  },
  "log": [
-  {
-   "ts_utc": "2026-11-20T02:30:36+00:00",
-   "ag": "10",
-   "local_feed_version": "LPT20261119052203",
-   "head_status": 200,
-   "head": {
-    "length": "1712259"
-   },
-   "remote_feed_version": "LPT20261119052203",
-   "remote_feed_date": "20261119",
-   "get": {
-    "length": "1712259"
-   },
-   "result": "same build"
-  },
   {
    "ts_utc": "2026-11-20T02:30:36+00:00",
    "ag": "11",
@@ -9056,8 +9043,23 @@
     "length": "1712183"
    },
    "result": "new build"
+  },
+  {
+   "ts_utc": "2026-11-25T09:50:16+00:00",
+   "ag": "10",
+   "local_feed_version": "LPT20261124052400",
+   "head_status": 200,
+   "head": {
+    "length": "1712345"
+   },
+   "remote_feed_version": "LPT20261125051714",
+   "remote_feed_date": "20261125",
+   "get": {
+    "length": "1712345"
+   },
+   "result": "new build"
   }
  ],
  "note": "Every probe of the MOTION open-data portal for the daily GTFS static bundles. days[YYYY-MM-DD][agency].new_seen_utc = first probe that found that day's build; last_old_utc = last probe that still found the previous build. The build appeared between the two (UTC).",
- "updated_utc": "2026-11-25T09:25:19.296603+00:00"
+ "updated_utc": "2026-11-25T09:50:19.693320+00:00"
 }
